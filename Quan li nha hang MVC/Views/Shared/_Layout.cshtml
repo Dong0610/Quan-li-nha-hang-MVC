@@ -1,0 +1,215 @@
+﻿
+@{
+    Quan_li_nha_hang_MVC.Models.ChuNhaHang cnh = Session["userlogin"] as Quan_li_nha_hang_MVC.Models.ChuNhaHang;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lí nhà hàng</title>
+    <link href="~/Content/css/Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/fontawesome-free-6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/style.css")" />
+    <link rel="stylesheet" href="~/Content/css/style0cs.css" />
+    <link rel="stylesheet" href="~/Content/css/hoadon.css" />
+    <link rel="stylesheet" href="~/Content/css/alter.css" />
+    <link rel="stylesheet" href="~/Content/css/tonkho.css" />
+    <link rel="stylesheet" href="~/Content/css/tablere.css" />
+    <link rel="stylesheet" href="~/Content/css/home_view.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="sidebar close">
+        <div class="logo-details">
+            <i class="bx-menu fa-solid fa-bars"></i>
+            <span class="logo_name">Quản lí nhà hàng</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="~/Home/Index">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span class="link_name">Home</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="~/Home/Index">Home</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        <span class="link_name">Báo cáo</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Báo cáo</a></li>
+                    <li><a href="~/GiaoDich/QuanLiGiaoDich">Quản lí giao dịch</a></li>
+                    <li><a href="~/GiaoDich/ProductMixView">ProductMix</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="link_name">Hóa đơn</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Hóa đơn hàng hóa</a></li>
+
+                    <li><a href="~/HoaDon/DanhSachHoaDon">Hóa đơn đã tạo</a></li>
+                    <li><a href="~/HoaDon/TaoHoaDon">Tạo hóa đơn oder</a></li>
+                    <li><a href="~/HoaDon/HoaDonThanhToan">Hóa đơn thanh toán</a></li>
+                </ul>
+
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-bell-concierge"></i>
+                        <span class="link_name">Mặt hàng</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Mặt hàng</a></li>
+                    <li><a href="~/SanPham/DanhMucSanPham">Mặt hàng</a></li>
+                    <li><a href="~/SanPham/DanhSachMonAn">Thực đơn</a></li>
+                    <li><a href="~/Buffet/DanhSachBuffet">Suất Buffe</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-table"></i>
+                        <span class="link_name">Đặt bàn</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Đặt bàn</a></li>
+                    <li><a href="~/DatBan/DanhSachBanDat">Danh sách bàn</a></li>
+                    <li><a href="~/Oder/StartOder?id=0">Start Oder</a></li>
+                    <li><a href="~/Oder/ThanhToanHD?idhd=0">Thanh toán</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="~/NhanVien/DanhSachNhanVien">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="link_name">Nhân viên</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a href="~/NhanVien/DanhSachNhanVien">Nhân viên</a></li>
+                    <li id="isquyen" ><a  href="~/NhanVien/PhanQuyenNhanVien?idnv=@cnh.Id_NV">Quyền nhân viên</a></li>
+                </ul>
+            </li>
+           
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-warehouse"></i>
+                        <span class="link_name">Thu chi</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Quản lí</a></li>
+                    <li><a href="~/KiemKe/TonKhoCuoiNgay">Kiểm kê cuối ngày</a></li>
+                    <li><a href="#">Nhập kho</a></li>
+                    <li><a href="#">Tồn kho</a></li>
+                </ul>
+            </li>
+          
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name"></div>
+                        <div class="job">Cài đặt nhà hàng</div>
+                    </div>
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <header class="header_main_container">
+            <div class="logo_name_res">@cnh.TenQL</div>
+            <div class="acc_user" onclick="ShowUserInf()">
+                <img src="~/Content/img/img_avatar.png" alt="anh nguoi dung" class="img_users">
+                <div class="txt_user_name">@cnh.TenQL</div>
+            </div>
+        </header>
+        <div id="list_info_user" onmouseleave="HideInf()" class="list_info_user">
+            <a href="#" class="item_list_inf">
+                <i class="fa-solid fa-envelope ic_item"></i>
+                @cnh.Email
+            </a>
+            <a href="#" class="item_list_inf">
+                <i class="fa-solid fa-gear ic_item"></i>
+                Cài đặt
+            </a>
+            <a href="#" class="item_list_inf">
+                <i class="fa-solid fa-circle-question ic_item"></i>
+                Trợ giúp
+            </a>
+            <a href="~/Home/DangXuat" class="item_list_inf">
+                <i class="fa-solid fa-right-from-bracket ic_item"></i>Đăng xuất
+            </a>
+        </div>
+        <div id="sectionctn" class="section_container">
+            @RenderBody()
+        </div>
+
+        <footer class="footer_main_container">
+            <div class="txt_dev">Develope by $DongDong 2022</div>
+        </footer>
+    </section>
+
+
+
+
+    <script src="https://kit.fontawesome.com/a7ddde5dca.js" crossorigin="anonymous"></script>
+    <script src="~/Content/js/style.js" type="text/javascript"></script>
+    <script src="~/Content/js/alter1.js" type="text/javascript"></script>
+    <script src="~/Content/js/exportsrtable.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "@Url.Action("KiemTraQuyen", "Home")",
+                method: "POST",
+                data: { idquyen: '100118', idnv:@cnh.Id_NV}
+            }).done(function (response) {
+                if (response != 1) {
+                    $("#isquyen").css("display", "none");
+                }
+            });
+        });
+
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

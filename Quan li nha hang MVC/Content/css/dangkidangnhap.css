@@ -1,0 +1,431 @@
+﻿* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+html {
+    box-sizing: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.form_signup,
+.form_signin {
+    margin: 5% auto;
+    width: 420px;
+    height: auto;
+    background: #fff;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(61, 57, 57, 0.2);
+    border-left: 1px solid rgba(61, 57, 57, 0.2);
+    box-shadow: 1px 10px 10px rgba(120, 120, 120, 0.496);
+}
+
+.user_header_log {
+    list-style: none;
+    color: black;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.ic_close_info {
+    float: right;
+    top: 10px;
+    margin: 15px;
+    right: 10px;
+    font-size: 16px;
+}
+
+.info_user,
+.info_usershowpass {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-top: 8px;
+}
+
+.info_user_title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 7px 0;
+    float: left;
+}
+
+.info_usershowpass {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.info_usershowpass {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.info_usershowpass {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.sub_btn {
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+}
+
+
+.disabled {
+    color: rgba(70, 70, 70, 0.2);
+}
+
+.warning_text {
+    color: red;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+
+
+.link_type {
+    border-bottom: .5px solid rgba(61, 57, 57, 0.2);
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    margin: 10px;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+
+.active {
+    border-bottom: 2px solid rgb(255, 0, 0);
+}
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+html {
+    box-sizing: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.form_signup,
+.form_signin {
+    margin: 5% auto;
+    width: 420px;
+    height: auto;
+  
+    background: #fff;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(61, 57, 57, 0.2);
+    border-left: 1px solid rgba(61, 57, 57, 0.2);
+    box-shadow: 1px 10px 10px rgba(120, 120, 120, 0.496);
+}
+
+.user_header_log {
+    list-style: none;
+    color: black;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+.info_title {
+    margin-top: 12px;
+    font-size: 28px;
+    padding-top: 32px;
+    color: rgb(4, 8, 255);
+    margin-bottom: 50px;
+}
+
+.txt_error {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    color: red;
+}
+
+.info_user,
+.info_usershowpass {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-top: 8px;
+}
+
+.info_user_title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 7px 0;
+    float: left;
+}
+
+.form_user_input {
+    margin-top: 2px;
+    border: 1px solid #333;
+    outline: none;
+    font-size: 14px;
+    border-radius: 5px;
+    padding-left: 15px;
+    padding-left: 20px;
+    width: 100%;
+    height: 32px;
+  
+    box-shadow: -3px 4px 10px rgba(120, 120, 120, 0.496);
+}
+
+.info_usershowpass {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.info_usershowpass {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.info_usershowpass {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.sub_btn {
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+}
+
+.btn_signup {
+    width: 124px;
+    height: 36px;
+    margin: auto;
+    border: none;
+    border-radius: 20px;
+    line-height:36px;
+    font-size: 16px;
+    border: .8px solid rgb(4, 8, 255);
+    background-color:white;
+    color: rgb(4, 8, 255);
+   font-weight:500;
+}
+
+    .btn_signup:hover {
+        color: #fff;
+        background: rgb(4, 8, 255);
+    }
+
+.disabled {
+    color: rgba(70, 70, 70, 0.2);
+}
+
+.warning_text {
+    color: red;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+
+
+.link_type {
+    border-bottom: .5px solid rgba(61, 57, 57, 0.2);
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    margin: 10px;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+.active {
+    border-bottom: 2px solid rgb(255, 0, 0);
+}
+
+
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+html {
+    box-sizing: inherit;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    width:100%;
+}
+
+
+body {
+    background-image: url("../img/menunhahang.jpg");
+    background-position: center; /* Center the image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative
+}
+
+
+.form_signup {
+    width: 800px;
+    height: auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 8% auto;
+    border-top: 1px solid rgba(61, 57, 57, 0.2);
+    border-left: 1px solid rgba(61, 57, 57, 0.2);
+    box-shadow: 1px 10px 10px rgba(120, 120, 120, 0.496);
+    display: flex;
+}
+
+.form_page {
+    width: 320px;
+    height: 100%;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+}
+
+
+._form_it {
+    margin: auto;
+}
+
+.form_value {
+    width: 480px;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+}
+
+    .form_value div {
+        margin: auto;
+    }
+
+.form_page img {
+    margin: auto;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.txt_title {
+    text-align: center;
+    margin: 20px auto;
+    font-weight: 500;
+    font-size: 24px;
+    color: blue;
+}
+
+.title_ip {
+    margin-left: 10px;
+}
+
+.form-item {
+    width: 100%;
+    margin: 20px 10px 10px 10px;
+    height: auto;
+    float: left;
+    text-align: left;
+}
+
+
+
+.txtinput_val {
+    border: .75px solid #333;
+    color: black;
+    margin: 5px;
+    padding-left: 20px;
+    width: 100%;
+    height: 32px;
+    border-top: 1px solid #333;
+    border-left: 1px solid #333;
+    border-right: none;
+    border-bottom: none;
+    box-shadow: -3px 4px 10px rgba(120, 120, 120, 0.496);
+    outline: none;
+    border-radius: 16px;
+}
+
+
+
+.text_eror {
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0px auto 5px 10px;
+}
+
+.input_error {
+    width: 100%;
+    height: auto;
+}
+
+
+
+
+
+.sub_btn {
+    width: 100%;
+    display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

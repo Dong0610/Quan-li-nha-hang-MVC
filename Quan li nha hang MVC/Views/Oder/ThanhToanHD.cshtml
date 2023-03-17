@@ -1,0 +1,385 @@
+﻿@{
+    ViewBag.Title = "ThanhToanHD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string mahd = ViewData["id"].ToString();
+}
+
+<div id="detail_val_sp" style="display: none; z-index: 1000;" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <a href="~/DatBan/DanhSachBanDat" class="fa-solid fa-arrow-left icclose"> </a>
+    </div>
+    <div style="display: flex;overflow-y: scroll;padding-bottom: 80px; " id="loadworking" class="detail_work_item">
+        <div style="z-index:500" id="dsloaiban" class="list_table_rs">
+        </div>
+    </div>
+</div>
+<div class="item_section_name">Thanh toán hóa đơn</div>
+<div style="width: 100%;" class="detail_table_view_id flex_il">
+    <div class="device">
+        <div class="item_section_name">Thông tin bàn</div>
+        <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px;">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tên khách hàng</div>
+                <input type="text" id="txtten" class="style_item_work " value="Trống" readonly />
+            </div>
+            <div class="flex_il">
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Số lượng khách</div>
+                    <input type="text" id="txtsl" class="style_item_work " value="Trống" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Số điện thoại</div>
+                    <input type="text" id="txtdt" class="style_item_work " value="Trống" readonly />
+                </div>
+            </div>
+            <div class="flex_il">
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Người Oder</div>
+                    <input type="text" id="txtnod" class="style_item_work " value="" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Người thanh toán</div>
+                    <input type="text" id="txtnd" class="style_item_work " value="Bùi Văn Đông" readonly />
+                </div>
+            </div>
+            <div class="flex_il">
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Giờ vào</div>
+                    <input type="text" id="txtgiovao" class="style_item_work " value="" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Giờ ra</div>
+                    <input type="text" id="txtgiora" class="style_item_work " value="" readonly />
+                </div>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Thông tin bàn</div>
+                <input type="text" id="txtban" class="style_item_work " value="Trống" readonly />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tình trạng</div>
+                <input type="text" class="style_item_work " value="Chờ thanh toán" readonly />
+            </div>
+            <div style="height:auto; padding-bottom:10px;" class="pr_item_work">
+                <div class="pr_txt_lb">Ghi chú</div>
+                <textarea style="resize:none; height: 100px;" id="txtnote" class="style_item_work edt_des"
+                          readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <div style="margin-right:4px;" class="device">
+        <div class="item_section_name">Chi tiết Oder</div>
+        <div class="tb_detail_list" style="padding:10px 1px;">
+            <fieldset style="width: 98%; height: 477px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                      class="style_item_work">
+                <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                <div style="height: auto;" id="item_food_oder">
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="device">
+        <div class="item_section_name">Thông tin thanh toán</div>
+        <div class="tb_detail_list" style="padding-top:10px;">
+            <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px;">
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Phương thức thanh toán</div>
+                    <select id="txthtttoan" class="style_item_work ">
+                        <option value="Thanh toán tiền mặt">Thanh toán tiền mặt</option>
+                        <option value="Thanh toán MoMo">Thanh toán MoMo</option>
+                        <option value="Thanh toán thẻ Visa">Thanh toán thẻ Visa</option>
+                        <option value="Thanh toán thẻ tín dụng">Thanh toán thẻ tín dụng</option>
+                        <option value="Thanh toán thẻ ngân hàng">Thanh toán thẻ ngân hàng</option>
+                    </select>
+                </div>
+                <div class="flex_il">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Tổng Bill</div>
+                        <input type="text" id="txttongtien" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Mã giảm giá</div>
+                        <div class="flex_il">
+                            <input type="text" id="txtgiamgia" class="style_item_work " placeholder="Trống" />
+                            <div style="width:92px;margin:auto 2px;" class="btn_sp btn_cancel"> <i class="fa-solid fa-check-circle"></i> Check</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex_il">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">VAT</div>
+                        <input type="text" id="txtdtnd" class="style_item_work " value="10%" />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Phí dịch vụ</div>
+                        <select onchange="ThayDoiPhiDV()" id="txtphidv" class="style_item_work ">
+                            <option value="10000">10000</option>
+                            <option value="15000">15000</option>
+                            <option value="30000">30000</option>
+                            <option value="40000">40000</option>
+                            <option value="50000">50000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex_il">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Tổng tiền cuối</div>
+                        <input type="text" id="txtlastmoney" class="style_item_work " value="" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Tình trạng giao dịch</div>
+                        <input type="text" id="txtdtnd" class="style_item_work " value="Chờ thanh toán" readonly />
+                    </div>
+                </div>
+                <div style="height:170px;" class="flex_il">
+                    <div style="height:145px; padding-bottom:3px;margin-right:40px;" class="pr_item_work">
+                        <div class="pr_txt_lb">Ghi chú</div>
+                        <textarea style="resize:none;" id="txtbillgc" class="style_item_work edt_des"
+                                  readonly></textarea>
+                    </div>
+                    <img src="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC" style="height:170px;width:170px ;padding:1px;margin-right:20px" class="style_item_work" />
+                </div>
+            </div>
+            <div style=" display: flex;" class="device_or">
+                <div style="margin:auto;" class="list_btn_pr">
+                    <a onclick="ThanhToanBill('@mahd')" style="background-color: blue;" class="btn_all">
+                        <i class="fa-solid fa-money-check-dollar"></i> Thanh
+                        toán
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ThanhToanBill(idbill) {
+        var giamgia = $("#txtgiamgia").val();
+        if (giamgia == "" || giamgia == null) {
+            giamgia = 0;
+        }
+        else {
+            giamgia = giamgia;
+        }
+        $.ajax({
+            url: "@Url.Action("ThanhToanBill", "Oder")",
+            method: "POST",
+            data: {
+                mahd: idbill, tongtien: tongtien, hinhtttoan: $("#txthtttoan").val(),
+                giora: $("#txtgiora").val(), madg: giamgia,
+                tiencuoi: lastmn, phidv: $("#txtphidv").val(), gc: $("#txtbillgc").val()
+            }
+        }).done(function (response) {
+            customAlert.alert(response, "Thông báo");
+            setTimeout(function () {
+                window.location.href = "/DatBan/DanhSachBanDat";
+            },2000);
+        });
+    }
+    var tongtien = 0;
+    var lastmn = 0;
+    function LoadHoaDon(idhd) {
+        $("#detail_val_sp").css("display", "none");
+        var now = new Date();
+        var phut = now.getMinutes();
+        if (phut.toString().length == 1) {
+            phut = "0" + phut;
+        }
+        var gio = now.getHours();
+        if (gio.toString().length == 1) {
+            gio = "0" + gio;
+        }
+        $("#txtgiora").val(gio + ":" + phut);
+        $.ajax({
+            url: "@Url.Action("ThongTinHoaDon", "Oder")",
+            method: "POST",
+            data: { mahd: idhd }
+        }).done(function (response) {
+            $.each([response], function (e, obj) {
+                $("#txtten").val(obj.TenKH);
+                $("#txtsl").val(obj.SoKhach);
+                $("#txtdt").val(obj.SoDT);
+                $("#txtgiovao").val(obj.GioVao);
+                $("#txtnote").val(obj.GhiChu);
+                $.ajax({
+                url: "@Url.Action("ThongTinCTBan", "DatBan")",
+                  method: "POST",
+                      data: { idb: obj.ID_Ban }
+                })
+                .done(function (response1) {
+                    $("#txtban").val(response1);
+                });
+                 $.ajax({
+                url: "@Url.Action("TenNguoiOder", "Oder")",
+                     method: "POST",
+                     data: { idhd: obj.ID_HDOder }
+                })
+                .done(function (response2) {
+                    $("#txtnod").val(response2);
+                });
+                  $.ajax({
+                        url: "@Url.Action("DanhSachBFOder","Oder")",
+                     method: "POST",
+                     data: { ten: obj.TenKH, phone: obj.SoDT, ngay: obj.NgayVao, maban: obj.ID_Ban }
+                    })
+                  .done(function (responses) {
+                        var dsfood = "";
+                        $.each(responses, function (e, obj) {
+                            tongtien += obj.GiaBF * obj.SoLuong;
+                            dsfood += Buffet_View(obj);
+                        });
+                      $("#txttongtien").val(tongtien.toLocaleString('vi-VN', {
+                          style: 'currency',
+                          currency: 'vnd',
+                      }));
+                      lastmn = (Math.floor(tongtien * 1.1)) + Number($("#txtphidv").val())
+                      $("#txtlastmoney").val(lastmn.toLocaleString('vi-VN', {
+                          style: 'currency',
+                          currency: 'vnd',
+                      }));
+                            $.ajax({
+                                url: "@Url.Action("MonAnDaGoiTheoBan", "Oder")",
+                                method: 'POST',
+                                data: { id: obj.ID_HDOder },
+                            }).done(function (response) {
+                                $.each(response, function (e, obj) {
+                                    dsfood += DanhSachFood(obj);
+                                });
+                                $("#item_food_oder").html(dsfood);
+                            });
+                  });
+            });
+        });
+    }
+    function ThayDoiPhiDV() {
+        var lastmn = (Math.floor(tongtien * 1.1)) + Number($("#txtphidv").val())
+        $("#txtlastmoney").val(lastmn.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'vnd',
+        }));
+    }
+    function Buffet_View(obj) {
+        return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.Image + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenBF + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaBF + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input  type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text"  style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ Number(obj.SoLuong) * Number(obj.GiaBF) + `" readonly />
+                                </p>
+                               <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="XoaBuffetOder('`+ obj.ID_Buffe + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    function DanhSachFood(obj) {
+        return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.HinhAnh + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenMon + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaMon + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input id="slbf`+ obj.ID_MonAn + `" type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text" id="tt`+ obj.ID_MonAn + `" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" readonly />
+                                </p>
+                                <div style="padding: 0;height: 32px;" class="flex_il">
+                                        <i onclick="XoaBuffetOder('`+ obj.ID_MonAn + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+
+    function ReturnList(obj) {
+        var bgcol = "";
+        if (obj.TinhTrang == 0) {
+            bgcol = "green";
+        }
+        else if (obj.TinhTrang == 1) {
+            bgcol = "red";
+        }
+        else {
+            bgcol = "orange";
+        }
+        return `<div style="background-color:#fff;width:250px;" class="table_style_view">
+                <div style="background-color:#fff;border:1px solid #ddd;height:40px;font-size: 20px;line-height:40px;" class="table_tiltle" >`+ obj.TenBan + `</div>
+                <div class="tablers_container">
+                  <input style="width: 100%; border-color: #ccc;" type="text" class="style_item_work" value="`+ obj.ViTri + `" readonly
+                    placeholder="Khu vực" />
+                  <div class="tablers_container_top flex_il">
+                    <div class="device ">
+                      <div style="background:`+ bgcol + `;" class="is_val_table"></div>
+                      <p style="text-align: center;" class="ctn_detail">`+ obj.TenLoaiBan + `</p>
+                    </div>
+                    <div style="width: 60%;" class="device">
+                      <p class="ctn_detail">Khu vực</p>
+                      <input style="width: 95%; height: 22px; border-color: #ccc;" type="text" class="style_item_work"
+                        value="`+ obj.KhuVuc + `" readonly />
+                      <p class="ctn_detail">Số ghế</p>
+                      <input style="width: 95%; height: 22px; border-color: #ccc;" type="text" class="style_item_work"
+                        value="`+ obj.SoGhe + `" readonly />
+                    </div>
+                  </div>
+                  <input style="width: 100%; border-color: #ccc;" type="text" class="style_item_work" value="Chờ thanh toán" readonly
+                    placeholder="Note" />
+                </div>
+                <div style="background-color:#fff;" class="table_bottom">
+                  <a style="width:75px;height:30px;border-radius:15px;line-height:30px;" href="/Oder/OderBanMoi?id=`+ obj.ID_HDOder +`" class="btn_sp btn_views">Xem</a>
+                  <div style="width:75px;height:30px;border-radius:15px;line-height:30px;" onclick="LoadHoaDon('`+ obj.ID_HDOder + `')" class="btn_sp btn_del">Thanh toán</div>
+                  
+                </div>
+              </div>`;
+    }
+
+    $(document).ready(function () {
+
+        if (@mahd == 0) {
+            $("#detail_val_sp").css("display", "block");
+             $.ajax({
+                    url: "@Url.Action("CacBanChoTT", "Oder")",
+                    method: 'POST'
+             }).done(function (response) {
+                 var html = "";
+                 console.log(response);
+                 $.each(response, function (e, obj) {
+                     html += ReturnList(obj);
+                 });
+                 $("#dsloaiban").html(html);
+                });
+        }
+        else {
+              LoadHoaDon(@mahd);
+        }
+
+    });
+</script>

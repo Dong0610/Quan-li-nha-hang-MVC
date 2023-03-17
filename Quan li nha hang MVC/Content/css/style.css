@@ -1,0 +1,356 @@
+﻿.product_list_work {
+    width: 100%;
+    height: 180px;
+    display: flex;
+}
+.pro_fint {
+    width: 60%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    margin: 2px;
+    border-radius: 4px;
+}
+.device {
+    width: 50%;
+    height: 100%;
+}
+.pro_list_choose {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+.pr_item_work {
+    width: 100%;
+    height: 45px;
+    margin: 8px;
+}
+.pr_txt_lb {
+    line-height: 20px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+}
+.style_item_work {
+    width: 95%;
+    height: 28px;
+    margin-top: 2px;
+    border: 1px solid #333;
+    outline: none;
+    font-size:14px;
+    border-radius: 3px;
+    padding-left: 15px;
+}
+option {
+    border-radius: 2px;
+    text-align: left;
+    margin-left: 20px;
+}
+.flex_il {
+    display: flex;
+}
+.class {
+    margin: auto 100px 10px 0px;
+}
+.pr_classify {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+.txt_number {
+    width: 120px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    padding-left: 20px;
+}
+.icsreach {
+    font-size: 24px;
+    color: rgb(179, 179, 179);
+    width: 60px;
+    height: 28px;
+    margin: auto 20px;
+}
+.txtsreach {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #333;
+    padding-left: 20px;
+}
+.type_input {
+    width: 100%;
+}
+.pr_work_user {
+    width: 40%;
+    height: 100%;
+    background-color: white;
+    margin: 2px;
+    border-radius: 4px;
+}
+.device_or {
+    width: 100%;
+    height: 50%;
+}
+.list_btn_pr {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.btn_all {
+    width: 120px;
+    margin: auto;
+    background-color: rgb(2, 196, 2);
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid rgb(255, 255, 255);
+    text-align: center;
+    line-height: 32px;
+    color: white;
+    font-weight: 500;
+}
+.pro_list_product {
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    border-radius: 4px;
+    background-color: white;
+}
+.edit_pr_pr {
+    width: 100%;
+    height: 100%;
+}
+.edit_pr_tiltle {
+    width: 100%;
+    line-height: 32px;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 600;
+}
+.edit_pr_input {
+    width: 80%;
+    height: 80%;
+    margin: 40px auto;
+    background-color: white;
+    padding-top: 30px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 3px -2px rgba(191, 191, 191, 0.807);
+}
+.device_add {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    margin-top: 20px;
+}
+.edit_clas {
+    height: auto;
+    min-height: 60px;
+}
+.edt_item {
+    display: flex;
+}
+.edit_id {
+    opacity: .4;
+    padding-top: 5px;
+}
+.edt_des {
+    height: 100px;
+    padding: 5px;
+}
+.edt_label {
+    font-weight: 500;
+    font-size: 18px;
+    margin: 4px;
+}
+.color_btn {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgb(255, 247, 199);
+}
+.dialog_confirm {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.277);
+    display: flex;
+}
+.dialog_layout {
+    width: 500px;
+    height: 450px;
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+}
+.list_btn_pr {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.btn_sp {
+    width: 50px;
+    height: 22px;
+    font-size: 12px;
+    line-height: 22px;
+    text-align: center;
+    margin:3px 2px;
+    background-color: white;
+    border-radius: 11px;
+}
+.btn_del {
+    border: 1px solid rgb(255, 0, 0);
+    color: red;
+}
+.btn_views {
+    border: 1px solid rgb(0, 72, 255);
+    color: rgb(0, 72, 255);
+}
+.btn_edt {
+    border: 1px solid green;
+    color: green;
+}
+.btn_del:hover {
+    background-color: red;
+    color: white;
+}
+.btn_views:hover {
+    background-color: rgb(0, 72, 255);
+    color: white;
+}
+.btn_edt:hover {
+    background-color: green;
+    color: white;
+}
+.btn_cancel {
+    border: 1px solid orangered;
+    color: orangered;
+}
+.btn_cancel {
+    border: 1px solid orangered;
+    color: orangered;
+}
+.btn_save {
+    border: 1px solid rgb(177, 0, 177);
+    color: rgb(177, 0, 177);
+}
+.btn_cancel:hover {
+    background-color: orangered;
+    color: white;
+}
+.btn_save:hover {
+    background-color: rgb(177,0,177);
+    color: white;
+}
+.detail_val_sp {
+    display: none;
+    width: auto;
+    height: 100%;
+    position: absolute;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.234);
+    left: 10px;
+    top: 5px;
+    border-radius: 5px;
+    right: 10px;
+}
+.top_td_val {
+    position: absolute;
+    display: flex;
+    height: 30px;
+    right: 0px;
+    border-radius: 5px;
+    color: white;
+    font-size: 24px;
+    left: 0px;
+    top: 0px;
+    justify-content: space-between;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.635);
+}
+.icclose {
+    float: right;
+    padding-right: 10px;
+    line-height: 30px;
+    padding-top: 3px;
+}
+.txt_dt_titer {
+    height: 28px;
+    width: auto;
+    min-width: 100px;
+    padding: 0 10px;
+    font-size: 18px;
+    background-color: #fff;
+    color: black;
+    line-height: 28px;
+    width: auto;
+    text-align: center;
+    margin: auto;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+.icclose:hover {
+    color: rgb(0, 255, 251);
+}
+.detail_work_item {
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    overflow-y: scroll;
+    padding: 5px 10px;
+}
+.center {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.txt_lv2 {
+    font-size: 16px;
+    margin-top: 0px;
+    line-height: 20px;
+}
+.datban_view {
+    width: 100%;
+    height: 70%;
+    display: flex;
+}
+.box_color {
+    background-color: white;
+    border-radius: 4px;
+    margin: 5px;
+    height: 100%;
+}
+.btb_at_rw {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.list_table_rs {
+    width: 100%;
+    height: 435px;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.table_style {
+    top: 0;
+    margin: 5px;
+    height: 150px;
+    border-radius: 5px;
+    width: 174px;
+    border: .5px solid #ccc;
+    box-shadow: 1px 3px 3px #ccc;
+    border-radius: 3px;
+    box-shadow: 1px;
+    padding: 10px;
+}
+.txt_tbrs_tt {
+    line-height: 22px;
+    font-weight: 500;
+    font-size: 15px;
+}

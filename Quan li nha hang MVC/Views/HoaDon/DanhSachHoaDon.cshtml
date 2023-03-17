@@ -1,0 +1,368 @@
+﻿@{
+    ViewBag.Title = "DanhSachHoaDon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="detail_val_sp" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <i onclick="CloseViewDetali();" class="fa-solid fa-xmark icclose"> </i>
+    </div>
+    <div class="detail_work_item">
+        <div style="margin-bottom:50px;" class="form_oder">
+            <div class="formod_header">
+                <div class="edit_pr_tiltle">Hóa đơn Oder</div>
+                <div class="edt_item center">
+                    <div class="device_add">
+                        <div class="edit_pr_tiltle" style="font-size:18px">Thông tin hóa đơn</div>
+                        <div class="pr_item_work">
+                            <div class="pr_txt_lb text_left">Số hiệu hóa đơn</div>
+                            <div class="type_input flex_il">
+                                <input type="text" id="txtshhd" class="style_item_work " value="" readonly />
+                            </div>
+                        </div>
+                        <div class="pr_item_work">
+                            <div class="pr_txt_lb text_left">Ngày đặt</div>
+                            <div class="type_input flex_il">
+                                <input type="text" id="txtngayd" class="style_item_work " value="" readonly />
+                            </div>
+                        </div>
+                        <div class="pr_item_work">
+                            <div class="pr_txt_lb text_left">Ngày dao hàng</div>
+                            <div class="type_input flex_il">
+                                <input type="text" id="txtngayg" class="style_item_work " value="" />
+                            </div>
+                        </div>
+                        <div class="pr_item_work">
+                            <div class="pr_txt_lb text_left">Thành tiền</div>
+                            <div class="type_input flex_il">
+                                <input type="text" id="txttien" class="style_item_work " value="" readonly />
+                            </div>
+                        </div>
+                        <div class="pr_item_work">
+                            <div class="pr_txt_lb text_left">Tình trạng</div>
+                            <div class="type_input flex_il">
+                                <input type="text" id="txttinhtrang" class="style_item_work " value="" readonly />
+                            </div>
+                        </div>
+                        <div style="margin-left: 8px;" class="pr_txt_lb text_left">Người gọi</div>
+                        <div  style ="display:flex; " class="flex_list_it">
+                            <div class="pr_item_work">
+                                <div class="type_input flex_il">
+                                    <input type="text" id="txttenng" class="style_item_work " value="" readonly />
+                                </div>
+                            </div>
+                            <div class="pr_item_work">
+                                <div class="type_input flex_il">
+                                    <input type="text" id="txtchuvu" class="style_item_work " value="" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="edit_pr_tiltle"  style="font-size:18px">Thông tin mặt hàng</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:3px;" class="form_table">
+                <table  class="table">
+                    <thead>
+                        <tr style="background-color: rgb(251, 172, 1);color:white;">
+                            <th style="text-align:center;">STT</th>
+                            <th>Mã hàng</th>
+                            <th>Tên hàng</th>
+                            <th>Số lượng</th>
+                            <th>ĐVT</th>
+                            <th>Mức giá</th>
+                            <th>Loại hàng</th>
+                            <th>Nhà cung cấp</th>
+                            <th>Tiền</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listsp_detail">
+                    </tbody>
+                </table>
+                <div class="device_or">
+                    <div class="list_btn_pr" style="margin:auto 200px;">
+                        <div onclick="CloseViewDetali()" style="background-color: blue; color: white;" class="btn_all"> <i class="fa-solid fa-arrow-left"></i> Trở lại</div>
+                        <a href="~/HoaDon/TaoHoaDon" style="background-color:blue; color: white;" class="btn_all"> <i class="fa-solid fa-plus"></i> Tạo mới</a>
+                        <i class="fa-regular fa-list-dropdown"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="item_section_name">Quản lí hóa đơn</div>
+<div class="product_list_work">
+    <div class="product_list_work">
+        <div class="pro_fint" style="display:block;">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb ">Số hiệu hóa đơn</div>
+                <div class="class flex_il mr_right">
+                    <input oninput="TimHDTheoMa();" id="txtidfind" type="text" class="style_item_work" />
+                    <i class="fa-sharp fa-solid fa-magnifying-glass icsreach"></i>
+                </div>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ngày oder</div>
+                <div class="class flex_il mr_right">
+                    <input id="txtfnd" type="date" class="style_item_work" />
+                    <i onclick="TimNgay(1);" class="fa-sharp fa-solid fa-magnifying-glass icsreach"></i>
+                </div>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ngày giao</div>
+                <div class="class flex_il mr_right">
+                    <input id="txtfng"  type="date" class="style_item_work" />
+                    <i onclick="TimNgay(2);" class="fa-sharp fa-solid fa-magnifying-glass icsreach"></i>
+                </div>
+            </div>
+        </div>
+        <div class="pr_work_user">
+            <div class="device_or">
+                <div class="list_btn_pr">
+                    <div onclick="TatCaHoaDon();" style="background-color: green;" class="btn_all">
+                        <i class="fa-solid fa-arrows-rotate"></i> Tất cả
+                    </div>
+                    <a href="~/HoaDon/DanhSachHoaDon" style="background-color: black;" class="btn_all">
+                        <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+                    </a>
+                    <a style="background-color: orange;" class="btn_all"><i class="fa-solid fa-circle-down"></i> Đồng bộ</a>
+                </div>
+            </div>
+            <div class="device_or">
+                <div class="list_btn_pr">
+                    <a href="~/HoaDon/TaoHoaDon" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-plus"></i>Tạo hóa đơn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top:5px;margin-left:2px; width:99.8%;padding:3px;" class="form_table">
+    <table  class="table">
+        <thead>
+            <tr style="background-color: rgb(251, 172, 1);color:white;" >
+                <th style="width:80px;">STT</th>
+                <th>Số hiệu HĐ</th>
+                <th>Ngày tạo</th>
+                <th>Ngày giao</th>
+                <th>Tổng tiền</th>
+                <th>Người lập</th>
+                <th>Chức vụ</th>
+                <th>Tình trạng</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody id="itemlisthd">
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script>
+        var listhd = $.ajax({
+            url: "@Url.Action("ListHD", "HoaDon")",
+            method: "POST"
+         });
+        $(document).ready(function () {
+            TatCaHoaDon();
+        });
+        function XoaHD(id, tien) {
+            if (tien <= 0) {
+                window.location.href = '/HoaDon/XoaHoaDon?idhd=' + id;
+            }
+            else {
+                alert("Không thể xóa hóa đơn này")
+            }
+        }
+        function TatCaHoaDon() {
+            var html = "";
+            listhd.done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                   
+                    html +=DsHD(stt, obj);
+                });
+                html += `<tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`
+                $("#itemlisthd").html(html);
+            });
+        }
+        function TimHDTheoMa() {
+            var id = $("#txtidfind").val().toLocaleLowerCase();
+            listhd.done(function (response) {
+                var stt = 0;
+                var html = "";
+                $.each(response, function (e, obj) {
+                    if ([obj.SoHieuHD].toString().toLocaleLowerCase().includes(id))
+                    {
+                        stt++;
+                        html += html += DsHD(stt, obj);;
+                    }
+                });
+                $("#itemlisthd").html(html);
+            });
+        }
+        function FomatDate(value) {
+            var today = new Date(value);
+            var yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            return (dd + '/' + mm + '/' + yyyy);
+        }
+        function TimNgay(value) {
+            var ngay = "";
+            if (value == 1) {
+                ngay = FomatDate($("#txtfnd").val());
+                console.log(ngay);
+                listhd.done(function (response) {
+                    var stt = 0;
+                    var html = "";
+                    $.each(response, function (e, obj) {
+                        if ([obj.NgayDat].toString().slice(0, 10) == ngay) {
+                            stt++;
+                            html += html += DsHD(stt, obj);;
+                        }
+                    });
+                    $("#itemlisthd").html(html);
+                });
+            }
+            else {
+                ngay = FomatDate($("#txtfng").val());
+                
+                listhd.done(function (response) {
+                    var stt = 0;
+                    var html = "";
+                    $.each(response, function (e, obj) {
+                        if ([obj.NgayGiao].toString().slice(0, 10) == ngay) {
+                            stt++;
+                            html += DsHD(stt, obj);
+                        }
+                    });
+                    $("#itemlisthd").html(html);
+                });
+            }
+        }
+
+        function DsHD(stt, obj) {
+            var ds = "";
+            ds += `<tr style="border-top:none;border-bottom:1px solid #ddd;">
+                    <td style=" text-align: center;" >`+ stt + `</td>
+                    <td>`+ [obj.SoHieuHD] + `</td>
+                    <td>`+ [obj.NgayDat].toString().slice(0, 10) + `</td>
+                    <td>`+ [obj.NgayGiao].toString().slice(0, 10) + `</td>
+                    <td>`+ Number(obj.ThanhTien).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')  + `</td>
+                    <td>`+ [obj.TenNV] + `</td>
+                    <td>`+ [obj.TenChucVu] + `</td>
+                    <td class="center">`;
+                    if ([obj.DuyetHD] == 1) {
+                        ds += `<div class="btn_sp " style ="background-color:green; color:#fff; width:54px;" ><i class="fa-solid fa-check"></i>Duyệt</div>`;
+                    }
+                    else {
+                        ds += `<div style=" width:54px;" onclick = "DuyetHoaDon('` + [obj.SoHieuHD] + `');" class="btn_sp btn_del"><i class="fa-solid fa-check"></i>Duyệt</div >`;
+                    }
+                 ds += `</td>
+                             <td  style="border-top:none;" class="flex_il">
+                               <div style="margin:auto;" onclick="ChiTietHD('`+ [obj.SoHieuHD] + `','` + [obj.NgayDat].toString().slice(0, 10) + `','` + [obj.NgayGiao].toString().slice(0, 10) + `','` + [obj.TenNV] + `', '` + [obj.TenChucVu] + `', '` + [obj.ThanhTien] + `', '` + [obj.DuyetHD] + `')" class="btn_sp btn_views"> <i class="fa-solid fa-circle-info"></i> Xem</div>
+                               <div onclick="XoaHoaDon('`+ [obj.SoHieuHD] + `');" style="margin:auto;"  class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                    </td>
+                    </tr>`;
+            return ds;
+        }
+        function XoaHoaDon(value) {
+             var listht = $.ajax({
+                   url: "@Url.Action("XoaHoaDon", "HoaDon")",
+                 method: "POST",
+                 data: { idhd: value }
+             });
+            var html = "";
+            var err = "Error";
+            listht.done(function (response) {
+                
+                if (response.toString().toLowerCase().includes(err.toString().toLowerCase())) {
+                    alert(response);
+                } else {
+                    var stt = 0;
+                    $.each(response, function (e, obj) {
+                        stt++;
+
+                        html += html += DsHD(stt, obj);
+                    });
+                    $("#itemlisthd").html(html);
+                }
+            });
+        }
+        function DuyetHoaDon(id) {
+            window.location.href = '/HoaDon/DuyetHoaDon?idhd=' + id;
+        }
+
+      
+        function ChiTietHD(id, ngaydat, ngaydao, tennv, chucvu, tien, duyet) {
+                var tt = "";
+                if (duyet == 1) {
+                        tt = "Đã duyệt";
+                } else {
+                        tt = "Chưa duyệt";
+               }
+               $("#txt_title_detail").html("Hóa đơn Oder ngày: " + ngaydat);
+                $("#txtshhd").val(id);
+                $("#txtngayd").val(ngaydat);
+               $("#txtngayg").val(ngaydao);
+                $("#txttien").val(Number(tien).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                $("#txttinhtrang").val(tt);
+                $("#txttenng").val(tennv);
+                $("#txtchuvu").val(chucvu);
+                $("#detail_val_sp").css("display", "block");
+                var html = "";
+               var listht = $.ajax({
+                   url: "@Url.Action("ChiTietHD", "HoaDon")",
+                   method: "POST",
+                   data: { idhd: id }
+                });
+               listht.done(function (response) {
+                    var stt = 0;
+                   $.each(response, function (e, obj) {
+                      
+                        stt++;
+                        var tt = "";
+                        if ([obj.DuyetH] == 1)
+                        {
+                            tt = "Đã duyệt";
+                        } else {
+                            tt = "Chưa duyệt";
+                        }
+                        html += `<tr >
+                                    <td style="text-align:center;" >`+ stt +`</td>
+                                    <td>
+                                        ` + [obj.ID_Hang] + `
+                                    </td>
+                                    <td>
+                                       ` + [obj.TenHang] + `
+                                    </td>
+                                    <td style="align-items: center;">
+                                       ` + [obj.SoLuong] + `
+                                    </td>
+                                    <td style="align-items: center;">
+                                       ` + [obj.DonViTon] + `
+                                    </td>
+                                    <td>
+                                       ` + [obj.MucGia] + `
+                                    </td>
+                                    <td>
+                                       ` + [obj.TenLoai] + `
+                                    </td>
+                                    <td>
+                                       ` + [obj.TenNCC] + `
+                                    </td>
+                                    <td>
+                                       ` + Number(obj.SoLuong * obj.MucGia).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + `
+                                    </td>
+                                   <td >`+tt+`</td>
+                                </tr>`;
+                   });
+                   html += `<tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> <td></td></tr>`
+                    $("#listsp_detail").html(html);
+                });
+           }
+    </script>
+}

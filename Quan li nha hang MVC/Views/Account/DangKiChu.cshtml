@@ -1,0 +1,133 @@
+﻿
+
+@{
+    ViewBag.Title = "PhanQuyenNhanVien";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="~/Content/css/dangkidangnhap.css" />
+    <link rel="stylesheet" href="~/Content/fontawesome-free-6.2.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div style="" class="main">
+        <div action="~/Account/XacNhanDangKi" id="form_signin" style="display:flex;width:850px;" class="form_signin" role="form">
+            <div style="display:flex;align-items:center;" class="device">
+                <img style="width:45%;border-radius:50%;margin:auto;" src="~/Content/img/img_avatar.png" />
+            </div>
+            <div class="device">
+                <p class="info_title">Đăng kí tài khoản mới</p>
+                <div class="info_user">
+                    <p class="info_user_title">Tên quản lí</p>
+                    <input type="text" id="tenql" name="tenql" class="form_user_input">
+                </div>
+                <div id="pass_res" class="info_user ">
+                    <p class="info_user_title">Tên nhà hàng</p>
+                    <input name="tennh" id="tennh" type="text" class="form_user_input">
+                </div>
+                <div class="info_user">
+                    <p class="info_user_title">Số điện thoại</p>
+                    <input type="text" id="sodt" name="sodt" class="form_user_input">
+                </div>
+                <div id="pass_res" class="info_user ">
+                    <p class="info_user_title">Email</p>
+                    <input name="email" id="email" type="email" class="form_user_input">
+                </div>
+
+                <div class="info_user">
+                    <p class="info_user_title">Mật khẩu</p>
+                    <input type="password" id="passw" name="pass" class="form_user_input">
+                </div>
+
+                <div class="info_usershowpass">
+                    <input id="check_showpassREG" onclick="ShowPassReg()" type="checkbox" class="showpasscb">
+                    <p class="showpasstt">Hiện mật khẩu</p>
+                </div>
+                <div class="sub_btn">
+                    <a onclick="DangKiTK();" type="submit" class="btn_signup">Đăng kí</a>
+                    <a href="~/Account/DangNhapAD" class="btn_signup">Đăng nhập</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="~/Content/js/alter1.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/js/account.js"></script>
+
+    <script>
+
+
+        function CheckTK(ten, tenh, sodt, email, pass) {
+            if (ten == "") {
+                $("#tenql").focus();
+                $("#tenql").css("border", "red solid 1px");
+                return false;
+            }
+
+            if (tenh == "") {
+                $("#tennh").focus();
+                $("#tennh").css("border", "red solid 1px");
+                return false;
+            }
+            if (ten == "") {
+                $("#sodt").focus();
+                $("#sodt").css("border", "red solid 1px");
+                return false;
+            }
+            if (ten == "") {
+                $("#email").focus();
+                $("#email").css("border", "red solid 1px");
+                return false;
+            }
+            if (ten == "") {
+                $("#passw").focus();
+                $("#passw").css("border", "red solid 1px");
+                return false;
+            }
+            return true;
+        }
+
+        function DangKiTK() {
+
+            var tenql = $("#tenql").val();
+            var tennh = $("#tennh").val();
+            var sodt = $("#sodt").val();
+            var email = $("#email").val();
+            var pass = $("#passw").val();
+
+            if (CheckTK(tenql, tennh, sodt, email, pass) == true) {
+                $.ajax({
+                    url: "@Url.Action("XacNhanDangKi", "Account")",
+                    method: "POST",
+                    data: { tenql: tenql, tennh: tennh, sodt: sodt, email: email, pass: pass }
+                }).done(function (response) {
+                
+                    if (response == '1') {
+                        alert("Đăng kí thành công! ");
+                        window.location.href = "/Home/Index";
+                    }
+                    else {
+                        alert(response,"Thông báo");
+                    }
+                });
+            }
+
+        }
+
+
+    </script>
+
+</body>
+</html>

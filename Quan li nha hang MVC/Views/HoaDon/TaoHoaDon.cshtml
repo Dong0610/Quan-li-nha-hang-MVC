@@ -1,0 +1,627 @@
+﻿@{
+    ViewBag.Title = "TaoHoaDon";
+}
+<div class="form_oder">
+    <div class="formod_header">
+        <div class="edit_pr_tiltle">Tạo hóa đơn gọi hàng</div>
+        <div class="edt_item">
+            <div class="device_add">
+                <div class="edit_pr_tiltle txt_lv2">Thông tin hóa đơn </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Số hiệu hóa đơn</div>
+                    <div class="type_input flex_il">
+                        <input type="text" id="txtidhang" class="style_item_work " value="" readonly />
+                    </div>
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Ngày đặt</div>
+                    <div class="type_input flex_il">
+                        <input type="text" id="txttoday" class="style_item_work " readonly />
+                    </div>
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Ngày dao</div>
+                    <div class="type_input flex_il">
+                        <input type="date" id="txtnxday" class="style_item_work " />
+                    </div>
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Người gọi</div>
+                    <div class="type_input flex_il">
+                        <input type="text" name="idhang" class="style_item_work " value="cnh.TenQL" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="device_add">
+                <div class="edit_pr_tiltle txt_lv2">Thông tin mặt hàng</div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Loại hàng</div>
+                    <input type="text" id="txtlh" readonly class="style_item_work" />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Nhà cung cấp</div>
+                    <input type="text" id="txtncc" readonly class="style_item_work" />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Sản phẩm oder</div>
+                    <input onfocus="ShowList();" oninput="FindData();" id="txt_name_sp" type="text" autocomplete="off" class="txt_name_sp style_item_work" />
+                    <ul style="overflow-x:hidden;" id="list_sp_show" class="list_sp_show">
+                    </ul>
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Số lượng</div>
+                    <div class="type_input flex_il">
+                        <input type="text" id="soluonghang" class="style_item_work" autocomplete="off" style="width: 200px;" placeholder="0" />
+                        <a onclick="AddDataToList();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-plus"></i> Thêm </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding:3px;" class="form_table" id="itemlist">
+        <table class="table">
+            <thead>
+                <tr style="background-color: rgb(251, 172, 1);color:white;">
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Tên hàng
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th>
+                        ĐVT
+                    </th>
+                    <th>
+                        Giá
+                    </th>
+                    <th>
+                        Loại hàng
+                    </th>
+                    <th>
+                        NCC
+                    </th>
+                    <th>
+                        Thành tiền
+                    </th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody id="listhang">
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td style="color:transparent">Note</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="device_or">
+        <div class="list_btn_pr">
+            <div onclick="LuuHoaDonDaTao();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+            <a href="/HoaDon/HuyHoaDon" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-xmark"></i>  Hủy</a>
+            <a href="/HoaDon/DanhSachHoaDon" style="background-color: blue;" class="btn_all"><i class="fa-solid fa-list"></i>  Danh sách</a>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+      var request = $.ajax({
+            url: "@Url.Action("GetListAll", "HoaDon")",
+            method: "POST"
+         });
+
+        function FindData() {
+            $("#list_sp_show").css("display", "block");
+            var txt_find = $("#txt_name_sp").val();
+            var html = "";
+            request.done(function (response) {
+                $.each(response, function (e, obj) {
+                    if (txt_find == "") {
+                        html += `<li onclick="MatHang('` + [obj.ID_Hang] + `', '` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `', '`
+                            + [obj.TenLoai] + `','` + [obj.TenNCC] + `')" class="list_sp_item_show">` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `</li>`;
+                        $("#list_sp_show").html(html);
+                    }
+                    if ([obj.ID_Hang].toString().toLocaleLowerCase().includes(txt_find.toLocaleLowerCase()) || [obj.TenHang].toString().toLocaleLowerCase().includes(txt_find.toLocaleLowerCase())) {
+                        html += `<li onclick="MatHang('` + [obj.ID_Hang] + `', '` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `', '`
+                            + [obj.TenLoai] + `','` + [obj.TenNCC] + `')" class="list_sp_item_show">` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `</li>`;
+                        $("#list_sp_show").html(html);
+                    }
+                });
+            });
+        }
+        $("#list_sp_show").mouseleave(function () {
+            $("#list_sp_show").css("display", "none");
+        });
+        function RandomID() {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var string_length = 4;
+            var randomstring = '';
+            for (var i = 0; i < string_length; i++) {
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum, rnum + 1);
+            }
+            var date = new Date();
+            var day = date.getDate();
+            var mont = date.getMonth();
+            var year = date.getFullYear();
+            if (day.toString().length == 1) {
+                day = "0" + day;
+            }
+            if (mont.toString().length == 1) {
+                mont = "0" + (mont+1);
+            }
+            var dateid = day + mont + year;
+            return "HD" + dateid + randomstring;
+        }
+        var idhang = "";
+        function AddDataToList() {
+            var tblMatHang = {}
+            tblMatHang.Id_Hang = idhang;
+            tblMatHang.SoLuong = $("#soluonghang").val();
+            tblMatHang.ID_LoaiH = $("#txtncc").val();
+            tblMatHang.ID_NCC = $("#txtlh").val();
+            if ($("#soluonghang").val() == 0 || $("#soluonghang").val().length == 0) {
+                alert("Nhập số lượng hàng");
+                $("#soluonghang").focus();
+                $("#soluonghang").css("border-color","red");
+            }
+            else {
+              var request = $.ajax({
+            url: "@Url.Action("AddData", "HoaDon")",
+                  method: "POST",
+                  data: { model: tblMatHang }
+              });
+            request.done(function (response) {
+                var html = "";
+                
+                $.each(response, function (e, obj) {
+                    html += `<tr >
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] + `
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex; border-top:none;border-bottom:1px solid #ddd;">
+                                 <div onclick="SuaSoLuongH('`+ [obj.ID_Hang] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                 <div onclick="XoaSanPham('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                            </td>`;
+                });
+                html += `<tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`
+                idhang = "";
+                $("#txt_name_sp").val("");
+                $("#soluonghang").val("");
+                $("#txtlh").val("");
+                $("#txtncc").val("");
+                $("#soluonghang").css("border-color", "black");
+                $("#listhang").html(html);
+            });
+         }
+        }
+        function XoaSanPham(value) {
+             var requests = $.ajax({
+            url: "@Url.Action("XoaSanPham", "HoaDon")",
+                 method: "POST",
+                 data: { id: value }
+             });
+            requests.done(function (response) {
+                var html = `
+                <table  class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên hàng
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                ĐVT
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Loại hàng
+                            </th>
+                            <th>
+                                NCC
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                $.each(response, function (e, obj) {
+                    html += `<tr >
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] + `
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex;">
+                                 <div onclick="SuaSoLuongH('`+ [obj.ID_Hang] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                 <div onclick="XoaSanPham('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                            </td>`
+                });
+                html += `</tbody>
+                </table>`
+                $("#itemlist").html(html);
+            });
+        }
+        function SuaSoLuongH(value) {
+              var requests = $.ajax({
+            url: "@Url.Action("GetListSua", "HoaDon")",
+            method: "POST"});
+            requests.done(function (response) {
+                var html = `
+                <table  class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên hàng
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                ĐVT
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Loại hàng
+                            </th>
+                            <th>
+                                NCC
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                $.each(response, function (e, obj) {
+                    if ([obj.ID_Hang] == value) {
+                        html += `<tr>
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                               <input style="width:80px;" id="txtslsua" type="text"  value="`+ [obj.SoLuong] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex;">
+                                 <div onclick="LuuMHSua('`+ [obj.ID_Hang] + `');" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                                <div onclick="TatCaMh();" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                            </td>`
+                    }
+                    else {
+                        html += `<tr>
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] + `
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex;">
+                                 <div onclick="SuaSoLuongH('` + [obj.ID_Hang] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                 <div onclick="XoaSanPham('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                            </td>`
+                    }
+                });
+                html += `</tbody>
+                </table>`;
+                $("#txt_name_sp").val("");
+                $("#soluonghang").val("");
+                $("#txtlh").val("");
+                $("#txtncc").val("");
+                $("#itemlist").html(html);
+            });
+        }
+        function TatCaMh() {
+             var requests = $.ajax({
+            url: "@Url.Action("GetListSua", "HoaDon")",
+            method: "POST"
+             });
+            requests.done(function (response) {
+                var html = `
+                <table  class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên hàng
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                ĐVT
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Loại hàng
+                            </th>
+                            <th>
+                                NCC
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                $.each(response, function (e, obj) {
+                    html += `<tr >
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] + `
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex;">
+                                 <div onclick="SuaSoLuongH('`+[obj.ID_Hang]+`');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                 <div onclick="XoaSanPham('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                            </td>`
+                });
+                html += `</tbody>
+                </table>`
+                $("#itemlist").html(html);
+            });
+        }
+        $(document).ready(function () {
+            LoadHoaDon();
+        });
+        function LoadHoaDon() {
+            $("#txtidhang").val(RandomID());
+            var nextday = new Date(new Date().setDate(new Date().getDate() + 1));
+            $("#txtnxday").val(nextday.toISOString().substring(0, 10));
+            $("#txttoday").val((new Date()).toISOString().substring(0, 10));
+            var html = "";
+            request.done(function (response) {
+                $.each(response, function (e, obj) {
+                    html += `<li onclick="MatHang('` + [obj.ID_Hang] + `', '` + [obj.ID_Hang] + ` - ` + [obj.TenHang]  + `', '`
+                        + [obj.TenLoai] + `','` +[obj.TenNCC] + `')" class="list_sp_item_show">` +[obj.ID_Hang] + ` - ` + [obj.TenHang]  + `</li>`;
+                });
+                $("#list_sp_show").html(html);
+            });
+        }
+        function LuuMHSua(value) {
+            var soluong = $("#txtslsua").val();
+           
+             var requests = $.ajax({
+            url: "@Url.Action("SuaData", "HoaDon")",
+                 method: "POST",
+                 data: { id: value, sol: soluong}
+             });
+            requests.done(function (response) {
+               
+                var html = `
+                <table  class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên hàng
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                ĐVT
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Loại hàng
+                            </th>
+                            <th>
+                                NCC
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                $.each(response, function (e, obj) {
+                    html += `<tr >
+                            <td>
+                                ` + [obj.ID_Hang] + `
+                            </td>
+                            <td>
+                                ` + [obj.TenHang] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] + `
+                            </td>
+                            <td>
+                               ` + [obj.DonViTon] + `
+                            </td>
+                            <td>
+                                ` + [obj.MucGia] + `
+                            </td>
+                            <td>
+                                ` + [obj.ID_LoaiH] + `
+                            </td>
+                            <td>
+                               ` + [obj.ID_NCC] + `
+                            </td>
+                            <td>
+                                ` + [obj.SoLuong] * [obj.MucGia] + `
+                            </td>
+                            <td style="display:flex;">
+                                 <div onclick="SuaSoLuongH('`+[obj.ID_Hang]+`');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                 <div onclick="XoaSanPham('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                            </td>`
+                });
+                html += `</tbody>
+                </table>`
+                $("#itemlist").html(html);
+            });
+        }
+        function MatHang(value, text, loai, ncc) {
+            $("#list_sp_show").css("display", "none");
+            $("#list_sp_show").hide();
+            $("#txt_name_sp").val(text);
+            $("#txtlh").val(loai);
+            $("#txtncc").val(ncc);
+            $("#soluonghang").focus();
+            idhang = value;
+        }
+        function FormatDate(dates) {
+            var date = dates.toString();
+            var year = date.substring(0, 4);
+            var month = date.substring(5, 7);
+            var day = date.substring(8, 10);
+            return day + "/" + month + "/" + year;
+        }
+        function LuuHoaDonDaTao() {
+            var tblHDNhapHang = {}
+           
+            tblHDNhapHang.SoHieuHD = $("#txtidhang").val();
+            tblHDNhapHang.NgayDat = FormatDate($("#txttoday").val());
+            tblHDNhapHang.NgayDao = FormatDate($("#txtnxday").val());
+            $.ajax({
+                url: "@Url.Action("LuuLaiHoaDon", "HoaDon")",
+                method: "POST",
+                data: { model: tblHDNhapHang }
+            }).done(function (respon) {
+                if (respon == "Success") {
+                    alert("Tạo hóa đơn thành công");
+                    window.location.href="/HoaDon/DanhSachHoaDon"
+                }
+                else {
+                    alert("Đã xảy ra lỗi. Hãy thử lại sau!");
+                }
+            });
+        }
+    </script>
+}

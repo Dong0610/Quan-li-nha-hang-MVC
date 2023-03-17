@@ -1,0 +1,306 @@
+﻿.detail_val_sp {
+    display: none;
+    width: auto;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.234);
+    left: 10px;
+    top: 5px;
+    border-radius: 5px;
+    right: 10px;
+}
+.top_td_val {
+    position: absolute;
+    display: flex;
+    height: 30px;
+    right: 0px;
+    border-radius: 5px;
+    color: white;
+    font-size: 24px;
+    left: 0px;
+    top: 0px;
+    justify-content: space-between;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.635);
+}
+.icclose {
+    float: right;
+    padding-right: 10px;
+    line-height: 30px;
+    padding-top: 3px;
+}
+.txt_dt_titer {
+    height: 28px;
+    width: auto;
+    min-width: 100px;
+    padding: 0 10px;
+    font-size: 18px;
+    background-color: #fff;
+    color: black;
+    line-height: 28px;
+    width: auto;
+    text-align: center;
+    margin: auto;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+.icclose:hover {
+    color: rgb(0, 255, 251);
+}
+.detail_work_item {
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    overflow-y: scroll;
+    padding: 5px 10px;
+}
+.center {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.txt_lv2 {
+    font-size: 16px;
+    margin-top: 0px;
+    line-height: 20px;
+}
+.datban_view {
+    width: 100%;
+    height: 70%;
+    display: flex;
+}
+.box_color {
+    background-color: white;
+    border-radius: 4px;
+    margin: 5px;
+    height: 100%;
+}
+.btb_at_rw {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.list_table_rs {
+    width: 100%;
+    height: 435px;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.table_style {
+    top: 0;
+    margin: 5px;
+    height: 150px;
+    border-radius: 5px;
+    width: 174px;
+    border: .5px solid #ccc;
+    box-shadow: 1px 3px 3px #ccc;
+    border-radius: 3px;
+    box-shadow: 1px;
+    padding: 10px;
+}
+.txt_tbrs_tt {
+    line-height: 22px;
+    font-weight: 500;
+    font-size: 15px;
+}
+.btn_choose {
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    margin: auto 3px;
+}
+    .btn_choose:hover {
+        background-color: rgb(0, 0, 0);
+        color: #ffffff;
+    }
+.list_table_rs {
+    width: 100%;
+    height: 435px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.table_style_view {
+    margin: 5px;
+    height: 220px;
+    border-radius: 8px;
+    width: 174px;
+    border: .5px solid rgb(182, 181, 181);
+    box-shadow: 1px 3px 3px #ccc;
+}
+.table_tiltle {
+    width: 100%;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #ccc;
+}
+.tablers_container {
+    padding: 3px;
+    position: relative;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 159px;
+}
+.tablers_container_top {
+    height: 92px;
+    border-radius: 3px;
+}
+.ctn_detail {
+    margin-top: 4px;
+    font-size: 14px;
+}
+.table_bottom {
+    position: relative;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: auto;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    text-align: end;
+    right: 0;
+    height: 32px;
+    background-color: #2e21512d;
+}
+.is_val_table {
+    width: 80%;
+    height: 55px;
+    margin: 10px;
+    background-color: #2e2151;
+    border-radius: 4px;
+}
+.inputfile-box {
+    position: relative;
+}
+.container {
+    display: flex;
+    width: 140px;
+    height: 28px;
+}
+.file-box {
+    display: flex;
+    border: 1px solid;
+    padding-right: 30px;
+    padding: 5px 0px 5px 5px;
+    box-sizing: border-box;
+    height: 30px;
+}
+.file-button {
+    height: 28px;
+    background: blue;
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: white;
+    position: absolute;
+    top: 2px;
+    right: 0px;
+}
+.read_file_excel {
+    border-radius: 3px;
+    width: 80%;
+    height: auto !important;
+    min-height: 800px;
+    background-color: white;
+    margin: auto;
+    padding: 20px 10px;
+}
+.read_excel_title {
+    width: 100%;
+    line-height: 32px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+.buffet_view {
+    background-color: white;
+    border-radius: 5px;
+    width: 24%;
+    height: 275px;
+    margin: 5px 6.6px;
+}
+.list_buff_stl {
+    overflow-y: scroll;
+    justify-content: flex-start;
+    height: 94%;
+    background-color: rgba(0, 0, 0, 0.756);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 5px;
+}
+.img_buffet {
+    border-radius: 50%;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: -30px;
+}
+.buffet_name {
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+.cb_use_buffet {
+    position: static;
+    width: 24px;
+    margin-top: 5px;
+    margin-left: 285px;
+}
+.stop {
+    opacity: .8;
+}
+.btn_all:hover {
+    background-color: rgb(2, 196, 2);
+}
+.list_bf_view_od {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    background-color: rgb(236, 255, 255);
+    padding: 5px;
+    border: .6px solid #ccc;
+}
+.bf_view_od {
+    height: 90%;
+    margin: auto 5px;
+    border-radius: 50%;
+}
+.name_oder_food {
+    width: 100%;
+    font-weight: 600;
+    font-size: 15px;
+}
+.ic_updown {
+    width: 32px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background-color: rgb(125, 125, 125);
+    color: white;
+    margin: auto 3px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 20px;
+    align-items: center;
+    padding: 2px;
+    font-size: 15px;
+}
+    .ic_updown:hover {
+        color: white;
+        background-color: black;
+    }

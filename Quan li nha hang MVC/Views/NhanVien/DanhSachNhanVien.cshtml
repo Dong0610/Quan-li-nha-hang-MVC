@@ -1,0 +1,409 @@
+﻿
+@{
+    ViewBag.Title = "DanhMucSanPham";
+    IEnumerable<Quan_li_nha_hang_MVC.Models.tblChucVu> dscv = ViewData["chucvu"] as IEnumerable<Quan_li_nha_hang_MVC.Models.tblChucVu>;
+}
+<div style="height:130px;" class="product_list_work">
+    <div class="pro_fint">
+        <div class="device">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Chức vụ</div>
+                <select id="cbncc" onchange="MatHangTheoNCC();" class="style_item_work">
+                    <option value="Tất cả">Tất cả</option>
+                    @foreach (Quan_li_nha_hang_MVC.Models.tblChucVu cv in dscv)
+                    {
+                        <option value="@cv.ID_ChucVu">@cv.TenChucVu</option>
+                    }
+                </select>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tên nhân viên</div>
+                <input oninput="LoaiTonHang();" id="txtlton" type="text" class="style_item_work" />
+            </div>
+
+        </div>
+        <div class="device">
+            <div class="flex_il">
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Giới tính</div>
+                    <select type="text" class="style_item_work">
+                        <option value="all">Tất cả</option>
+                        <option value="all">Nam</option>
+                        <option value="all">Nữ</option>
+                    </select>
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Tình trạng làm việc</div>
+                    <select id="cblh" onchange="MatHangTheoLH();" class="style_item_work">
+                        <option value="Tất cả">Tất cả</option>
+                        <option value="Tất cả">Đã nghỉ việc</option>
+                        <option value="Tất cả">Đang làm việc</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="pr_work_user">
+        <div class="device_or">
+            <div class="list_btn_pr">
+                <div onclick="TatCaNhanVienTNH();" class="btn_all"> <i class="fa-solid fa-file-export"></i>Tất cả</div>
+                <a href="~/SanPham/DanhMucSanPham" style="background-color: black; text-decoration: none" class="btn_all"> <i class="fa-solid fa-arrows-rotate"></i> Làm mới</a>
+                <a style="background-color: orange;" class="btn_all"><i class="fa-solid fa-circle-down"></i> Đồng bộ</a>
+                <a href="@Url.Action("ExportExcel","SanPham")" class="btn_all"> <i class="fa-solid fa-file-export"></i> Xuất Excel</a>
+            </div>
+        </div>
+        <div class="device_or">
+            <div class="list_btn_pr">
+                <div onclick="ThemMoiNhanVien()" style="background-color: blue; text-decoration:none" class="btn_all"> <i class="fa-solid fa-plus"></i> Thêm mới</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top:5px;margin-left:2px; width:99.8%;padding:3px;" class="form_table">
+    <table class="table">
+        <thead>
+            <tr style="background-color: rgb(251, 172, 1);color:white;">
+                <th style="width:80px;text-align:center;">STT</th>
+                <th style="text-align:center;">Mã NV</th>
+                <th>Tên nhân viên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Số căn cước</th>
+                <th>Số điện thoại</th>
+                <th>Quê quán</th>
+                <th>Sức khỏe</th>
+                <th>Ngày vào làm</th>
+                <th>Chức vụ</th>
+                <th>Ghi chú</th>
+                <th>Phân quyền</th>
+            </tr>
+        </thead>
+        <tbody id="listnhanvien">
+        </tbody>
+    </table>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            TatCaNhanVien();
+        });
+        function ThemMoiNhanVien() {
+             $.ajax({
+                url: "@Url.Action("DanhSachNVDL", "NhanVien")",
+                method: "POST"
+             })
+             .done(function (response) {
+                var stt = 0;
+                var html= `<tr style="background-color:#bec3c7;" >
+                        <td  style="text-align:center;">0</td>
+                    <td> <input id="txttennv" type="text" readonly placeholder="Auto" class="style_item_work" /></td>
+                    <td>
+                        <input id="txttennvs" type="text"   class="style_item_work" />
+                    </td>
+                    <td>
+                        <input id="txtngaysinhs" type="text"   class="style_item_work" />
+                    </td>
+                    <td id="txtsls">
+                        <select style="width:130px;" id="txtgt" class="style_item_work">
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input style="width:110px;" id="txtsoccs" type="text"  class="style_item_work" />
+                    </td>
+                    <td>
+                        <input style="width:110px;" id="txtsodts" type="text"   class="style_item_work" />
+                    </td>
+                    <td>
+                        <input id="txtquequans" type="text"   class="style_item_work" />
+                    </td>
+                    <td>
+                        <input  style="width:90px;"  id="txtsucks" type="text" class="style_item_work" />
+                    </td>
+                    <td>
+                        <input id="txtngayvaos" type="text"  class="style_item_work" />
+                    </td>
+
+                    <td>
+                        <select style="width:130px;" id="txtchucvs" class="style_item_work">
+                        @foreach (Quan_li_nha_hang_MVC.Models.tblChucVu cv in dscv)
+                        {
+                            <option value="@cv.ID_ChucVu">@cv.TenChucVu</option>
+                        }
+                        </select>
+                    </td>
+                    <td style="display:flex;">
+                        <div onclick="LuuMoiNhanVien();" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                        <div onclick="TatCaNhanVien();" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                    </td>
+                    </tr>`;
+                 $.each(response, function (e, obj) {
+                     stt++;
+                     html += DanhSachNV(stt, obj);
+                 });
+                 $("#listnhanvien").html(html);
+             });
+        }
+
+        function LuuMoiNhanVien() {
+            var tennv = $("#txttennvs").val();
+            var ngaynv = $("#txtngaysinhs").val();
+            var socc = $("#txtsoccs").val();
+            var sodt = $("#txtsodts").val();
+            var queq = $("#txtquequans").val();
+            var suck = $("#txtsucks").val();
+            var ngaylm = $("#txtngayvaos").val();
+            var gt = $("#txtgt").val();
+            var chucvu = $("#txtchucvs").val();
+             $.ajax({
+                 url: '@Url.Action("LuuMoiNhanVien", "NhanVien")',
+                 data: { name: tennv, birth: ngaynv, gt: gt, cc: socc, dt: sodt, qq: queq, sk: suck, nl: ngaylm, cv: chucvu },
+                type: 'Post',
+            }).done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                TatCaNhanVien();
+            });
+        }
+
+        function TatCaNhanVienTNH() {
+            $.ajax({
+                url: "@Url.Action("TatCaNhanVien", "Account")",
+                method: "POST"
+            }).done(function (response) {
+                var stt = 0;
+                var html = "";
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += DanhSachNV(stt, obj);
+                });
+                $("#listnhanvien").html(html);
+
+            });
+        }
+
+        function TatCaNhanVien() {
+
+            $.ajax({
+                url: "@Url.Action("DanhSachNVDL", "NhanVien")",
+                method: "POST"
+            }).done(function (response) {
+                var stt = 0;
+                var html = "";
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += DanhSachNV(stt, obj);
+                });
+                $("#listnhanvien").html(html);
+
+            });
+
+        }
+        function DanhSachNV(stt, obj) {
+            var gt = "";
+            if (obj.GioiTinh == 0) {
+                gt = "Nữ";
+            }
+            else {
+                gt = "Nam";
+            }
+            return `<tr style="border-top:none;border-bottom:1px solid #ddd;" >
+                 <td  style="text-align:center;">
+                    ` + stt+ `
+                </td>
+                <td  style="text-align:center;">
+                    ` + obj.ID_NhanVien + `
+                </td>
+                <td>
+                   ` + [obj.TenNV] + `
+                </td>
+                <td>
+                   ` + [obj.NgaySinh] + `
+                </td>
+                <td>
+                   ` + gt + `
+                </td>
+                <td>
+                   ` + [obj.IDCanCuoc] + `
+                </td>
+                <td>
+                   ` + [obj.SoDT] + `
+                </td>
+                <td>
+                   ` + [obj.QueQuan] + `
+                </td>
+                <td>
+                   ` + [obj.TinhTrangSK] + `
+                </td>
+                <td>
+                   ` + [obj.NgayVaoLam] + `
+                </td>
+                <td>
+                   ` + [obj.TenChucVu] + `
+                </td>
+               <td style="border:none;display:flex;">
+                  <div onclick="SuaThongTin('` + [obj.ID_NhanVien] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                  <div  class="btn_sp btn_views"> <i class="fa-solid fa-circle-info"></i> Xem</div>
+                  <div onclick="XoaNhanVien('` + [obj.ID_NhanVien] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                </td>
+                 <td>
+                     <div onclick="PhanQuyenNV('` + [obj.ID_NhanVien] + `')" style="width:60px;"  class="btn_sp btn_save"> <i class="fa-solid fa-gear"></i> Quyền</div>
+                </td>
+            </tr>`;
+        }
+        
+        function XoaNhanVien(id) {
+            $.ajax({
+                url: "@Url.Action("XoaNhanVien", "NhanVien")",
+                method: "POST",
+                data: {manv:id}
+            }).done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                TatCaNhanVien();
+            });
+        }
+
+        function PhanQuyenNV(id) {
+            window.location.href = "/NhanVien/PhanQuyenNhanVien?idnv=" + id;
+        }
+
+        function SuaThongTin(value) {
+
+             $.ajax({
+                url: "@Url.Action("DanhSachNVDL", "NhanVien")",
+                method: "POST"
+             })
+                 .done(function (response) {
+
+                 var html = "";
+                 var stt = 0;
+                 $.each(response, function (e, obj) {
+                     stt++;
+                     var gt = "";
+                     if (obj.GioiTinh == 0) {
+                         gt = "Nữ";
+                     }
+                     else {
+                         gt = "Nam";
+                     }
+
+                     if (obj.ID_NhanVien == value) {
+
+                         html += `<tr  style="background-color:#bec3c7;" >
+                              <td  style="text-align:center;">0</td>
+                            <td>
+                              `+ [obj.ID_NhanVien] + `
+                            </td>
+                            <td>
+                             <input id="txttennv" type="text"  value="`+ [obj.TenNV] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                              <input id="txtngaysinh" type="text"  value="`+ [obj.NgaySinh] + `" class="style_item_work" />
+                            </td>
+                            <td id="txtsls">
+                              `+gt + `
+                            </td>
+                            <td>
+                               <input style="width:110px;" id="txtsocc" type="text"  value="`+ [obj.IDCanCuoc] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                               <input style="width:110px;" id="txtsodt" type="text"  value="`+ [obj.SoDT] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                              <input id="txtquequan" type="text"  value="`+ [obj.QueQuan] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                              <input  style="width:90px;"  id="txtsuck" type="text"  value="`+ [obj.TinhTrangSK] + `" class="style_item_work" />
+                            </td>
+                            <td>
+                              <input id="txtngayvao" type="text"  value="`+ [obj.NgayVaoLam] + `" class="style_item_work" />
+                            </td>
+
+                            <td>
+                             <select style="width:130px;" id="txtchucv" class="style_item_work">
+                               @foreach (Quan_li_nha_hang_MVC.Models.tblChucVu cv in dscv)
+                                {
+                                    <option value="@cv.ID_ChucVu">@cv.TenChucVu</option>
+                                }
+                              </select>
+                            </td>
+                            <td style="display:flex;">
+                                <div onclick="LuuSuaThongTin('`+ [obj.ID_NhanVien] + `');" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                                <div onclick="TatCaNhanVien();" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                            </td>
+                           
+                    </tr>`;
+                     } else {
+
+                         html += DanhSachNV(stt, obj);
+                     }
+                 });
+
+                     $("#listnhanvien").html(html);
+             });
+        }
+        function LuuSanPhamMoi() {
+            var tblMatHang = {};
+            tblMatHang.ID_Hang = $("#txtmah").val();
+            tblMatHang.TenHang = $("#txttenhm").val();
+            tblMatHang.MoTa = $("#txtmota").val();
+            tblMatHang.DonViTon = $("#txtloaiton").val();
+            tblMatHang.MucGia = $("#txtgiahang").val();
+            tblMatHang.ID_LoaiH = $("#txtlh").val();
+            tblMatHang.ID_NCC = $("#txtncc").val();
+            tblMatHang.HanSudung = $("#txthandung").val();
+            tblMatHang.SuDung = 0;
+            var request = $.ajax({
+                url: "@Url.Action("LuuSanPhamMoi", "SanPham")",
+                method: "POST",
+                data: { model: tblMatHang }
+            });
+            request.done(function (response) {
+                LoadDsHang([response])
+            });
+            request.fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+        }
+        function LuuSuaThongTin(id) {
+            var tennv = $("#txttennv").val();
+            var ngaynv = $("#txtngaysinh").val();
+            var socc = $("#txtsocc").val();
+            var sodt = $("#txtsodt").val();
+            var queq = $("#txtquequan").val();
+            var suck = $("#txtsuck").val();
+            var ngaylm = $("#txtngayvao").val();
+            var chucvu = $("#txtchucv").val();
+            $.ajax({
+                url: '@Url.Action("SuaThongTinNV", "NhanVien")',
+                data: { id: id, name: tennv, birth: ngaynv, cc: socc, dt: sodt, qq: queq, sk: suck, nl: ngaylm, cv: chucvu },
+                type: 'Post',
+            }).done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                TatCaNhanVien();
+
+            });
+        }
+        function XoaSanPham(value) {
+            if (confirm("Bạn có chắc muốn xóa mặt hàng này") == true) {
+                var request = $.ajax({
+                    url: "@Url.Action("XoaSanPham", "SanPham")",
+                    method: "POST",
+                    data: {
+                        value: value
+                    },
+                    dataType: "text"
+                });
+                request.done(function (response) {
+                    LoadDsHang([response])
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    alert("Request failed: " + textStatus);
+                });
+            }
+        }
+    </script>
+}

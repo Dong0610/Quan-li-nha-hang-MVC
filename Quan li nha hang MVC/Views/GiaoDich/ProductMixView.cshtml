@@ -1,0 +1,275 @@
+﻿@model IEnumerable<Quan_li_nha_hang_MVC.Models.ProductMix>
+
+@{
+    ViewBag.Title = "ProductMixView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="item_section_name">Products Mix</div>
+<div style="height:128px;margin-bottom:8px;" class="product_list_work">
+    <div class="pro_fint">
+        <div class="device">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Nhân viên Oder</div>
+                <select id="cbncc" class="style_item_work">
+                    <option value="Tất cả">Tất cả</option>
+                </select>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ngày</div>
+                <input onchange="ProMixListDay()" id="txtngay" type="date" value="" class="style_item_work" />
+            </div>
+        </div>
+        <div class="device">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Bàn</div>
+                <select id="cbtdb" onchange="ThayDoiBanTT();" class="style_item_work">
+                    <option value="0">Tất cả</option>
+
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <div class="pr_work_user flex_il">
+        <div class="device">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tổng doanh thu</div>
+                <div class="type_input flex_il">
+                    <input id="tongdt" class="style_item_work" type="text" readonly />
+
+                </div>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Doanh thu hôm nay</div>
+                <div class="type_input flex_il">
+                    <input id="txtdttd" class="style_item_work" type="text" readonly>
+
+                </div>
+            </div>
+        </div>
+        <div class="device">
+            <div class="device_or">
+                <div style="flex-wrap:wrap;" class="list_btn_pr">
+                    <div onclick=" ExportExcel();" style="background-color: green;" class="btn_all">
+                        <i class="fa-solid fa-file-export"></i> Xuất Excel
+                    </div>
+                    <div onclick="LuuLaiMix()" style="background-color: black;" class="btn_all">
+                        <i class="fa-solid fa-arrows-rotate"></i> Lưu lại
+                    </div>
+                    <div style="background-color: orange;" class="btn_all"><i class="fa-solid fa-circle-down"></i> Đồng bộ</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div style="background-color: #fff; width: 99.6%; height: 100%;margin:auto; overflow:scroll; border-radius:5px;">
+    <table id="table" class="table">
+        <thead>
+            <tr style="background-color: rgb(251, 172, 1);color:white;">
+                <th style="text-align:center">
+                    Mã hàng
+                </th>
+                <th>
+                    Tên hàng
+                </th>
+                <th>
+                    ĐVT
+                </th>
+                <th>
+                    Giá hàng
+                </th>
+                <th>
+                    Tồn đầu
+                </th>
+                <th>
+                    Nhập thực
+                </th>
+                <th>
+                    Tồn cuối
+                </th>
+                <th>
+                    Xuất thực
+                </th>
+                <th>
+                    Phần trăm
+                </th>
+                <th>
+                    Tên loại
+                </th>
+
+                <th>
+                    Nhà CC
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="danhsachmh">
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+        var d = new Date(),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        var fdts= [year, month, day].join('-');
+        
+        $("#txtngay").val(fdts);
+        DSMH();
+    });
+
+    function ExportExcel() {
+        var reportname = "ProductMix" + ToDay().replace("/","");
+
+        let table = $("#table");
+        TableToExcel.convert(table[0], { name: reportname+'.xlsx',  sheet: {
+                name: 'Sheet 1'
+            }
+        });
+    }
+
+    function DSMH() {
+        var html = "";
+        $.ajax({
+        url: "@Url.Action("ProMixList", "GiaoDich")",
+            method: "POST"
+        }).done(function (response) {
+            $.each(response, function (e, obj) {
+                html += DanhSachMatHang(obj);
+            })
+            $("#danhsachmh").html(html);
+        }).fail(function () {
+            alert('error');
+        });
+    }
+
+    function FomatDate(value) {
+        var today = new Date(value);
+        var yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        return (dd + '/' + mm + '/' + yyyy);
+    }
+
+    function ProMixListDay() {
+        var ngayton = FomatDate( $("#txtngay").val());
+          $.ajax({
+            url: "@Url.Action("ProMixListDay", "GiaoDich")",
+              method: "POST",
+              data: { ngay: ngayton }
+          }).done(function (response) {
+              console.log(response);
+              var html = "";
+              $.each(response, function (e, obj) {
+                  html += DanhSachMatHang(obj);
+              });
+              $("#danhsachmh").html(html);
+        });
+    }
+
+    function DanhSachMatHang(item) {
+            var value = "";
+            if (item.SuDung < 0)
+            {
+                value = "#F5C6CB";
+            }
+            else if (item.SuDung > 3)
+            {
+                value = "#FFEEBA";
+            }
+            else
+            {
+                value = "#FCFCFD";
+        }
+        if ((item.PhanTram)=="NaN")
+            {
+                item.PhanTram = 0;
+            }
+        return `<tr style="background:`+ value+`;">
+                <td style="text-align:center">
+                    `+ item.ID_Hang+`
+                </td>
+                <td>
+                    `+item.TenHang+`
+                </td>
+                <td>
+                    `+item.DonViTon+`
+                </td>
+                <td style="text-align:end">
+                    `+item.MucGia+`
+                </td>
+                <td>
+                    `+item.TonDau+`
+                </td>
+                <td>
+                    `+item.NhapVe+`
+                </td>
+                <td>
+                    `+item.TonCuoi+`
+                </td>
+                <td style="`+value+`">
+                    `+item.SuDung+`
+                </td>
+                <td>
+
+                    `+item.PhanTram+`
+                </td>
+                <td>
+                    `+item.TenLoai+`
+                </td>
+                <td>
+                    `+item.TenNCC+`
+                </td>
+            </tr>`;
+    }
+
+
+
+    function LuuLaiMix() {
+         $.ajax({
+            url: "@Url.Action("LuuLaiMix", "GiaoDich")",
+            method: "POST"
+          }).done(function (response) {
+              alert(response);
+        });
+    }
+
+    function ToDay() {
+        var date = new Date();
+        var day = date.getDate();
+        var mont = date.getMonth();
+        var year = date.getFullYear();
+        if (day.toString().length == 1) {
+            day = "0" + day;
+        }
+        if (mont.toString().length == 1) {
+            mont = "0" + (mont + 1);
+        }
+        return day+"/"+ mont +"/"+ year;
+    }
+
+    function ExportCus() {
+        $.ajax({
+        url: "@Url.Action("ExportExcel", "GiaoDich")",
+        method: "POST"
+        }).done(function (response) {
+            alert(response);
+        });
+    }
+</script>

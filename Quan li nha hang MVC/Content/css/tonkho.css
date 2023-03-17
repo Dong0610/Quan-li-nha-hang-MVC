@@ -1,0 +1,290 @@
+﻿
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+html {
+    box-sizing: inherit;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    height: auto;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+[class*="col-"] {
+    float: left;
+}
+
+.col1 {
+    width: 8.33%;
+}
+
+.col2 {
+    width: 16.66%;
+}
+
+.col3 {
+    width: 25%;
+}
+
+.col4 {
+    width: 33.33%;
+}
+
+.col5 {
+    width: 41.66%;
+}
+
+.col6 {
+    width: 50%;
+}
+
+.col7 {
+    width: 58.33%;
+}
+
+.col8 {
+    width: 66.66%;
+}
+
+.col9 {
+    width: 75%;
+}
+
+.col10 {
+    width: 83.33%;
+}
+
+.col11 {
+    width: 91.66%;
+}
+
+.col12 {
+    width: 100%;
+}
+
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 100%;
+        overflow: auto;
+    }
+}
+
+
+
+
+
+#main {
+    width: 100%;
+    display: flex;
+}
+
+.formmain {
+    width: 900px;
+    min-height: 80px;
+    margin: 10px auto;
+    display: flex;
+    box-shadow: 1px 2px 10px #ccc;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.nav_lef {
+    width: 50px;
+    border-right: 1px solid #ccc;
+    min-height: 100%;
+    border-radius: 5px;
+}
+
+.main_screen {
+    width: 850px;
+    min-height: 1000px;
+}
+
+.account_user {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px
+}
+
+.nav_main {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 50px;
+}
+
+.item_navmain {
+    width: 125px;
+    color: white;
+    margin: 9px;
+    text-align: center;
+    align-items: center;
+    line-height: 32px;
+    border-radius: 3px;
+    height: 34px;
+    background-color: #cff;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.green {
+    background: green;
+}
+
+p {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.form_input {
+    padding: 10px;
+    width: 890px;
+    min-height: 200px;
+    box-shadow: 1px 2px 10px #ccc;
+    margin: 10px 5px 5px 5px;
+}
+
+.top_index1 {
+    display: flex;
+    width: 100%;
+}
+
+.txt_kieke {
+    margin-top: 15px;
+}
+
+
+.kiemkenhom {
+    height: 26px;
+    line-height: 26px;
+    font-size: 15px;
+    background: rgb(251, 172, 1)
+}
+
+.form_select_date {
+    width: 200px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    height: 26px;
+}
+
+.form_select_vl {
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    width: 160px;
+    height: 26px;
+}
+
+.form_select_locate {
+    width: 100px;
+    height: 26px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+}
+
+.input_form {
+    width: 100%;
+    height: auto;
+}
+
+.inputvl {
+    width: 80%;
+    height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 10px;
+}
+
+.note_ip {
+    width: 60%;
+    margin-top: 10px;
+}
+
+.btnlist {
+    display: flex;
+    margin-top: 10px;
+}
+
+.btn_enter {
+    width: 40px;
+    height: 26px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    padding-top: 4px;
+}
+
+
+.div_form {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    min-height: 50px;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table_header {
+  
+    background: orange;
+    text-align: center;
+    color: #fff;
+    height: 30px;
+    font-size: 15px;
+}
+
+.list_nvl {
+    position: absolute;
+    width: 326px;
+    margin: 1px 2px;
+    display: none;
+    height: 250px;
+    background: white;
+    scroll-behavior: smooth;
+    max-height: 250px;
+    list-style: none;
+    overflow: hidden;
+    overflow-y: scroll;
+    box-shadow: 1px 1px 15px #ccc;
+    border-radius: 2px;
+}
+
+.nvl_item {
+    line-height: 16px;
+    margin: 12px 20px;
+    border-bottom: .5px solid #ccc;
+    font-size: 14px;
+}
+
+
+
+

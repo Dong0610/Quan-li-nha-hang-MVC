@@ -1,0 +1,596 @@
+﻿@{
+    ViewBag.Title = "DanhSachBanDat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiBan> dsloaiban = ViewData["dsloaiban"] as IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiBan>;
+}
+<div id="detail_val_sp" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <i onclick="CloseViewDetali();" class="fa-solid fa-xmark icclose"> </i>
+    </div>
+    <div id="loadworking" style="display: flex;overflow-y: scroll;padding-bottom: 50px;" class="detail_work_item">
+        <div style="margin-bottom:0px;" class="detail_table_view_id flex_il">
+            <div class="device">
+                <div class="item_section_name">Thông tin bàn đặt</div>
+                <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px;">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Tên khách hàng</div>
+                        <input type="text" id="txtdtten" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Số điện thoại</div>
+                        <input type="text" id="txtdtdt" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Hẹn giờ</div>
+                        <input type="text" id="txtdthd" class="style_item_work " value="" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Ngày đặt</div>
+                        <input type="text" id="txtdtnd" class="style_item_work " value="" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Số lượng khách</div>
+                        <input type="text" id="txtdtsl" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Ghi chú</div>
+                        <textarea style="resize:none; height: 100px;" id="txtdtgc" class="style_item_work edt_des" readonly></textarea>
+                    </div>
+                    <div style="margin-top: 80px; display: flex;" class="device_or">
+                        <div class="pr_item_work" style="margin:0 8px">
+                            <div class="pr_txt_lb">Chọn bàn</div>
+                            <select style="width: 115%;" id="txtdtchange" class="style_item_work " value="Trống">
+                            </select>
+                        </div>
+                        <div class="list_btn_pr">
+                            <div onclick="DoiBanMoi();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-retweet"></i> Đổi</div>
+                            <a style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-trash"></i> Hủy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="device">
+                <div class="item_section_name">Chi tiết bàn đặt</div>
+                <div class="tb_detail_list" style="padding-top:10px;">
+                    <fieldset style="width: 98%; height: 390px; margin: 4px; padding: 4px;overflow-y: scroll;" class="style_item_work">
+                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                    </fieldset>
+                    <div style=" display: flex;" class="device_or">
+                        <div class="pr_item_work" style="margin:0 8px">
+                            <div class="pr_txt_lb">Tổng bill</div>
+                            <input type="text" style="width: 100%;" class="style_item_work " value="0" readonly />
+                        </div>
+                        <div class="list_btn_pr">
+                            <a style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-money-check-dollar"></i> Thanh toán</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="item_section_name">Đặt bàn</div>
+<div class="home_index_view" style="height: 93.50%;">
+    <div class="datban_view flex_il" style="height: 100%; overflow: hidden;">
+        <div class="device box_color" style="width: 60%;">
+            <div class="edit_pr_tiltle ">Danh sách bàn</div>
+            <div class="flex_il">
+                <div class="device_add" style="height: auto; width: 40%;">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Loại bàn</div>
+                        <select id="dslb" onchange="ThayDoiBan()" class="style_item_work">
+                            <option value="all">Tất cả</option>
+                            @foreach (var item in dsloaiban)
+                            {
+                                <option value="@item.TenLoaiBan">@item.TenLoaiBan</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="device_add" style="height: auto;">
+                    <div class="pr_item_work flex_il btb_at_rw ">
+                        <div onclick="LoadDSBan();" style="background-color: blue; margin: auto;" class="btn_all ">Tất cả</div>
+                        <div onclick="LoadTinhTrang(0);" style="background-color: green;margin: auto;" class="btn_all ">Bàn trống</div>
+                        <div onclick="LoadTinhTrang(2);" style="background-color: orange;margin: auto;" class="btn_all ">Bàn đặt</div>
+                        <div onclick="LoadTinhTrang(1);" style="background-color: red;margin: auto;" class="btn_all ">Bàn có người</div>
+                    </div>
+                </div>
+            </div>
+            <div id="dsloaiban" class="list_table_rs">
+            </div>
+        </div>
+        <form method="post" class="device box_color" style="padding-left: 30px; padding-right: 30px;width: 40%;">
+            <div class="edit_pr_tiltle ">Thông tin khách hàng</div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tên khách hàng</div>
+                <input type="text" id="tenkh" class="style_item_work " value="" />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Số điện thoại</div>
+                <input type="text" id="sodt" class="style_item_work " value="" />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Hẹn giờ</div>
+                <input type="time" id="hengio" class="style_item_work " value="" />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ngày đặt</div>
+                <input type="date" id="ngaydat" class="style_item_work " />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Số lượng khách</div>
+                <input type="text" id="sokhach" class="style_item_work " value="" />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Bàn đã chọn</div>
+                <input type="text" id="txtbc" class="style_item_work " value="" readonly />
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ghi chú</div>
+                <input type="text" id="ghichu" class="style_item_work " value="" />
+            </div>
+            <div class="device_or">
+                <div class="list_btn_pr">
+                    <a onclick="XacNhanDatBan();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-check"></i>  Xác nhận</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function ReturnList(obj) {
+        var bgcol = "";
+        if (obj.TinhTrang == 0) {
+            bgcol = "green";
+        }
+        else if (obj.TinhTrang == 1) {
+            bgcol = "red";
+        }
+        else {
+            bgcol = "orange";
+        }
+        return`<div class="table_style_view">
+                <div class="table_tiltle" style="font-size: 20px;">`+obj.TenBan+`</div>
+                <div class="tablers_container">
+                  <input style="width: 100%; border-color: #ccc;" type="text" class="style_item_work" value="`+ obj.ViTri+`" readonly
+                    placeholder="Khu vực" />
+                  <div class="tablers_container_top flex_il">
+                    <div class="device ">
+                      <div style="background:`+ bgcol+`;" class="is_val_table"></div>
+                      <p style="text-align: center;" class="ctn_detail">`+ obj.TenLoaiBan+`</p>
+                    </div>
+                    <div style="width: 60%;" class="device">
+                      <p class="ctn_detail">Khu vực</p>
+                      <input style="width: 95%; height: 22px; border-color: #ccc;" type="text" class="style_item_work"
+                        value="`+ obj.KhuVuc +`" readonly />
+                      <p class="ctn_detail">Số ghế</p>
+                      <input style="width: 95%; height: 22px; border-color: #ccc;" type="text" class="style_item_work"
+                        value="`+obj.SoGhe+`" readonly />
+                    </div>
+                  </div>
+                  <input style="width: 100%; border-color: #ccc;" type="text" class="style_item_work" value="`+obj.MoTa+`" readonly
+                    placeholder="Note" />
+                </div>
+                <div class="table_bottom">
+                  <div onclick="TableDetail('`+ obj.ID_Ban + `','` + obj.TenBan + `',` + obj.TinhTrang + `)" class="btn_sp btn_choose">Xem</div>
+                  <div onclick="SelectTB('`+ obj.ID_Ban + `',` + obj.TinhTrang +`)" class="btn_sp btn_choose">Chọn</div>
+                   <div onclick="OderBanDat('`+ obj.ID_Ban + `',` + obj.TinhTrang +`)" class="btn_sp btn_choose">Oder</div>
+                </div>
+              </div>`;
+    }
+    function DoiBanMoi() {
+        var ID_BanMoi = $("#txtdtchange").val();
+        if (confirm("Xác nhận đổi bàn", "Thông báo") == true) {
+            $.ajax({
+                url: "@Url.Action("DoiBanMoi", "DatBan")",
+                method: "POST",
+                data: { idmoi: ID_BanMoi, idcu: idbancu, idbd: idbandat }
+            }).done(function (response) {
+                customAlert.alert(response);
+                LoadDSBan();
+            });
+        }
+    }
+    function SelectTB(idb, tinhtrang) {
+        if (tinhtrang == 0) {
+            $("#txtbc").val(idb);
+        }
+        else if (tinhtrang == 1) {
+            alert("Bàn hiện tại đang có người");
+        }
+        else if (tinhtrang == 2) {
+            alert("Bàn này đã được đặt trước");
+        }
+    }
+    function LoadTinhTrang(value) {
+        var html = "";
+        dsbannh.done(function (response) {
+        if (value == 0) {
+            $.each(response, function (e, obj) {
+                if (obj.TinhTrang == 0) {
+                    html += ReturnList(obj);
+                }
+            });
+        }
+        else if (value == 1) {
+            $.each(response, function (e, obj) {
+                if (obj.TinhTrang == 1) {
+                    html += ReturnList(obj);
+                }
+            });
+        }
+        else if (value == 2) {
+            $.each(response, function (e, obj) {
+                if (obj.TinhTrang == 2) {
+                    html += ReturnList(obj);
+                }
+            });
+        }
+            $("#dsloaiban").html(html);
+        });
+    }
+    var dsbannh= $.ajax({
+    url: "@Url.Action("ListBanRS", "DatBan")",
+    method: "POST"
+    });
+    function XacNhanDatBan() {
+        var tblDatBan = {};
+        tblDatBan.TenKH = $("#tenkh").val();
+        tblDatBan.SoDT = $("#sodt").val();
+        tblDatBan.NgayDat = $("#ngaydat").val();
+        tblDatBan.GioDat = $("#hengio").val();
+        tblDatBan.SoKhach = $("#sokhach").val();
+        tblDatBan.ID_BanDat = $("#txtbc").val();
+        tblDatBan.Note = $("#ghichu").val();
+        if ($("#txtbc").val() == "") {
+            alert("Chưa chọn bàn");
+        } else {
+              var datban= $.ajax({
+                  url: "@Url.Action("DatBanMoi", "DatBan")",
+                  method: "POST",
+                  data: { model: tblDatBan }
+              });
+            datban.done(function (response) {
+                if (response == "1") {
+                    customAlert.alert("Đặt bàn thành công");
+                     var dsbannh= $.ajax({
+                        url: "@Url.Action("ListBanRS", "DatBan")",
+                        method: "POST"
+                     });
+                    dsbannh.done(function (response) {
+                        var html = "";
+                        $.each(response, function (e, obj) {
+                            html += ReturnList(obj);
+                        });
+                        $("#dsloaiban").html(html);
+                        $("#tenkh").val("");
+                        $("#sodt").val("");
+                        $("#ngaydat").val("");
+                        $("#hengio").val("");
+                        $("#sokhach").val("");
+                        $("#txtbc").val("");
+                        $("#ghichu").val("");
+                    });
+                }
+                else if (response == "0") {
+                    alert("Đã xảy ra lỗi. Vui lòng thử lại");
+                }
+                else {
+                    alert("Error: " + response);
+                }
+            });
+        }
+    }
+    function ThayDoiBan() {
+        var tenlb = $("#dslb").val();
+        var html = "";
+        dsbannh.done(function (response) {
+            if (tenlb == "all") {
+                LoadDSBan();
+            }
+            else {
+                $.each(response, function (e, obj) {
+                    if (obj.TenLoaiBan == tenlb) {
+                        html += ReturnList(obj);
+                    }
+                });
+            }
+            $("#dsloaiban").html(html);
+        });
+    }
+    function OderBanDat(idbandat, tinhtrang) {
+        if (tinhtrang == 2) {
+            $.ajax({
+                url: "@Url.Action("TimKiemMaBan","DatBan")",
+                method: "POST",
+                data: { idbd: idbandat }
+            })
+                .done(function (response) {
+                    window.location.href = "/Oder/StartOder?id=" + response;
+                });
+        }
+        else if (tinhtrang == 0) {
+            window.location.href = "/Oder/StartOder?id=" + 0;
+        }
+        else if (tinhtrang == 1) {
+            $.ajax({
+                url: "@Url.Action("TimKiemMaHD","DatBan")",
+                method: "POST",
+                data: { idbd: idbandat }
+            })
+                .done(function (response) {
+                    window.location.href = "/Oder/OderBanMoi?id=" + response;
+                });
+        }
+    }
+    function LoadDSBan() {
+         var dsbannh= $.ajax({
+            url: "@Url.Action("ListBanRS", "DatBan")",
+            method: "POST"
+      });
+        var html = "";
+        $("#detail_val_sp").css("display", "none");
+        dsbannh.done(function (response) {
+            $.each(response, function (e, obj) {
+                html += ReturnList(obj);
+            });
+            $("#dsloaiban").html(html);
+        });
+    }
+    var idbandat = "";
+    var idbancu = "";
+    var tenkh = "";
+    var bandat = "";
+    var ngay = "";
+    var sodt = "";
+    function TableDetail(value, nametb, tinhtrang) {
+        var idban = "";
+        $.ajax({
+            url: "@Url.Action("TimKiemMaBan","DatBan")",
+            method: "POST",
+            data: { idbd: value }
+        })
+            .done(function (idban) {
+                $("#detail_val_sp").css("display", "block");
+                if (tinhtrang == 0) {
+                    $("#txtdtten").val("");
+                    $("#txtdtdt").val("");
+                    $("#txtdthd").val("");
+                    $("#txtdtnd").val("");
+                    $("#txtdtsl").val("");
+                    $("#txtdtgc").val("");
+                }
+                else if (tinhtrang == 2) {
+                        var detailtable = $.ajax({
+                            url: "@Url.Action("ChiTietBan", "DatBan")",
+                            method: "POST",
+                            data: { idb: idban }
+                        });
+                        detailtable.done(function (response) {
+                            $.each(response, function (e, response) {
+                                idbandat = response.ID_Ban;
+                                idbancu = response.ID_BanNH;
+                                $("#txtdtten").val(response.TenKH);
+                                $("#txtdtdt").val(response.SoDT);
+                                $("#txtdthd").val(response.GioDat);
+                                $("#txtdtnd").val(response.NgayDat);
+                                $("#txtdtsl").val(response.SoKhach);
+                                $("#txtdtgc").val(response.Note);
+                            });
+                            var bannhohon = $.ajax({
+                                url: "@Url.Action("SoKhachNhoHon", "DatBan")",
+                                method: "POST"
+                            });
+                            var htmlb = "";
+                            bannhohon.done(function (response2) {
+                                $.each(response2, function (e, obj) {
+                                    htmlb += `<option value="` + obj.ID_Ban + `">` + obj.TenBan + "-" + obj.SoGhe + `</option>`;
+                                });
+                                $("#txtdtchange").html(htmlb);
+                            });
+                        });
+                }
+                else if (tinhtrang == 1) {
+                        var detailtable = $.ajax({
+                            url: "@Url.Action("ChiTietBanOderCF", "Oder")",
+                            method: "POST",
+                            data: { idb: value }
+                        });
+                        detailtable.done(function (response) {
+                            var hts = "";
+                            $.each([response], function (e, response) {
+                                tenkh = response.TenKH;
+                                sodt = response.SoDT;
+                                ngayd = response.NgayVao;
+                                bandat = response.ID_Ban;
+                                hts = `  <div style="margin-bottom:100px; width:1000px;" class="detail_table_view_id flex_il">
+                                        <div <div style="width:50%;" class="device">
+                                            <div class="item_section_name">Thông tin bàn đặt</div>
+                                            <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px;">
+                                                <div class="pr_item_work">
+                                                    <div class="pr_txt_lb">Tên khách hàng</div>
+                                                    <input type="text" class="style_item_work " value="`+ response.TenKH + `" readonly />
+                                                </div>
+                                                <div class="pr_item_work">
+                                                    <div class="pr_txt_lb">Số điện thoại</div>
+                                                    <input type="text" id="txtdtdt" class="style_item_work " value="`+ response.SoDT + `" readonly />
+                                                </div>
+                                                <div class="flex_il">
+                                                    <div class="pr_item_work">
+                                                    <div class="pr_txt_lb">Ngày vào</div>
+                                                    <input type="text" id="txtdtnd" class="style_item_work " value="`+ response.NgayVao +`" readonly />
+                                                    </div>
+                                                    <div class="pr_item_work">
+                                                        <div class="pr_txt_lb">Giờ vào</div>
+                                                        <input type="text" id="txtdthd" class="style_item_work " value="`+ response.GioVao +`" readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="flex_il">
+                                                    <div class="pr_item_work">
+                                                        <div class="pr_txt_lb">Số lượng khách</div>
+                                                        <input type="text" id="txtdtsl" class="style_item_work " value="`+ response.SoKhach +`" readonly />
+                                                    </div>
+                                                    <div class="pr_item_work">
+                                                        <div class="pr_txt_lb">Thuế</div>
+                                                        <input type="text" id="txtdtsl" class="style_item_work " value="`+response.Thue+`" readonly />
+                                                    </div>
+                                                 </div>
+                                                <div style="height:auto;" class="pr_item_work">
+                                                    <div class="pr_txt_lb">Ghi chú</div>
+                                                    <textarea style="resize:none; height: 120px;" id="txtdtgc" class="style_item_work edt_des" readonly>`+ response.GhiChu +`</textarea>
+                                                </div>
+                                                <div class="device_or flex_il">
+                                                    <div class="pr_item_work" style="margin:0 8px">
+                                                        <div class="pr_txt_lb">Chọn bàn</div>
+                                                        <select style="width: 115%;" id="txtdtchange" class="style_item_work " value="Trống">
+                                                        </select>
+                                                    </div>
+                                                    <div class="list_btn_pr">
+                                                        <div onclick="DoiBanMoi();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-retweet"></i> Đổi</div>
+                                                        <a onclick="OderBanDat('`+ response.ID_Ban +`',1)" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-plus"></i> Oder</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:50%;" class="device">
+                                            <div class="item_section_name">Chi tiết bàn đặt</div>
+                                            <div class="tb_detail_list" style="padding-top:10px;">
+                                                <fieldset style="width: 98%; height: 390px; margin: 4px; padding: 4px;overflow-y: scroll;" class="style_item_work">
+                                                    <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                                                         <div style="height: auto;" id="item_food_oder_cf_tb">
+                                                         </div>
+                                                </fieldset>
+                                                <div style=" display: flex;" class="device_or">
+                                                    <div class="pr_item_work" style="margin:0 8px">
+                                                        <div class="pr_txt_lb">Tổng bill</div>
+                                                        <input id="sumbill" type="text" style="width: 100%;" class="style_item_work " value="0" readonly />
+                                                    </div>
+                                                    <div class="list_btn_pr">
+                                                        <a onclick="ThanhToanHD()"  style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-money-check-dollar"></i> Thanh toán</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                            });
+                            $("#loadworking").html(hts);
+                            var bannhohon = $.ajax({
+                                url: "@Url.Action("SoKhachNhoHon", "DatBan")",
+                                method: "POST"
+                            });
+                            var htmlb = "";
+                            bannhohon.done(function (response2) {
+                                $.each(response2, function (e, obj) {
+                                    htmlb += `<option value="` + obj.ID_Ban + `">` + obj.TenBan + "-" + obj.SoGhe + `</option>`;
+                                });
+                                $("#txtdtchange").html(htmlb);
+                            });
+                              $.ajax({
+                                url: "@Url.Action("KiemTraMaDatBan","Oder")",
+                                  method: 'POST',
+                                  data: { ten: response.TenKH, phone: response.SoDT, ngay: response.NgayVao, maban: response.ID_Ban },
+                              }).done(function (id) {
+                                    $.ajax({
+                                        url: "@Url.Action("DanhSachBFOder","Oder")",
+                                        method: "POST",
+                                        data: { ten: response.TenKH, phone: response.SoDT, ngay: response.NgayVao, maban: response.ID_Ban }
+                                    })
+                                    .done(function (responses) {
+                                        var dsfood = "";
+                                        var tongtien = 0;
+                                        $.each(responses, function (e, obj) {
+                                            tongtien += obj.GiaBF * obj.SoLuong;
+                                            dsfood += Buffet_View(obj);
+                                        });
+                                         $.ajax({
+                                                url: "@Url.Action("MonAnDaGoiTheoBan", "Oder")",
+                                              method: 'POST',
+                                              data: { id: id },
+                                         }).done(function (response) {
+                                             $.each(response, function (e, obj) {
+                                                 dsfood += DanhSachFood(obj);
+                                              });
+                                             $("#item_food_oder_cf_tb").html(dsfood);
+                                          });
+                                        $("#sumbill").val(Math.floor(tongtien * 1.1));
+                                    });
+                              })
+                        });
+                    }
+            });
+    }
+    function ThanhToanHD() {
+        $.ajax({
+            url: "@Url.Action("KiemTraMaDatBan","Oder")",
+            method: 'POST',
+            data: { ten: tenkh, phone: sodt, ngay: ngayd, maban: bandat },
+        }).done(function (id) {
+            window.location.href = "/Oder/ThanhToanHD?idhd=" + id;
+        });
+    }
+    function Buffet_View(obj) {
+        return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.Image + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenBF + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaBF + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input  type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text"  style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ Number(obj.SoLuong) * Number(obj.GiaBF) + `" readonly />
+                                </p>
+                               <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="XoaBuffetOder('`+ obj.ID_Buffe + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    function DanhSachFood(obj) {
+        return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.HinhAnh + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenMon + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaMon + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input id="slbf`+ obj.ID_MonAn + `" type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text" id="tt`+ obj.ID_MonAn + `" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" readonly />
+                                </p>
+                                <div style="padding: 0;height: 32px;" class="flex_il">
+                                        <i onclick="XoaBuffetOder('`+ obj.ID_MonAn + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    $(document).ready(function () {
+        LoadDSBan();
+    });
+</script>

@@ -1,0 +1,630 @@
+﻿@{
+    ViewBag.Title = "OderDatTruoc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string madb = ViewData["idban"].ToString();
+    IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiBan> dsloaiban = ViewData["dsloaiban"] as IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiBan>;
+}
+<div id="detail_val_sp" style="display: none; z-index: 1000;" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <i onclick="CloseViewDetali();" class="fa-solid fa-xmark icclose"> </i>
+    </div>
+    <div style="display: flex;overflow-y: scroll;padding-bottom: 80px; " id="loadworking" class="detail_work_item">
+        <div style="margin:auto;width:75%;" class="flex_il">
+            <div style="margin-right:5px; width:55%;" class="device">
+                <div class="item_section_name">Danh sách món ăn</div>
+                <div class="tb_detail_list" style="padding-top:10px;">
+                    <fieldset style="width: 98%; height: 432px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                              class="style_item_work">
+                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                        <div style="height: auto;" id="item_food_list">
+                        </div>
+                    </fieldset>
+                    <div class="device_or">
+                        <div id="listbtn_oders" class="list_btn_pr flex_il">
+                            <div onclick="LuuThemMonAnMoi()" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-burger"></i> Gọi món</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:45%;" class="device">
+                <div class="item_section_name">Chi tiết Oder</div>
+                <div class="tb_detail_list" style="padding-top:10px;">
+                    <fieldset style="width: 98%; height: 432px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                              class="style_item_work">
+                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                        <div style="height: auto;" id="item_food_oder_list">
+                        </div>
+                    </fieldset>
+                    <div style=" display: flex;" class="device_or">
+                        <div class="pr_item_work" style="margin:0 8px">
+                            <div class="pr_txt_lb">Thuế</div>
+                            <input type="text" style="width: 100%;" class="style_item_work " value="10%" readonly />
+                        </div>
+                        <div class="pr_item_work" style="margin:0 8px">
+                            <div class="pr_txt_lb">Tổng bill</div>
+                            <input id="sumbilldt" type="text" style="width: 100%;" class="style_item_work " value="0" readonly />
+                        </div>
+                        <div class="list_btn_pr">
+                            <a style="background-color: blue;" class="btn_all">
+                                <i class="fa-solid fa-money-check-dollar"></i> Thanh
+                                toán
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="item_section_name">Danh sách Buffet</div>
+<div style="width: 100%;" class="detail_table_view_id flex_il">
+    <div class="device">
+        <div class="item_section_name">Thông tin bàn đặt</div>
+        <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px;">
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Tên khách hàng</div>
+                <input type="text" id="txtdtten" class="style_item_work " value="" readonly />
+            </div>
+            <div class="flex_il">
+                <div style="width:130%" class="pr_item_work">
+                    <div class="pr_txt_lb">Số điện thoại</div>
+                    <input type="text" id="txtdtdt" class="style_item_work " value="SoDT" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Số lượng khách</div>
+                    <input type="text" id="txtdtsl" class="style_item_work " value="SoKhach" readonly />
+                </div>
+            </div>
+            <div class="flex_il">
+                <div style="width:130%" class="pr_item_work">
+                    <div class="pr_txt_lb">Ngày đặt</div>
+                    <input type="text" id="txtdtnd" class="style_item_work " value="NgayDat" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Hẹn giờ</div>
+                    <input type="text" id="txtdthd" class="style_item_work " value="GioDat" readonly />
+                </div>
+            </div>
+            <div class="flex_il">
+                <div style="width:130%" class="pr_item_work">
+                    <div class="pr_txt_lb">Ngày vào</div>
+                    <input type="text" id="txtngayvao" class="style_item_work " value="Trống" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Giờ vào</div>
+                    <input type="text" id="txtgiovao" class="style_item_work " value="Đã đặt trước" readonly />
+                </div>
+            </div>
+            <div class="flex_il">
+                <div style="width:130%" class="pr_item_work">
+                    <div class="pr_txt_lb">Bàn đặt</div>
+                    <input type="text" id="txtdtbandat" class="style_item_work " value="Trống" readonly />
+                </div>
+                <div class="pr_item_work">
+                    <div class="pr_txt_lb">Tình trạng bàn</div>
+                    <input type="text" id="txtdtsl" class="style_item_work " value="Đã đặt trước" readonly />
+                </div>
+            </div>
+            <div class="pr_item_work">
+                <div class="pr_txt_lb">Ghi chú</div>
+                <textarea style="resize:none; height: 100px;" id="txtdtgc" class="style_item_work edt_des"
+                          readonly>Note</textarea>
+            </div>
+            <div style="margin-top: 80px; display: flex;" class="device_or">
+                <div class="pr_item_work" style="margin:0 8px">
+                    <div class="pr_txt_lb">Chọn bàn</div>
+                    <select style="width: 115%;" id="txtdtchange" class="style_item_work " value="Trống">
+                    </select>
+                </div>
+                <div class="list_btn_pr">
+                    <div onclick="DoiBanMoi();" style="background-color: blue;" class="btn_all">
+                        <i class="fa-solid fa-retweet"></i> Đổi
+                    </div>
+                    <a style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-trash"></i> Xóa bàn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-right:5px;" class="device">
+        <div class="item_section_name">Danh sách Buffet</div>
+        <div class="tb_detail_list" style="padding-top:10px;">
+            <fieldset style="width: 98%; height: 432px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                      class="style_item_work">
+                <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                <div style="height: auto;" id="item_food_oder">
+                </div>
+            </fieldset>
+            <div class="device_or">
+                <div id="listbtn_oder" class="list_btn_pr flex_il">
+                    <div onclick="LuuLaiOder()" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-check-circle"></i> Lưu Oder</div>
+                    <div style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-bowl-food"></i> Gọi món</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="device">
+        <div class="item_section_name">Chi tiết Oder</div>
+        <div class="tb_detail_list" style="padding-top:10px;">
+            <fieldset style="width: 98%; height: 432px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                      class="style_item_work">
+                <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Chi tiết Oder</legend>
+                <div style="height: auto;" id="item_food_oder_cf">
+                </div>
+            </fieldset>
+            <div style=" display: flex;" class="device_or">
+                <div class="pr_item_work" style="margin:0 8px">
+                    <div class="pr_txt_lb">Thuế</div>
+                    <input type="text" style="width: 100%;" class="style_item_work " value="10%" readonly />
+                </div>
+                <div class="pr_item_work" style="margin:0 8px">
+                    <div class="pr_txt_lb">Tổng bill</div>
+                    <input id="sumbill" type="text" style="width: 100%;" class="style_item_work " value="0" readonly />
+                </div>
+                <div class="list_btn_pr">
+                    <a onclick="ThanhToanHD()" style="background-color: blue;" class="btn_all">
+                        <i class="fa-solid fa-money-check-dollar"></i> Thanh
+                        toán
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function DanhSachBFOder(tenkh, dtkh,ngay,maban) {
+        var html = "";
+        $.ajax({
+            url: "@Url.Action("DanhSachBFOder","Oder")",
+            method: "POST",
+            data: { ten: tenkh, phone: dtkh, ngay: ngay, maban: maban }
+        })
+        .done(function (responses) {
+            var tongtien = 0;
+            $.each(responses, function (e, obj) {
+                tongtien += obj.GiaBF * obj.SoLuong;
+                html += List_Buffet_View_CFOD(obj,1);
+            });
+            $("#item_food_oder_cf").html(html);
+            $("#sumbill").val(Math.floor(tongtien * 1.1));
+        });
+    }
+    function ThanhToanHD() {
+        $.ajax({
+            url: "@Url.Action("KiemTraMaDatBan","Oder")",
+            method: 'POST',
+            data: { ten: tenkh, phone: sodt, ngay: ngayd, maban: idbanchon },
+        }).done(function (id) {
+            window.location.href = "/Oder/ThanhToanHD?idhd=" + id;
+        });
+    }
+    function LuuLaiOder() {
+        var tenkh = $("#txtdtten").val();
+        var dtkh = $("#txtdtdt").val();
+        var giovaokh = $("#txtdthd").val();
+        var ngaykh = $("#txtdtnd").val();
+        var sokhach = $("#txtdtsl").val();
+        var ghichukh = $("#txtdtgc").val();
+        if (confirm("Xác nhận đặt bàn!") == true) {
+            $.ajax({
+                url: "@Url.Action("XacNhanOder","Oder")",
+                method: "POST",
+                data: { ten: tenkh, phone: dtkh, giovao: giovaokh, ngay: ngaykh, sokhach: sokhach, note: ghichukh, maban: idbanchon }
+            }).done(function (response) {
+                customAlert.alert(response);
+                KiemTraMaDatBan(tenkh, dtkh, ngaykh, idbanchon);
+            });
+        }
+    }
+    function List_Buffet_View(obj) {
+        return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.Image +`" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+obj.TenBF+`</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+obj.GiaBF+`" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input id="slbf`+ obj.ID_Buffe+`" type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text" id="tt`+ obj.ID_Buffe +`" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" readonly />
+                                </p>
+                                <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="TangMonBF('`+ obj.ID_Buffe + `',` + obj.GiaBF +`)" id="ic_up`+ obj.ID_Buffe +`" class="fa-solid fa-arrow-up ic_updown"></i>
+                                    <i  onclick="GiamMonBF('`+ obj.ID_Buffe + `',` + obj.GiaBF + `)" id="ic_dow` + obj.ID_Buffe + `" class="fa-solid fa-arrow-down ic_updown"></i>
+                                    <i onclick="ThemMonBF('`+ obj.ID_Buffe + `','` + obj.TenBF + `','` + obj.Image + `',` + obj.GiaBF + `)"  id="ic_add` + obj.ID_Buffe +`" class="fa-solid fa-arrow-right ic_updown"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    function List_Buffet_View_CFOD(obj, varl) {
+        if (varl = 0) {
+            return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.Image + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenBF + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaBF + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input  type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text"  style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ Number(obj.SoLuong) * Number(obj.GiaBF) + `" readonly />
+                                </p>
+                               <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="XoaMonBuffet('`+ obj.ID_Buffe + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+        else {
+            return `  <div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.Image + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenBF + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaBF + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input  type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text"  style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ Number(obj.SoLuong) * Number(obj.GiaBF) + `" readonly />
+                                </p>
+                               <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="XoaBuffetOder('`+ obj.ID_Buffe + `')" class="fa-solid fa-trash ic_updown"></i>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+    }
+    function XoaBuffetOder(id) {
+        customAlert.alert("Chỉ có người quản trị mới có thể xóa món","Thông báo");
+    }
+    function LuuThemMonAnMoi() {
+          $.ajax({
+            url: "@Url.Action("KiemTraMaDatBan","Oder")",
+              method: 'POST',
+              data: { ten: tenkh, phone: sodt, ngay: ngayd, maban: idbanchon },
+          }).done(function (id) {
+              var html = '';
+              $.ajax({
+                    url: "@Url.Action("LuuMonAnMoi", "Oder")",
+                  method: 'POST',
+                  data: { id: id },
+              }).done(function (response) {
+                  $.each(response, function (e, obj) {
+                      html += DanhSachFood(obj);
+                  });
+                  $("#item_food_oder_list").html(html);
+              });
+          })
+        }
+    function TangMonBF(idbf,gia) {
+        var soldau = $("#slbf" + idbf).val();
+        var sotang = (Number(soldau)+1);
+        $("#slbf" + idbf).val(sotang);
+        $("#tt" + idbf).val(sotang * gia);
+    }
+    function GiamMonBF(idbf, gia) {
+        var soldau = $("#slbf" + idbf).val();
+        if (soldau == 0) {
+            alert("Số lượng không nhỏ hơn 0");
+            soldau = $("#slbf" + idbf).val("0");
+        } else {
+            var soldau = $("#slbf" + idbf).val();
+            var sotang = (Number(soldau) - 1);
+            $("#slbf" + idbf).val(sotang);
+            $("#tt" + idbf).val(sotang * gia);
+        }
+    }
+    function XoaMonBuffet(id) {
+        var tongtien = 0;
+         var html = "";
+            $.ajax({
+                url: "@Url.Action("XoaMonSuatOder", "Oder")",
+                method: "POST",
+                data: { id: id }
+            })
+                .done(function (response) {
+                    $.each(response, function (e, obj) {
+                        tongtien += obj.GiaBF * obj.SoLuong;
+                        html += List_Buffet_View_CFOD(obj,0);
+                });
+                    $("#item_food_oder_cf").html(html);
+                    $("#sumbill").val(Math.floor(tongtien * 1.1));
+            });
+    }
+    function ThemMonBF(idbf, ten, anh, gia) {
+        var tongtien = 0;
+        var soldau = $("#slbf" + idbf).val();
+        if (soldau == 0) {
+            alert("Số lượng không nhỏ hơn 0");
+        } else {
+            var soldau = $("#slbf" + idbf).val();
+            var html = "";
+            $.ajax({
+                url: "@Url.Action("ThemVaoSuatOder", "Oder")",
+                method: "POST",
+                data: { id: idbf, ten: ten, anh: anh, gia: gia, sol: soldau }
+            })
+                .done(function (response) {
+                    $.each(response, function (e, obj) {
+                        tongtien += obj.GiaBF * obj.SoLuong;
+                        html += List_Buffet_View_CFOD(obj,1);
+                });
+                    $("#item_food_oder_cf").html(html);
+                    $("#sumbill").val(Math.floor(tongtien*1.1));
+            });
+        }
+    }
+    var tenkh = "";
+    var sodt = "";
+    var ngayd = "";
+    function LoadDsBuffet() {
+        var html = "";
+         $.ajax({
+              url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+                    method: "POST"
+        })
+             .done(function (response) {
+                 $.each(response, function (e, obj) {
+                html += List_Buffet_View(obj);
+            });
+                $("#item_food_oder").html(html);
+        });
+    }
+    function fomatDateStr(value) {
+        var ngay = value.substring(8, 10);
+        var thang = value.substring(5, 7);
+        var nam = value.substring(0, 4);
+        return ngay + '/' + thang + '/' + nam;
+    }
+    var idbanchon = "";
+    function LoadTTBanDat() {
+        var detailtable =
+            $.ajax({
+                url: "@Url.Action("ChiTietBan", "DatBan")",
+                method: "POST",
+                data: { idb: @madb }
+                });
+        detailtable.done(function (response) {
+            $.each(response, function (e, response) {
+                $("#txtdtten").val(response.TenKH);
+                $("#txtdtdt").val(response.SoDT);
+                $("#txtdthd").val(response.GioDat);
+                $("#txtdtnd").val(fomatDateStr(response.NgayDat));
+                $("#txtdtsl").val(response.SoKhach);
+                $("#txtdtgc").val(response.Note);
+                tenkh = response.TenKH;
+                sodt = response.SoDT;
+                ngayd = fomatDateStr(response.NgayDat);
+                idbanchon = response.ID_BanNH;
+                KiemTraMaDatBan(response.TenKH, response.SoDT, fomatDateStr(response.NgayDat), response.ID_BanNH);
+                DanhSachBFOder(response.TenKH, response.SoDT, fomatDateStr(response.NgayDat), response.ID_BanNH);
+               var bannhohon =
+                $.ajax({
+                    url: "@Url.Action("SoKhachNhoHon", "DatBan")",
+                    method: "POST"
+                });
+                var htmlb = "";
+                $.ajax({
+                url: "@Url.Action("ThongTinCTBan", "DatBan")",
+                  method: "POST",
+                      data: { idb: response.ID_BanNH }
+                })
+                .done(function (response3) {
+                    $("#txtdtbandat").val(response3);
+                    htmlb += response3;
+                    bannhohon.done(function (response2) {
+                        $.each(response2, function (e, obj) {
+                            htmlb += `<option value="` + obj.ID_Ban + `">Bàn: ` + obj.TenBan + "- " + obj.SoGhe + ` chỗ - Tình trạng: Trống</option>`;
+                        });
+                        $("#txtidtable").html(htmlb);
+                    });
+                });
+            });
+        });
+    }
+    function KiemTraMaDatBan(tenkh, dtkh, ngay, maban) {
+        var html = "";
+        $.ajax({
+            url: "@Url.Action("KiemTraMaDatBan","Oder")",
+            method: "POST",
+            data: { ten: tenkh, phone: dtkh, ngay: ngay, maban: maban }
+        })
+            .done(function (responses) {
+                if (responses == "0") {
+                    html += `  <div onclick="LuuLaiOder()" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-check-circle"></i> Lưu Oder</div>
+                    <div onclick="GoiThemMon()" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-bowl-food"></i> Gọi món</div>`;
+                }
+                else {
+                    html += `  <div onclick="PhachThemSuat(` + responses +`)" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-add"></i> Phách thêm</div>
+                    <div onclick="GoiThemMon()" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-bowl-food"></i> Gọi món</div>`;
+                }
+                $("#listbtn_oder").html(html);
+        });
+    }
+    function GoiThemMon() {
+        $("#detail_val_sp").css("display", "block");
+         var html = "";
+         $.ajax({
+            url: "@Url.Action("DanhSachMonAn", "Oder")",
+             method: "POST"
+        })
+         .done(function (responses) {
+             $.each(responses, function (e, obj) {
+                 html += `<div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.HinhAnh + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenMon + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaMon + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input id="slbf`+ obj.ID_MonAn + `" type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ 0 + `" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text" id="tt`+ obj.ID_MonAn + `" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" readonly />
+                                </p>
+                                <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="TangMonBF('`+ obj.ID_MonAn + `',` + obj.GiaMon + `)" id="ic_up` + obj.ID_MonAn + `" class="fa-solid fa-arrow-up ic_updown"></i>
+                                    <i  onclick="GiamMonBF('`+ obj.ID_MonAn + `',` + obj.GiaMon + `)" id="ic_dow` + obj.ID_MonAn + `" class="fa-solid fa-arrow-down ic_updown"></i>
+                                    <i onclick="ThemMonAn('`+ obj.ID_MonAn + `','` + obj.TenMon + `','` + obj.HinhAnh + `',` + obj.GiaMon + `)"  id="ic_add` + obj.ID_MonAn + `" class="fa-solid fa-arrow-right ic_updown"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+             $("#item_food_list").html(html);
+         });
+         $.ajax({
+            url: "@Url.Action("KiemTraMaDatBan","Oder")",
+             method: 'POST',
+             data: { ten: tenkh, phone: sodt, ngay: ngayd, maban: idbanchon },
+          }).done(function (id) {
+              $.ajax({
+                    url: "@Url.Action("MonAnDaGoiTheoBan", "Oder")",
+                  method: 'POST',
+                  data: { id: id },
+              }).done(function (response) {
+                  var htmls = "";
+                  $.each(response, function (e, obj) {
+                      htmls += DanhSachFood(obj);
+                  });
+                  $("#item_food_oder_list").html(htmls);
+              });
+          })
+        $("#sumbilldt").val($("#sumbill").val())
+    }
+    function DanhSachFood(obj) {
+        return `<div style="margin-top:5px;" class="list_bf_view_od flex_il">
+                        <img style="width:80px;" src="`+ obj.HinhAnh + `" alt="" class="bf_view_od">
+                        <div class="view_bf_item">
+                            <div class="name_oder_food">`+ obj.TenMon + `</div>
+                            <div style="display: flex;">
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Giá
+                                    <input type="text" style="width: 80%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.GiaMon + `" readonly />
+                                </p>
+                                <p style="font-weight: 500;font-size: 15px; line-height: 20px; width: 100%;">
+                                    Số lượng:
+                                    <input id="slbf`+ obj.ID_MonAn + `" type="text" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="`+ obj.SoLuong +`" />
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: end;" class="device_or flex_il">
+                                <p style="font-weight: 500;font-size: 15px; height: 20px; width: 100%;">
+                                    Thành tiền:
+                                    <input type="text" id="tt`+ obj.ID_MonAn + `" style="width: 50%; height: 24px;  border-color: #ccc;" class="style_item_work "
+                                           value="0" readonly />
+                                </p>
+                                <div style="padding: 0;height: 32px;" class="flex_il">
+                                    <i onclick="TangMonBF('`+ obj.ID_MonAn + `',` + obj.GiaMon + `)" id="ic_up` + obj.ID_MonAn + `" class="fa-solid fa-arrow-up ic_updown"></i>
+                                    <i  onclick="GiamMonBF('`+ obj.ID_MonAn + `',` + obj.GiaMon + `)" id="ic_dow` + obj.ID_MonAn + `" class="fa-solid fa-arrow-down ic_updown"></i>
+                                    <i onclick="ThemMonAn('`+ obj.ID_MonAn + `','` + obj.TenMon + `','` + obj.HinhAnh + `',` + obj.GiaMon + `)"  id="ic_add` + obj.ID_MonAn + `" class="fa-solid fa-arrow-right ic_updown"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
+     function ThemMonAn(idbf, ten, anh, gia) {
+        var soldau = $("#slbf" + idbf).val();
+        if (soldau == 0) {
+            alert("Số lượng không nhỏ hơn 0");
+        } else {
+            var soldau = $("#slbf" + idbf).val();
+            var html = "";
+            $.ajax({
+                url: "@Url.Action("ThemVaoSuatOder", "Oder")",
+                method: "POST",
+                data: { id: idbf, ten: ten, anh: anh, gia: gia, sol: soldau }
+            })
+                .done(function (response) {
+                    $.each(response, function (e, obj) {
+                        html += List_Buffet_View_CFOD(obj,1);
+                });
+                    $("#item_food_oder_list").html(html);
+            });
+        }
+    }
+    function PhachThemSuat(idhd) {
+        var html = "";
+         $.ajax({
+            url: "@Url.Action("PhachThemSuat", "Oder")",
+             method: "POST",
+             data: { id: idhd }
+        })
+         .done(function (responses) {
+            customAlert.alert("Thêm suất thành công");
+            var tongtien = 0;
+            $.each(responses, function (e, obj) {
+                tongtien += obj.GiaBF * obj.SoLuong;
+                html += List_Buffet_View_CFOD(obj,1);
+            });
+            $("#item_food_oder_cf").html(html);
+            $("#sumbill").val(Math.floor(tongtien * 1.1));
+        });
+    }
+    $(document).ready(function () {
+        LoadTTBanDat();
+        LoadDsBuffet();
+        var now = new Date();
+        var thang = now.getMonth() + 1;
+        if (thang.toString().length == 1) {
+            thang = "0" + thang;
+        }
+        $("#txtngayvao").val(now.getDate() + "/" + thang + "/" + now.getFullYear());
+        var phut = now.getMinutes();
+        if (phut.toString().length == 1) {
+            phut = "0" + phut;
+        }
+        var gio = now.getHours();
+        if (gio.toString().length == 1) {
+            gio = "0" + gio;
+        }
+        $("#txtgiovao").val(gio + ":" + phut);
+    });
+</script>

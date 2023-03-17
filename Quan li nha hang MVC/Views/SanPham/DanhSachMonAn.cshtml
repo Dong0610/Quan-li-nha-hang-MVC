@@ -1,0 +1,703 @@
+﻿@{
+    ViewBag.Title = "DanhMucSanPham";
+    IEnumerable<Quan_li_nha_hang_MVC.Models.tblNhaCC> DsNCC = ViewData["dsnhacc"] as IEnumerable<Quan_li_nha_hang_MVC.Models.tblNhaCC>;
+    IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiHang> DsLoaiHang = ViewData["dsloaihang"] as IEnumerable<Quan_li_nha_hang_MVC.Models.tblLoaiHang>;
+    object dslh = ViewData["dssanpham"] as object;
+}
+<div id="detail_val_sp" style="display: none; z-index: 1000;" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <i onclick="CloseViewDetali();" class="fa-solid fa-xmark icclose"> </i>
+    </div>
+    <div style="display: flex;overflow-y: scroll;padding-bottom: 80px; " id="loadworking" class="detail_work_item">
+        <div style="width: 1100px;" class="detail_table_view_id flex_il">
+            <div style="width: 40%;" class="device">
+                <div class="item_section_name">Thông tin món ăn</div>
+                <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px; height: 480px;">
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Mã món</div>
+                        <input type="text" id="txtdtidmon" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Tên món</div>
+                        <input type="text" id="tenmon" class="style_item_work " value="Trống" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Giá món</div>
+                        <input type="text" id="giamon" class="style_item_work " value="" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Mô tả</div>
+                        <input type="text" id="mota" class="style_item_work " value="" readonly />
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Sử dụng</div>
+                        <div class="flex_il">
+                            <input type="text" id="sudung" class="style_item_work "  readonly />
+                        </div>
+                    </div>
+                    <div class="pr_item_work">
+                        <div class="pr_txt_lb">Trạc món</div>
+                        <textarea style="resize:none; height: 155px;" cols="40" id="tracmon" class="style_item_work edt_des"
+                                  readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 60%;" class="device">
+                <div class="item_section_name">Chi tiết món ăn</div>
+                <div class="tb_detail_list" style="padding-top:10px;">
+                    <img src="../img_avatar.png" alt="" id="hinhanh"
+                         style="width: 180px; height: 180px; border: 1px solid #ccc; border-radius: 5px; margin-left: 240px;">
+                    <fieldset style="width: 98%; height: 220px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                              class="style_item_work">
+                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Thành phần</legend>
+                        <table style="font-size:13px;" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        STT
+                                    </th>
+                                    <th>
+                                        Mã VL
+                                    </th>
+                                    <th>
+                                        Tên vật liệu
+                                    </th>
+                                    <th style="width:80px;">
+                                        Định lượng
+                                    </th>
+                                    <th style="width:80px;">
+                                        Đơn vị
+                                    </th>
+                                    <th width="130px">
+                                        Quản lí
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="dsdetail_food">
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <div style=" display: flex;" class="device_or">
+                        <div style="margin: auto; padding-top: 10px;" class="list_btn_pr">
+                            <div onclick="ThemMoiChiTiet();" style="background-color: blue; " class="btn_all">
+                                <i class="fa-solid fa-add"></i> Thêm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="item_section_name">Danh mục món ăn</div>
+<div style="height: auto;" class="product_list_work">
+    <div style="display: flex; flex-wrap: wrap;height: 132px;" class="pro_fint">
+        <div style="width: 45%;" class="pr_item_work">
+            <div class="pr_txt_lb">Sử dụng</div>
+            <select class="style_item_work">
+                <option value="all">Tất cả</option>
+                <option value="using">Sử dụng</option>
+                <option value="block">Tạm dừng</option>
+            </select>
+        </div>
+        <div style="width: 45%;" class="pr_item_work">
+            <div class="pr_txt_lb">Giá hàng</div>
+            <div class="flex_il">
+                <input oninput="LoaiTonHang();" id="txtlton" type="text" class="style_item_work" />
+                <i style="font-size: 20px;margin: auto 10px; font-weight: 600;" class="fa-solid fa-search"></i>
+            </div>
+        </div>
+        <div style="width: 45%;" class="pr_item_work">
+            <div class="pr_txt_lb">Tên hàng</div>
+            <div class="flex_il">
+                <input id="txttkname" type="text" class="style_item_work" />
+                <i onclick="TimKiemSanPham()" style="font-size: 20px;margin: auto 10px; font-weight: 600;" class="fa-solid fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div style="height: 132px;" class="pr_work_user">
+        <div class="device_or">
+            <div style="display: flex; flex-wrap: wrap;justify-content: space-between;" class="list_btn_pr">
+                <div onclick="TatCaMh();" class="btn_all"> <i class="fa-solid fa-file-export"></i>Tất cả</div>
+                <a href="~/SanPham/DanhSachMonAn" style="background-color: black; text-decoration: none" class="btn_all">
+                    <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+                </a>
+                <a style="background-color: orange;" class="btn_all"><i class="fa-solid fa-circle-down"></i> Đồng bộ</a>
+                <a class="btn_all">
+                    <i class="fa-solid fa-file-export"></i>
+                    Xuất Excel
+                </a>
+                <div onclick="ThemHangMoi()" style="background-color: blue; margin:20px auto; text-decoration:none"
+                     class="btn_all"> <i class="fa-solid fa-plus"></i> Thêm mới</div>
+               <div style="margin:20px auto;" class="inputfile-box">
+                    <input type="file" id="file" name="UploadedFiles" multiple style="display: none;"
+                           onchange='ChangeInPut(this)'>
+                    <label for="file">
+                        <input type="text" id="file-name" style=" width: 140px;padding: 0 58px 0 10px;" value=""
+                               class="style_item_work file-box"></>
+                        <span class="file-button">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            File
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="device_or">
+        </div>
+    </div>
+</div>
+<div class="pro_list_product">
+    <table style="font-size:13px;" class="table ">
+        <thead>
+            <tr style="height:42px;">
+                <th>
+                    STT
+                </th>
+                <th>
+                    Mã món
+                </th>
+                <th>
+                    Tên món
+                </th>
+                <th>
+                    Giá món
+                </th>
+                <th>
+                    Môt tả
+                </th>
+                <th>
+                    Trạc món
+                </th>
+                <th>
+                    Sử dụng
+                </th>
+                <th>
+                    Ảnh
+                </th>
+                <th>
+                    Quản lí
+                </th>
+            </tr>
+        </thead>
+        <tbody id="dsmonan">
+        </tbody>
+    </table>
+</div>
+@section scripts
+{
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            TatCaMh();
+        });
+        var tblMonAn = [];
+        function TimKiemSanPham() {
+            var txtsearch = $("#txttkname").val();
+             $.ajax({
+            url: "@Url.Action("DanhSachMonAnList", "SanPham")",
+            method: "POST"
+             })
+             .done(function (response) {
+                var html = "";
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    if (obj.ID_MonAn.toString().toLocaleLowerCase().includes(txtsearch.toLocaleLowerCase()) ||
+                        obj.TenMon.toString().toLocaleLowerCase().includes(txtsearch.toLocaleLowerCase())) {
+                        html += ReturnDs(stt, obj);
+                    }
+                });
+                $("#dsmonan").html(html);
+            }).fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+        }
+    function ChangeInPut(event) {
+        $("#detail_val_sp").css("display","block");
+        var html = `  <div class="read_file_excel">
+              <div class="read_excel_title">Danh sách đọc từ file</div>
+            `;
+        var table_output = "";
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(event.files[0]);
+        $("#file-name").val(event.files[0].name);
+        reader.onload = function (event) {
+            var data = new Uint8Array(reader.result);
+            var work_book = XLSX.read(data, { type: 'array' });
+            var sheet_name = work_book.SheetNames;
+            var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], { hearder: 0 });
+            if (sheet_data.length > 0) {
+                table_output += '<table class="table table-bordered">';
+                table_output +=
+                    `<thead>
+                            <tr>
+                                <th>STT </th>
+                                <th> Mã món </th>
+                                <th>Tên món </th>
+                                <th> Giá món</th>
+                                <th>Mô tả</th>
+                                <th>Trạc món</th>
+                                <th> Sử dụng </th>
+                                <th> Hình ảnh</th>
+                            </tr>
+                            </thead>`;
+                table_output += '<tbody>';
+                for (var row = 0; row < sheet_data.length; row++) {
+                    table_output += '<tr>';
+                    table_output += '<td>' + row + '</td>';
+                    table_output += '<td>' + sheet_data[row].ID_MonAn + '</td>';
+                    table_output += '<td>' + sheet_data[row].TenMon + '</td>';
+                    table_output += '<td>' + sheet_data[row].GiaMon + '</td>';
+                    table_output += '<td>' + sheet_data[row].MoTa + '</td>';
+                    table_output += '<td>' + sheet_data[row].TracMon + '</td>';
+                    table_output += '<td>' + sheet_data[row].SuDung + '</td>';
+                    table_output += '<td>' + sheet_data[row].HinhAnh + '</td>';
+                    table_output += '</tr>';
+                    tblMonAn.push(sheet_data[row]);
+                }
+                table_output += '</tbody></table > ';
+            }
+            html += table_output;
+            html += ` <div class="device_or">
+                    <div class="list_btn_pr">
+                        <div onclick="LuuDanhSachThucPham();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                    </div>
+                </div>`;
+            html += `</div>`;
+            $("#txt_title_detail").html("Đọc dữ liệu từ: "+$("#file-name").val());
+            $("#loadworking").html(html);
+        }
+    }
+    function ReturnDs(stt, obj) {
+        var cbsd = "";
+        if (obj.SuDung == 1) {
+            cbsd = `<input onclick="ISSuDungMon(0,'` + obj.ID_MonAn + `')" style="width: 18px" id="cbtt" type="checkbox" class="style_item_work " checked />`;
+        } else {
+            cbsd = `<input onclick="ISSuDungMon(1,'` + obj.ID_MonAn + `')" style="width: 18px;" id="cbtt" type="checkbox" class="style_item_work "/>`;
+        }
+        return `<tr >
+                    <td style="width:80px;text-align: center;" >
+                    ` + stt + `
+                </td>
+                <td>
+                    ` + obj.ID_MonAn + `
+                </td>
+                <td>
+                    ` + [obj.TenMon] + `
+                </td>
+                <td  style="text-align:center;">
+                    ` + [obj.GiaMon] + `
+                </td>
+                <td >
+                    ` + [obj.MoTa] + `
+                </td>
+                <td>
+                    ` + [obj.TracMon] + `
+                </td>
+                <td style="">
+                    ` + cbsd + `
+                </td>
+                <td>
+                    ` + [obj.HinhAnh] + `
+                </td>
+                <td >
+                    <div class="flex_il">
+                     <div onclick="SuaThongTin('` + [obj.ID_MonAn] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                    <div onclick="ChiTietMonAn('` + [obj.ID_MonAn] + `','` + [obj.TenMon] + `','` + [obj.GiaMon] + `',
+                    '` + [obj.MoTa] + `','` + [obj.TracMon] + `','` + [obj.HinhAnh] + `');"  class="btn_sp btn_views"> <i class="fa-solid fa-circle-info"></i> Xem</div>
+                    </div>
+                    </td>
+            </tr>`;
+        }
+    function ISSuDungMon(isuse, Idh) {
+            $.ajax({
+                  url: "@Url.Action("SuDungMonAn", "SanPham")",
+                method: "POST",
+                data: { use: isuse, idh: Idh }
+            })
+                .done(function (response) {
+                    var html = "";
+                    var stt = 0;
+                    $.each(response, function (e, obj) {
+                        stt++;
+                        html += ReturnDs(stt, obj);
+                    });
+                    $("#dsmonan").html(html);
+                });
+        }
+    function LuuDanhSachThucPham() {
+            $.ajax({
+                url: "@Url.Action("Upload", "SanPham")",
+                method: "POST",
+                data: { model: tblMonAn }
+            })
+            .done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                $("#detail_val_sp").css("display", "none");
+            });
+        }
+        function ChiTietMonAn(idma,tenm,gia,mot,trac,anh) {
+            var html = "";
+            $("#txtdtidmon").val(idma);
+            $("#tenmon").val(tenm);
+            $("#giamon").val(gia);
+            $("#mota").val(mot);
+            $("#tracmon").val(trac);
+            $("#hinhanh").attr('src', anh);
+            var sudung = $("#cbtt").is(":checked");
+            if (sudung == false) {
+                $("#sudung").val("Đang dùng");
+            }
+            else {
+                $("#sudung").val("Ngưng sử dụng");
+            }
+            $("#detail_val_sp").css("display", "block");
+             $.ajax( {
+                url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                 method: "POST",
+                 data: { idma: $("#txtdtidmon").val()}
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += RTTable_ItemFood(stt, obj);
+                });
+                $("#dsdetail_food").html(html);
+            });
+        }
+        var idhanghoa = "";
+        function TatCaMh() {
+             $.ajax({
+            url: "@Url.Action("DanhSachMonAnList", "SanPham")",
+            method: "POST"
+             })
+             .done(function (response) {
+                var html = "";
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                        stt++;
+                        html += ReturnDs(stt, obj);
+                });
+                $("#dsmonan").html(html);
+            }).fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+        }
+        function ThemMoiChiTiet() {
+            var idma = $("#txtdtidmon").val();
+            var html = `<tr>
+                        <td>
+                          STT
+                        </td>
+                        <td colspan="2">
+                          <input oninput="FindData();" type="text" class="style_item_work" id="txtsreach_dt" />
+                          <ul style="overflow-x:hidden; display: none; margin: 3px 0; height: 100px;" id="list_sp_show"
+                            class="list_sp_show">
+                          </ul>
+                        </td>
+                        <td>
+                          <input type="text" class="style_item_work" id="txtadddl" />
+                        </td>
+                        <td>
+                          <input type="text" class="style_item_work" id="txtaddv" />
+                        </td>
+                        <td style="width:130px; display:flex">
+                          <div onclick="ThemChiItetMonAn();" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                          <div onclick="HuyThemMoiSP('`+ idma +`');" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                        </td>
+                      </tr>`;
+            $.ajax( {
+                url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                method: "POST",
+                data: { idma: idma }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += RTTable_ItemFood(stt, obj);
+                });
+                $("#dsdetail_food").html(html);
+            });
+        }
+        function HuyThemMoiSP(value) {
+            var html = "";
+            $.ajax( {
+                url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                method: "POST",
+                data: { idma: value }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += RTTable_ItemFood(stt, obj);
+                });
+                $("#dsdetail_food").html(html);
+            });
+        }
+        var listh = $.ajax({
+            url: "@Url.Action("GetListAll", "SanPham")",
+            method: "POST"
+        });
+        function FindData() {
+            var txt_find = $("#txtsreach_dt").val();
+            var html = "";
+            $("#list_sp_show").css("display", "block");
+            listh.done(function (response) {
+                $.each(response, function (e, obj) {
+                    if (txt_find == "") {
+                        html += `<li onclick="ChonHang('` + [obj.ID_Hang] + `', '` + [obj.TenHang] + `','` + [obj.TenNCC] + `')" class="list_sp_item_show">` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `</li>`;
+                        $("#list_sp_show").html(html);
+                    }
+                    if ((obj.ID_Hang.toString().toLocaleLowerCase()).includes(txt_find.toLocaleLowerCase()) || [obj.TenHang].toString().toLocaleLowerCase().includes(txt_find.toLocaleLowerCase())) {
+                        html += `<li onclick="ChonHang('` + [obj.ID_Hang] + `', '` + [obj.TenHang] + `','` + [obj.TenNCC] + `')" class="list_sp_item_show">` + [obj.ID_Hang] + ` - ` + [obj.TenHang] + `</li>`;
+                        $("#list_sp_show").html(html);
+                    }
+                });
+            });
+        }
+        function ChonHang(idh, tenh, tencc) {
+            $("#txtsreach_dt").val(idh + "   " + tenh);
+            $("#list_sp_show").css("display", "none");
+            idhanghoa = idh;
+        }
+        function SuaThongTin(idh) {
+               $.ajax({
+            url: "@Url.Action("DanhSachMonAnList", "SanPham")",
+            method: "POST"
+             })
+             .done(function (response) {
+                var html = "";
+                var stt = 0;
+                 $.each(response, function (e, obj) {
+                     stt++;
+                     if (obj.ID_MonAn == idh) {
+                        var cbsd = "";
+                        if (obj.SuDung == 1) {
+                            cbsd = `<input onclick="ISSuDungMon(0,'` + obj.ID_MonAn + `')" style="width: 18px" id="cbtt" type="checkbox" class="style_item_work " checked />`;
+                        } else {
+                            cbsd = `<input onclick="ISSuDungMon(1,'` + obj.ID_MonAn + `')" style="width: 18px;" id="cbtt" type="checkbox" class="style_item_work "/>`;
+                         }
+                         html+=`<tr >
+                            <td style="width:80px;text-align: center;" >
+                            ` + stt + `
+                        </td>
+                        <td>
+                                 <input type="text" class="style_item_work" id="txtfoodid" value="` + obj.ID_MonAn + `" readonly/>
+                        </td>
+                        <td>
+                                  <input type="text" class="style_item_work" id="txtfoodname" value="` + [obj.TenMon] + `"/>
+                        </td>
+                        <td  style="text-align:center;">
+                                <input type="text" class="style_item_work" id="txtfoodgia" value="` + [obj.GiaMon] + `"/>
+                        </td>
+                        <td >
+                                <input type="text" class="style_item_work" id="txtfoodmota" value="` + [obj.MoTa] + `"/>
+                        </td>
+                        <td>
+                                <input type="text" class="style_item_work" id="txtfoodtrac" value="` + [obj.TracMon] + `"/>
+                        </td>
+                        <td style="">
+                            ` + cbsd + `
+                        </td>
+                        <td>
+                            <input type="text" class="style_item_work" id="txtfoodanh" value="` + [obj.HinhAnh] + `"/>
+                        </td>
+                        <td style="display: flex;padding:3px;">
+                            <div onclick="LuuSuaTTMonAn('`+ obj.ID_MonAn + `');" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                            <div onclick="TatCaMh();" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                        </td>
+                    </tr>`;
+                     }
+                     else {
+                         html += ReturnDs(stt, obj);
+                     }
+                });
+                $("#dsmonan").html(html);
+            }).fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+        }
+        function ThemChiItetMonAn() {
+            var idma = $("#txtdtidmon").val();
+            var dl = $("#txtadddl").val();
+            var dv = $("#txtaddv").val();
+            if (idhanghoa == "") {
+                customAlert.alert("Chưa chọn mặt hàng");
+            }
+            else {
+                $.ajax({
+                    url: "@Url.Action("ThemChiTietMonAn","SanPham")",
+                    method: "POST",
+                    data: {
+                        idma: idma,
+                        idh: idhanghoa,
+                        sl: dl,
+                        dvt: dv
+                    }
+                }).done(function (response) {
+                    var html = "";
+                        $.ajax({
+                            url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                            method: "POST",
+                            data: {
+                                idma: $("#txtdtidmon").val()
+                            }
+                        }).done(function (response) {
+                            var stt = 0;
+                            $.each(response, function (e, obj) {
+                                stt++;
+                                html += RTTable_ItemFood(stt, obj);
+                            });
+                            $("#dsdetail_food").html(html);
+                        });
+                    });
+                    idhanghoa = '';
+            }
+        }
+        function LuuSuaTTMonAn(idh) {
+            var tenf = $("#txtfoodname").val();
+            var anhf = $("#txtfoodanh").val();
+            var tracf = $("#txtfoodtrac").val();
+            var motaf = $("#txtfoodmota").val();
+            var giaf = $("#txtfoodgia").val();
+            $.ajax({
+                url: "@Url.Action("Save_Food_Change","SanPham")",
+                type: "POST",
+                data: { id: idh, ten: tenf, anh: anhf, mota: motaf, trac: tracf, gia: giaf }
+            }).done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                TatCaMh();
+            });
+        }
+       function RTTable_ItemFood(stt,obj) {
+            return  `<tr>
+                         <td style="text-align:center;">
+                           `+stt +`
+                        </td>
+                        <td style="text-align:center;">
+                            `+ [obj.ID_Hang] +`
+                        </td>
+                        <td>
+                           `+[obj.TenHang]+`
+                        </td>
+                        <td style="text-align:center;">
+                           `+[obj.DinhLuong]+`
+                        </td>
+                        <td style="text-align:center;">
+                           `+[obj.DonViDung]+`
+                        </td>
+                        <td style="width:130px; display:flex">
+                           <div onclick="SuaThongTinCT('` + [obj.ID_Hang] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                           <div onclick="XoaSanPhamCT('` + [obj.ID_Hang] + `')"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                        </td>
+                    </tr>`
+        }
+        function SuaThongTinCT(idhh) {
+            var idma = $("#txtdtidmon").val();
+            $("#dsdetail_food").html("");
+             $.ajax({
+                            url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                            method: "POST",
+                            data: {
+                                idma: $("#txtdtidmon").val()
+                            }
+                        }).done(function (response) {
+                            var stt = 0;
+                            var html = "";
+                            $.each(response, function (e, obj) {
+                                stt++;
+                                if (obj.ID_Hang == idhh) {
+                                    html += `<tr>
+                                            <td>
+                                              0
+                                            </td>
+                                            <td >
+                                                `+ obj.ID_Hang + `
+                                            </td>
+                                             <td >
+                                                `+ obj.TenHang + `
+                                            </td>
+                                            <td>
+                                              <input type="text" id="dinhluongsua" class="style_item_work" value="`+ obj.DinhLuong + `" />
+                                            </td>
+                                            <td>
+                                              <input type="text" id="donvisua" class="style_item_work" value="`+ obj.DonViDung + `" />
+                                            </td>
+                                            <td style="width:130px; display:flex">
+                                              <div onclick="LuuSuaCTMon('`+ obj.ID_Hang + `');" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                                              <div onclick="HuyThemMoiSP('`+ idma + `');" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                                            </td>
+                                          </tr>`;
+                                }
+                                else {
+                                    html += RTTable_ItemFood(stt, obj);
+                                }
+                            });
+                            $("#dsdetail_food").html(html);
+                        });
+        }
+        function LuuSuaCTMon(idhh) {
+            var donvi = $("#donvisua").val();
+            var dinhluong = $("#dinhluongsua").val();
+            var idma = $("#txtdtidmon").val();
+                $.ajax({
+                    url: "@Url.Action("ThayDoiDinhLuongCT","SanPham")",
+                    method: "POST",
+                    data: {
+                        idma: idma,
+                        idh: idhh,
+                        sl: dinhluong,
+                        dvt: donvi
+                    }
+                }).done(function (response) {
+                    var html = "";
+                        $.ajax({
+                            url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                            method: "POST",
+                            data: {
+                                idma: $("#txtdtidmon").val()
+                            }
+                        }).done(function (response) {
+                            var stt = 0;
+                            $.each(response, function (e, obj) {
+                                stt++;
+                                html += RTTable_ItemFood(stt, obj);
+                            });
+                            $("#dsdetail_food").html(html);
+                        });
+                    });
+                    idhanghoa = '';
+         }
+       function XoaSanPhamCT(idct) {
+            var idtp = $("#txtdtidmon").val();
+            var html = "";
+            $("#detail_val_sp").css("display", "block");
+            $.ajax({
+                 url: "@Url.Action("XoaCTDSThucPham", "SanPham")",
+                method: "POST",
+                data: {
+                    idma: idtp,
+                    idh: idct
+                }
+            }).done(function (response) {
+                alert(response, "Thông báo");
+                $.ajax({
+                     url: "@Url.Action("ChiTetDSThucPham", "SanPham")",
+                    method: "POST",
+                    data: {
+                        idma: $("#txtdtidmon").val()
+                    }
+                }).done(function (response) {
+                    var stt = 0;
+                    $.each(response, function (e, obj) {
+                        stt++;
+                        html += RTTable_ItemFood(stt, obj);
+                    });
+                    $("#dsdetail_food").html(html);
+                });
+            });
+        }
+    </script>
+}

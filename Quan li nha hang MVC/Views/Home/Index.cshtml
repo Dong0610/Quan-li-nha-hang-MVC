@@ -1,0 +1,340 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    int sokhach =(int) ViewData["sokhach"];
+    int tongnv = (int)ViewData["tongnv"];
+    int tongh = (int)ViewData["tongmh"];
+}
+
+<div style="background: transparent;" class="pr_mix_view">
+    <div class="flex_il">
+        <div style="display: block;" class="custom_list_oder">
+            <div class="list_view_home">
+                <div class="view_home_item">
+                    <div style="width:225px;background:#fff;" class="item_section_name">Số lượng khách hôm nay</div>
+                    <div style="width: 80px; height: 80px;margin:13px auto; border-radius: 50%; background-color: #ccc; color:#000; display: flex; justify-content: center; align-items: center; font-size: 28px;font-weight:600;">@sokhach</div>
+                </div>
+                <div ondblclick="ChuyenDsNV();" style="padding:5px;" class="view_home_item">
+                    <div style="width:225px;background:#fff;" class="item_section_name">Tổng số nhân viên</div>
+                    <div style="width: 80px; height: 80px;margin:13px auto; border-radius: 50%; background-color: #ccc; color:#000; display: flex; justify-content: center; align-items: center; font-size: 28px;font-weight:600;">@tongnv</div>
+
+                </div>
+                <div class="view_home_item">
+                    <div style="width:225px;background:#fff;" class="item_section_name">Tổng mặt hàng</div>
+                    <div style="width: 80px; height: 80px;margin:13px auto; border-radius: 50%; background-color: #ccc; color:#000; display: flex; justify-content: center; align-items: center; font-size: 28px;font-weight:600;">@tongh</div>
+
+                </div>
+            </div>
+            <div style="width: 99.6%; margin: 10px 2px; height: auto;margin-right: 3px;padding-bottom: 10px;">
+
+                <div style="height: 500px; overflow-y: scroll;">
+
+                    <div style="display: block; background-color: #fff;height: 275px;border-radius: 3px; overflow-y: scroll;">
+                        <div style="width:225px;background:#fff;" class="item_section_name">Danh sách bàn </div>
+                        <table id="table" style="font-size:13px;background:#fff;" class="table ">
+                            <thead>
+                                <tr style="background:orange;color:white;">
+                                    <th style="text-align:center">
+                                        STT
+                                    </th>
+                                    <th>
+                                        Mã GD
+                                    </th>
+                                    <th>
+                                        Tên KH
+                                    </th>
+                                    <th>
+                                        Giờ vào
+                                    </th>
+                                    <th>
+                                        Tổng hóa đơn
+                                    </th>
+                                    <th>
+                                        Tình trạng
+                                    </th>
+                                    <th>
+                                        Quản lí
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll;" id="danhsach">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="background-color: transparent; height: 275px; border-radius: 3px;display:flex; margin-top: 10px; overflow-y: scroll;">
+                        <div style="width:50%" id="myChart"></div>
+                        <div style="width:50%" id="myChart2"></div>
+
+                    </div>
+                    <div style="background-color: transparent; height: 275px; border-radius: 3px; margin-top: 10px; overflow-y: scroll;">
+                        <div style="width:100%" id="doanhthungay"></div>
+                       
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <div style="background-color:transparent;" class="list_notifi_view">
+            <div style="background-color:white; width:100%;height:130px; padding:3px;" class="list_notifi_view">
+                <div style="width:100%;height:120px;"  id="doanhthu"> </div>
+            </div>
+            <div style="background-color: white; width: 100%; height: 515px;" class="list_notifi_view">
+                <img id="qrcode" style="width:100%"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+
+    function ChuyenDsNV() {
+        window.location.href = "/NhanVien/DanhSachNhanVien";
+    }
+   function drawchart(result) {
+        data = new google.visualization.DataTable()
+        data.addColumn('string', 'Tên Buffet')
+        data.addColumn('number', 'Suất')
+        var dataArr = []
+       $.each(result, function (i, obj) {
+            dataArr.push([obj.TenCot, obj.SoLuong])
+        })
+        data.addRows(dataArr)
+        var options = {
+            title: 'Số suất Buffet đã bán trong hôm nay',
+            chartArea: { width: '80%' },
+            backgroundColor: '#fff', // Set background color of chart area
+            series: {
+                0: { // Set properties for first column (Sales)
+                    color: 'red',
+                    backgroundColor: 'red'
+                }
+            },
+            bar: {
+                groupWidth: '5px'
+            }
+        }
+       var chart = new google.visualization.ColumnChart(document.getElementById('myChart'));
+       chart.draw(data, options)
+    }
+
+    function QRCodeCreate(img) {
+       
+        // Chuyển đổi Bitmap thành một ArrayBuffer
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 10, 10);
+        var data = canvas.toDataURL('image/png').split(',')[1];
+        var buffer = new Uint8Array(atob(data).split('').map(function (c) { return c.charCodeAt(0); }));
+
+        // Tạo một đối tượng Blob từ ArrayBuffer
+        var blob = new Blob([buffer], { type: 'image/png' });
+
+        // Tạo URL cho Blob và đặt nó làm src của thẻ img
+        var url = URL.createObjectURL(blob);
+        $("#qrcode").attr("src", url);
+    }
+
+    function PhanTramDoanhThu() {
+        $.ajax({
+            url: "@Url.Action("PhanTramDoanhThu", "Home")",
+            type: 'POST'
+        }).done(function (response) {
+            google.charts.load('current', {
+                packages: ['corechart', 'gauge'],
+            })
+            google.charts.setOnLoadCallback(function () {
+                VeBieuDoDT(response)
+            })
+
+        });
+    }
+
+     function ThanhToanCode() {
+        $.ajax({
+            url: "@Url.Action("GenerateQrCode", "HoaDon")",
+            method: "POST",
+        }).done(function (response) {
+            console.log(response);
+            QRCodeCreate(response);
+        });
+    }
+
+    function BieuDoDuong(result) {
+        data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Ngày')
+        data2.addColumn('number', 'Nghìn đồng')
+        var dataArr = []
+        $.each(result, function (i, obj) {
+            dataArr.push([obj.TenCot, obj.SoLuong])
+        })
+        data2.addRows(dataArr)
+        var options = {
+            title: 'Doanh thu theo từng ngày',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            colors:['#FE0000']
+        }
+        var chart2 = new google.visualization.LineChart(document.getElementById('doanhthungay'));
+        chart2.draw(data2, options)
+    }
+    function DoanhThuTheoNgay() {
+        $.ajax({
+            url: "@Url.Action("DoanhThuTheoNgay", "Home")",
+            type: 'POST'
+        }).done(function (response) {
+            google.charts.load('current', {
+                packages: ['corechart', 'gauge'],
+            })
+            google.charts.setOnLoadCallback(function () {
+                BieuDoDuong(response);
+            })
+
+        });
+    }
+
+    function VeBieuDoDT(result) {
+        data = new google.visualization.DataTable()
+        data.addColumn('string', 'Tên Buffet')
+        data.addColumn('number', 'Doanh thu')
+        var dataArr = []
+        $.each(result, function (i, obj) {
+            dataArr.push([obj.TenCot, obj.SoLuong])
+        })
+        data.addRows(dataArr)
+
+        var options = {
+            title: 'Doanh thu hôm nay',
+            chartArea: { width: '80%' },
+            pieHole: 0.8,
+            colors: ['#FE0000', '#3366CC']
+        }
+        var chart2 = new google.visualization.PieChart(document.getElementById('doanhthu'));
+        chart2.draw(data, options)
+    }
+
+    function LoadHDCTT() {
+        var html = "";
+        $.ajax({
+            url: "@Url.Action("HoaDonChoThanhT", "Home")",
+            type: 'POST'
+        }).done(function (response) {
+            var stt = 0;
+            $.each(response, function (e, obj) {
+                stt++;
+                html += DsLoadHD(stt, obj);
+            });
+            $("#danhsach").html(html);
+        });
+    }
+
+    function DsLoadHD(stt, obj) {
+        var tt = "";
+        if (obj.TTThanhToan==2) {
+            tt = "Chờ thanh toán";
+        }
+        else {
+            tt = "Chưa thanh toán";
+        }
+        return `<tr>
+                    <td style="text-align:center">
+                         `+ stt +`
+                        </td>
+                        <td>
+                         `+ obj.ID_GiaoDich +`
+                        </td>
+                        <td>
+                           `+ obj.TenKH +`
+                        </td>
+                        <td>
+                           `+ obj.GioVao +`
+                        </td>
+                        <td>
+                          `+ FomatCurence(obj.TienBanDau) +`
+                        </td>
+                        <td>
+                          `+tt+`
+                        </td>
+                        <td>
+                          <div onclick="ThanhToanHD('`+ obj.ID_HDOder +`');" style="width:82px; height:24px;border-radius:12px;" class="btn_sp btn_save"> <i class="fa-solid fa-credit-card"></i>  Thanh toán</div>
+                        </td>
+                      </tr>`;
+    }
+
+    function FomatCurence(tien) {
+        return Number(tien).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').toString();
+    }
+
+    function ThanhToanHD(idhd) {
+        window.location.href = "/Oder/ThanhToanHD?idhd=" + idhd;
+    }
+
+    function BieuDoTron(result) {
+        data = new google.visualization.DataTable()
+        data.addColumn('string', 'Tên Buffet')
+        data.addColumn('number', 'Thành phần')
+        var dataArr = []
+        $.each(result, function (i, obj) {
+            dataArr.push([obj.TenCot, obj.SoLuong])
+        })
+        data.addRows(dataArr)
+        var options = {
+            title: 'Thành phần hàng',
+            chartArea: { width: '80%' },
+
+            bar: {
+                groupWidth: '5px'
+            }
+        }
+        var chart2 = new google.visualization.PieChart(document.getElementById('myChart2'));
+        chart2.draw(data, options)
+    }
+    $(document).ready(function () {
+        $('#sectionctn').css('overflow', 'hidden');
+        LoadHDCTT();
+        ThanhToanCode();
+
+        PhanTramDoanhThu();
+        DoanhThuTheoNgay();
+        $.ajax({
+            url: "@Url.Action("SoSuatBuffet", "Home")",
+            type: 'POST'
+        }).done(function (response) {
+            google.charts.load('current', {
+                packages: ['corechart', 'gauge'],
+            })
+            google.charts.setOnLoadCallback(function () {
+                drawchart(response)
+            })
+
+        });
+         $.ajax({
+            url: "@Url.Action("BieuDoThanhPhan", "Home")",
+            type: 'POST'
+         }).done(function (response) {
+            google.charts.load('current', {
+                packages: ['corechart', 'gauge'],
+            })
+             google.charts.setOnLoadCallback(function () {
+                 BieuDoTron(response)
+             });
+
+         });
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

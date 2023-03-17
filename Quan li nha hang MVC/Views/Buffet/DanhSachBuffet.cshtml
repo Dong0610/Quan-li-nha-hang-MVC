@@ -1,0 +1,752 @@
+﻿@{
+    ViewBag.Title = "DanhSachBuffet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="detail_val_sp" style="z-index:1000;" class="detail_val_sp">
+    <div class="top_td_val">
+        <p style="padding-left:10px;padding-right:10px;" id="txt_title_detail" type="text" class="txt_dt_titer"></p>
+        <i onclick="CloseViewDetali();" class="fa-solid fa-xmark icclose"> </i>
+    </div>
+    <div style="display: flex;overflow-y: scroll;padding-bottom: 50px;" id="loadworking" class="detail_work_item">
+    </div>
+</div>
+<div class="item_section_name">Danh sách Buffet</div>
+<div id="buffet_item_view" class=" list_buff_stl product_list_work " style="height:94%">
+</div>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<script>
+    let ngaydoi = "";
+    var strDefaulrBf = ` <div style="padding-top: 10px;" class="buffet_view">
+        <div class="pr_item_work">
+            <div class="pr_txt_lb">Tên Buffet</div>
+            <div class="flex_il">
+                <input id="mamh" type="text" style="width: 85%;" class="style_item_work" />
+                <i onclick="ThayDoiMa()" style="font-size: 24px; font-weight: 600; margin: 3px;" class="fa-solid fa fa-search"></i>
+            </div>
+        </div>
+        <div class="pr_item_work">
+            <div class="pr_txt_lb">Ngày tạo</div>
+            <div class="flex_il">
+                <input  id="ngaydoi" type="text" value="`+ ngaydoi +`" style="width: 85%;" class="style_item_work" />
+                <i onclick="ThayDoiNgay()" style="font-size: 24px; font-weight: 600; margin: 3px;" class="fa-solid fa fa-search"></i>
+            </div>
+        </div>
+        <div class="pr_item_work">
+            <div class="pr_txt_lb">Nhập file</div>
+            <div class="inputfile-box">
+                <input type="file" id="file" name="UploadedFiles" multiple style="display: none;"
+                       onchange='ChangeInPut(this)'>
+                <label for="file">
+                    <input type="text" id="file-name" style=" width: 218px;padding: 0 58px 0 10px;" value=""
+                           class="style_item_work file-box"></>
+                    <span style="right: 60px;top:0;" class="file-button">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        File
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="device_or">
+            <div style="margin-top:0px; flex-wrap: wrap;" class="list_btn_pr">
+                <div onclick="TatCaMH();" style="background-color: green; margin-bottom: 5px;" class="btn_all">
+                    <i  class="fa-solid fa-circle-dot"></i> Tất cả
+                </div>
+                <div onclick="BuffetUse(1)" style="background-color: blue; margin-bottom: 5px;" class="btn_all">
+                    <i class="fa-solid fa-circle-check"></i> Sử dụng
+                </div>
+                <div  onclick="BuffetUse(0)"  style="background-color: blue;" class="btn_all">
+                    <i class="fa-solid fa-circle-stop"></i> Ngưng
+                </div>
+                <div onclick="TaoMoiSuatBF();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-plus"></i> Thêm Buffet</div>
+            </div>
+        </div>
+    </div>`;
+    var result = $.ajax({
+        url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+        method: "POST"
+    });
+    function ThayDoiMa() {
+        var htmls = "";
+        htmls += strDefaulrBf;
+        var mah = $("#mamh").val();
+        result.done(function (response) {
+            $.each(response, function (e, obj) {
+                if (obj.ID_Buffe.toString().toLowerCase().includes(mah.toLowerCase()) ||
+                    obj.TenBF.toString().toLowerCase().includes(mah.toLowerCase())) {
+                    htmls += DetailBf(obj);
+                }
+            });
+            $("#buffet_item_view").html(htmls);
+            $("#mamh").val(mah);
+        });
+    }
+    function ThayDoiNgay() {
+        var htmls = "";
+        htmls += strDefaulrBf;
+        var ngay = $("#ngaydoi").val();
+        result.done(function (response) {
+            $.each(response, function (e, obj) {
+                if (obj.NgayTao.toString().includes(ngay)) {
+                    htmls += DetailBf(obj);
+                }
+            });
+            $("#buffet_item_view").html(htmls);
+            $("#ngaydoi").val(ngay);
+        });
+    }
+    var CreateNewStr =
+        `<div class="buffet_view">
+                          <p style="width: 100%;height: 28px; text-align: center; font-weight: 600; font-size: 18px; margin-bottom: -5px;">Tạo mới Buffet</p>
+                          <div class="pr_item_work">
+                            <div class="pr_txt_lb">Tên Buffet</div>
+                              <input id="txtnamebf" type="text" style="width: 95%;" class="style_item_work" />
+                          </div>
+                          <div class="pr_item_work flex_il">
+                            <div class="pr_item_work" style="margin-top: 0; margin-left: 0;">
+                              <div class="pr_txt_lb">Ngày tạo</div>
+                              <div class="flex_il">
+                                <input id="txtdatebf" type="text" readonly value=`+ DefaulDate() + ` style="width: 95%;" class="style_item_work" />
+                              </div>
+                            </div>
+                            <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                              <div class="pr_txt_lb">Sử dụng</div>
+                              <div class="flex_il">
+                                <input id="txtusebf" type="checkbox" style="width: 32px;" class="style_item_work" />
+                              </div>
+                                </div>
+                                 </div>
+                                  <div class="pr_item_work flex_il">
+                                    <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                      <div class="pr_txt_lb">Giá</div>
+                                      <div class="flex_il">
+                                        <input id="txtpricebf" type="text" style="width: 95%;" class="style_item_work" />
+                                      </div>
+                                    </div>
+                                    <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                      <div class="pr_txt_lb">Thuế</div>
+                                      <div class="flex_il">
+                                        <input id="txtthuebf" type="text" style="width: 95%;" class="style_item_work" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="pr_item_work">
+                                    <div class="pr_txt_lb">Hình ảnh</div>
+                                    <div class="flex_il">
+                                      <input id="txtimagebf" type="text" style="width: 85%;" class="style_item_work" />
+                                    </div>
+                                  </div>
+                                  <div style="display:flex;padding-top:5px; justify-content:flex-end;">
+                                    <div onclick="LuuMoiTTBuffet();" style="margin: auto 3px;" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                                    <div onclick="TatCaMH();" class="btn_sp btn_cancel"style="margin: auto 3px;" > <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                                  </div>
+                                 </div>`
+    function LuuMoiTTBuffet() {
+        var isuse = "0";
+        if ($("#txtusebf").is(":checked")) {
+            isuse = "1";
+        }
+        else {
+            isuse = "0";
+        }
+        var tenbf = $("#txtnamebf").val();
+        var datebf = $("#txtdatebf").val();
+        var pricebf = $("#txtpricebf").val();
+        var thuebf = $("#txtthuebf").val();
+        var imagebf = $("#txtimagebf").val();
+        if (confirm("Bạn có chắc tạo mới suất Buffet này?") == true) {
+            $.ajax({
+                url: "@Url.Action("TaoMoiSuatBuffet", "Buffet")",
+                method: "POST",
+                data: { name: tenbf, ngay: datebf, gia: pricebf, thue: thuebf, anh: imagebf, dung: isuse }
+            }).done(function (response) {
+                alert("Thành công!");
+                TatCaMH();
+            });
+        }
+    }
+    function BuffetUse(value) {
+        var html = "";
+        html += strDefaulrBf;
+        if (value == 1) {
+            $.ajax({
+                url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+                method: "POST"
+            })
+                .done(function (response) {
+                    $.each(response, function (e, obj) {
+                        if (obj.SuDung == 1) {
+                            html += DetailBf(obj);
+                        }
+                    });
+                    $("#buffet_item_view").html(html);
+                });
+        }
+        else {
+             $.ajax({
+              url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+                    method: "POST"
+                })
+                .done(function (response) {
+                    $.each(response, function (e, obj) {
+                        if (obj.SuDung == 0) {
+                            html += DetailBf(obj);
+                        }
+                    });
+                    $("#buffet_item_view").html(html);
+                });
+        }
+    }
+    function DetailBf(obj) {
+        var isuse = "";
+        var stop = "";
+        if (obj.SuDung == 1) {
+            isuse = `<input onclick="ISSuDungMon(0,'` + obj.ID_Buffe + `')"  type="checkbox" style="width:10%" class="style_item_work cb_use_buffet"  checked />`;
+            stop = "";
+        }
+        else {
+            isuse = `<input onclick="ISSuDungMon(1,'` + obj.ID_Buffe + `')"  type="checkbox" style="width:10%" class="style_item_work cb_use_buffet"/>`;
+            stop = "stop";
+        }
+        return `<div class="buffet_view ` + stop +`">
+         `+isuse +`
+        <img src="`+ obj.Image +`" alt="" style="width:159px;height:159px;" class="img_buffet">
+        <div class="buffet_name">`+ obj.TenBF + `</div>
+        <input type="text" style="width: 50%; margin: 5px 25% ;   text-align: center;" value="`+ obj.NgayTao +`" class="style_item_work" readonly />
+        <div style="padding: 0 10px;width: 100%; justify-content: flex-end; " class="list_btn_pr">
+            <div style="margin: auto 3px;" onclick="EditBuffetView('` + [obj.ID_Buffe] + `');" class="btn_sp btn_edt">
+                <i class="fa-solid fa-pen-alt"></i>Sửa
+            </div>
+            <div style="margin: auto 3px;" onclick="ChiTietBuffetView('` +[obj.ID_Buffe]+`');" class="btn_sp btn_views">
+                <i class="fa-solid fa-eye"></i>Xem
+            </div>
+            </div>
+        </div>`;
+    }
+    //<div style="margin: auto 3px;" onclick="DuyetHangTheoSP('` + [obj.ID_Buffe] + `');" class="btn_sp btn_del">
+            //    <i class="fa-solid fa-xmark-circle"></i>Xóa
+            //</div>
+    function TaoMoiSuatBF() {
+          var html = "";
+        html += strDefaulrBf;
+        html += CreateNewStr;
+        $.ajax({
+              url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+                    method: "POST"
+        })
+        .done(function (response) {
+            $.each(response, function (e, obj) {
+                html += DetailBf(obj);
+            });
+            $("#buffet_item_view").html(html);
+        });
+    }
+    function DefaulDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/'+ mm + '/'   + yyyy;
+       return today
+    }
+    var tblBuffe = [];
+    function ChiTietBuffetView(id) {
+        $("#detail_val_sp").css("display", "block");
+        var html = "";
+        $.ajax({
+            url: "@Url.Action("DetailBuffetView", "Buffet")",
+            method: "POST",
+            data: { idbf: id }
+        })
+            .done(function (response) {
+                $.each(response, function (e, obj) {
+                    html = `<div style="width: 1050px; margin-bottom:65px;" class="detail_table_view_id flex_il">
+                            <div style="width: 40%;" class="device">
+                                <div class="item_section_name">Chi tiết Buffet</div>
+                                <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px; height: 445px;">
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Mã Buffet</div>
+                                        <input type="text" value="`+ obj.ID_Buffe + `" id="txtdtidbf" class="style_item_work "
+                                             readonly />
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Tên buffet</div>
+                                        <input type="text" value="`+ obj.TenBF + `" id="tenmon" class="style_item_work "
+                                            readonly />
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Giá buffet</div>
+                                        <input type="text" value="`+ obj.GiaBF + `" id="giamon" class="style_item_work " value=""
+                                            readonly />
+                                    </div>
+                                    <div class="pr_item_work flex_il">
+                                        <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                            <div class="pr_txt_lb">Ngày tạo</div>
+                                            <div class="flex_il">
+                                                <input id="txtpricebf" type="text" value="`+ obj.NgayTao + `" style="width: 95%;"
+                                                    class="style_item_work" />
+                                            </div>
+                                        </div>
+                                        <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                            <div class="pr_txt_lb">Thuế</div>
+                                            <div class="flex_il">
+                                                <input id="txtthuebf" value="`+ obj.Thue + `" type="text" style="width: 95%;"
+                                                    class="style_item_work" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Hình ảnh</div>
+                                        <div class="flex_il">
+                                            <img src="`+ obj.Image + `" alt="" id="hinhanh"
+                                                style="width: 180px; height: 180px; border: 1px solid #ccc; border-radius: 90px; margin: auto;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 60%;" class="device">
+                                <div class="item_section_name">Chi tiết buffet</div>
+                                <div class="tb_detail_list" style="padding-top:10px; height:445px;">
+                                    <fieldset style="width: 98%; height: 370px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                                        class="style_item_work">
+                                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Thành phần</legend>
+                                        <table style="font-size:13px;" class="table">
+                                            <thead>
+                                                <tr style="background:#FFA600; color:white;">
+                                                    <th style="width:50px; text-align:center;">
+                                                        STT
+                                                    </th>
+                                                    <th>
+                                                        Mã món
+                                                    </th>
+                                                    <th>
+                                                        Tên món
+                                                    </th>
+                                                    <th style="width:120px;">
+                                                        Giá
+                                                    </th>
+                                                    <th style="width:80px;">
+                                                        Số lượng
+                                                    </th>
+                                                    <th width="130px">
+                                                        Quản lí
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dsdetail_foodbf">
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                    <div style="margin: auto; padding-top: 10px;" class="list_btn_pr">
+                                        <div onclick="ThemMoiChiTietBf();" style="background-color: blue; " class="btn_all">
+                                            <i class="fa-solid fa-add"></i> Thêm
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                $("#loadworking").html(html);
+                 var detail = "";
+                $.ajax({
+                    url: "@Url.Action("ChiTietMon","Buffet")",
+                    method: "POST",
+                    data: { id: id }
+                }).done(function (response) {
+                    var st = 0;
+                    $.each(response, function (e, obj) {
+                        st++;
+                        detail += Return_ListFood(st,obj,id);
+                    });
+                    detail += `<tr >
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="width:80px;"></td>
+                                    <td style="width:130px; display:flex"></td></tr>`;
+                    $("#dsdetail_foodbf").html(detail);
+                });
+            });
+    }
+     function EditBuffetView(id) {
+        $("#detail_val_sp").css("display", "block");
+        var html = "";
+        $.ajax({
+            url: "@Url.Action("DetailBuffetView", "Buffet")",
+            method: "POST",
+            data: { idbf: id }
+        })
+            .done(function (response) {
+                $.each(response, function (e, obj) {
+                    html = `<div style="width: 1050px; margin-bottom:65px;" class="detail_table_view_id flex_il">
+                            <div style="width: 40%;" class="device">
+                                <div class="item_section_name">Chi tiết Buffet</div>
+                                <div class="tb_detail_list" style="padding-top:10px;margin-right: 5px; height: 520px;">
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Mã Buffet</div>
+                                        <input type="text" value="`+ obj.ID_Buffe + `" id="udbfid" class="style_item_work" readonly />
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Tên buffet</div>
+                                        <input type="text" value="`+ obj.TenBF + `" id="udbfname" class="style_item_work " />
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Giá buffet</div>
+                                        <input type="text" value="`+ obj.GiaBF + `" id="udbfgia" class="style_item_work "/>
+                                    </div>
+                                    <div class="pr_item_work flex_il">
+                                        <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                            <div class="pr_txt_lb">Ngày tạo</div>
+                                            <div class="flex_il">
+                                                <input id="txtpricebf" type="text" value="`+ obj.NgayTao + `" style="width: 95%;" class="style_item_work" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="pr_item_work" style="margin-top: 0;margin-left: 0;">
+                                            <div class="pr_txt_lb">Thuế</div>
+                                            <div class="flex_il">
+                                                <input id="udbfthue" value="`+ obj.Thue + `" type="text" style="width: 95%;" class="style_item_work" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pr_item_work">
+                                        <div class="pr_txt_lb">Hình ảnh</div>
+                                         <input oninput="ChangeImg()" id="txtimgchange" value="`+ obj.Image + `" type="text" style="width: 95%;" class="style_item_work" />
+                                        <div style="margin-top:10px;" class="flex_il">
+                                            <img src="`+ obj.Image + `" alt="" id="hinhanh"
+                                                style="width: 180px; height: 180px; border: 1px solid #ccc; border-radius: 90px; margin: auto;">
+                                        </div>
+                                         <div style="margin: auto; padding-top: 10px;" class="list_btn_pr">
+                                            <div onclick="UpdateChiTietBf();" style="background-color: blue; " class="btn_all">
+                                            <i class="fa-solid floppy-disk"></i> Lưu
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 60%;" class="device">
+                                <div class="item_section_name">Chi tiết buffet</div>
+                                <div class="tb_detail_list" style="padding-top:10px; height:520px;">
+                                    <fieldset style="width: 98%; height: 450px; margin: 4px; padding: 4px;overflow-y: scroll;"
+                                        class="style_item_work">
+                                        <legend style="padding: 4px;font-size: 15px;font-weight: 500;">Thành phần</legend>
+                                        <table style="font-size:13px;" class="table">
+                                            <thead>
+                                                <tr style="background:#FFA600; color:white;">
+                                                    <th style="width:50px; text-align:center;">
+                                                        STT
+                                                    </th>
+                                                    <th>
+                                                        Mã món
+                                                    </th>
+                                                    <th>
+                                                        Tên món
+                                                    </th>
+                                                    <th style="width:120px;">
+                                                        Giá
+                                                    </th>
+                                                    <th style="width:80px;">
+                                                        Số lượng
+                                                    </th>
+                                                    <th width="130px">
+                                                        Quản lí
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dsdetail_foodbf">
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                    <div style="margin: auto; padding-top: 10px;" class="list_btn_pr">
+                                        <div onclick="ThemMoiChiTietBf();" style="background-color: blue; " class="btn_all">
+                                            <i class="fa-solid fa-add"></i> Thêm
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                $("#loadworking").html(html);
+                 var detail = "";
+                $.ajax({
+                    url: "@Url.Action("ChiTietMon","Buffet")",
+                    method: "POST",
+                    data: { id: id }
+                }).done(function (response) {
+                    var st = 0;
+                    $.each(response, function (e, obj) {
+                        st++;
+                        detail += Return_ListFood(st,obj,id);
+                    });
+                    detail += `<tr >
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="width:80px;"></td>
+                                    <td style="width:130px; display:flex"></td></tr>`;
+                    $("#dsdetail_foodbf").html(detail);
+                });
+            });
+    }
+    function UpdateChiTietBf() {
+        var id = $("#udbfid").val();
+        var name = $("#udbfname").val();
+        var gia = $("#udbfgia").val();
+        var thue = $("#udbfthue").val().replace(",",".");
+        var anh = $("#txtimgchange").val();
+        if (confirm("Bạn có xác nhận sửa") == true) {
+            $("#list_sp_show").css("display", "block");
+            $.ajax({
+                url: "@Url.Action("UpdateDeatailBF","Buffet")",
+                method: "POST",
+                data: { id: id, name: name, gia: gia, thue: thue, anh: anh }
+            }).done(function (response) {
+                $("#detail_val_sp").css("display", "none");
+                customAlert.alert(response);
+                TatCaMH();
+            });
+        }
+    }
+    function ChangeImg() {
+        var newsrc = $("#txtimgchange").val();
+        $("#hinhanh").attr("src", newsrc);
+    }
+    function FindData() {
+        var txt_find = $("#txtsreach_dt").val();
+        var html = "";
+        $("#list_sp_show").css("display", "block");
+         $.ajax({
+                url: "@Url.Action("DanhSachMonAnList","SanPham")",
+                method: "POST"
+         }).done(function (response) {
+            $.each(response, function (e, obj) {
+                if (txt_find == "") {
+                    html += `<li style="font-size:12px;margin:0;" onclick="ChonHang('` + [obj.ID_MonAn] + `', '` + [obj.TenMon] + `','` + [obj.GiaMon] + `')" class="list_sp_item_show">` + [obj.ID_MonAn] + ` - ` + [obj.TenMon] + `</li>`;
+                    $("#list_sp_show").html(html);
+                }
+                else if (([obj.ID_MonAn].toString().toLocaleLowerCase()).includes(txt_find.toLocaleLowerCase()) || [obj.TenMon].toString().toLocaleLowerCase().includes(txt_find.toLocaleLowerCase())) {
+                    html += `<li style="font-size:12px;margin:0;" onclick="ChonHang('` + [obj.ID_MonAn] + `', '` + [obj.TenMon] + `','` + [obj.GiaMon] + `')" class="list_sp_item_show">` + [obj.ID_MonAn] + ` - ` + [obj.TenMon] + `</li>`;
+                    $("#list_sp_show").html(html);
+                }
+            });
+        });
+    }
+    var idmonchoose = "";
+    function ChonHang(idmon, trmmon, giamon) {
+        $("#txtgiambf").val(giamon);
+        $("#txtsreach_dt").val(idmon + "-" + trmmon);
+        $("#list_sp_show").css("display", "none");
+        idmonchoose = idmon;
+    }
+    function Return_ListFood(st,obj,idbf) {
+        return `<tr ><td style="text-align:center;">
+                               `+ st + `
+                            </td>
+                            <td>
+                                `+ obj.ID_Mon + `
+                            </td>
+                            <td>
+                              `+ obj.TenMon + `
+                            </td>
+                            <td>
+                               `+ obj.GiaMon + `
+                            </td>
+                            <td style="width:80px;">
+                               `+ obj.SoLuong + `
+                            </td>
+                            <td >
+                                <div class="flex_il">
+                                     <div onclick="SuaThongTin('` + [obj.ID_MonAn] + `');" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                                                    <div onclick="XoaMonAnBF('` + [obj.ID_Mon] + `','` + idbf + `');" class="btn_sp btn_del"> <i class="fa-solid fa-circle-info"></i> Xóa</div>
+                                    </div>
+                            </td>
+                        </tr>`;
+    }
+    function XoaMonAnBF(idmon, idbf) {
+        var html = "";
+        alert(idmon);
+          $.ajax( {
+                url: "@Url.Action("XoaCtTietMon", "Buffet")",
+                method: "POST",
+                data: { idbf: idbf,idma:idmon }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += Return_ListFood(stt, obj,idbf);
+                });
+                $("#dsdetail_foodbf").html(html);
+            });
+    }
+    function ThemMoiChiTietBf() {
+        var idbf = $("#txtdtidbf").val();
+            var html = `<tr>
+                        <td style="text-align: center;">
+                          0
+                        </td>
+                        <td colspan="2">
+                          <input oninput="FindData();" type="text" class="style_item_work" id="txtsreach_dt" />
+                          <ul style="overflow-x:hidden;z-index:10000;position:absolute;width:182px; display: none; margin: 3px 0; height: 100px;" id="list_sp_show" class="list_sp_show">
+                          </ul>
+                        </td>
+                        <td>
+                          <input type="text" class="style_item_work" id="txtgiambf" readonly />
+                        </td>
+                        <td>
+                          <input type="text" class="style_item_work" id="txtsl" value="0" />
+                        </td>
+                        <td >
+                            <div class="flex_il">
+                              <div onclick="LuuChiTietBF('`+ idbf +`');" class="btn_sp btn_save"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                              <div onclick="HuyThemMoiBF('`+ idbf +`');" class="btn_sp btn_cancel"> <i class="fa-solid fa-xmark"></i>  Hủy</div>
+                            </div>
+                        </td>
+                      </tr>`;
+            $.ajax( {
+                url: "@Url.Action("ChiTietMon", "Buffet")",
+                method: "POST",
+                data: { id: idbf }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += Return_ListFood(stt, obj,idbf);
+                });
+                $("#dsdetail_foodbf").html(html);
+            });
+    }
+    function LuuChiTietBF(idbf) {
+        var html = "";
+         $.ajax( {
+                url: "@Url.Action("ThemMonCtBf", "Buffet")",
+             method: "POST",
+             data: { idbf: idbf, idm: idmonchoose, sl: $("#txtsl").val() }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += Return_ListFood(stt, obj,idbf);
+                });
+                $("#dsdetail_foodbf").html(html);
+            });
+    }
+    function HuyThemMoiBF(id) {
+        var html = "";
+         $.ajax( {
+                url: "@Url.Action("ChiTietMon", "Buffet")",
+                method: "POST",
+                data: { id: id }
+            }).done(function (response) {
+                var stt = 0;
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += Return_ListFood(stt, obj,id);
+                });
+                $("#dsdetail_foodbf").html(html);
+            });
+    }
+    function ISSuDungMon(isuse, Idh) {
+        var html = "";
+        html += strDefaulrBf;
+            $.ajax({
+                  url: "@Url.Action("SuDungMonAn", "Buffet")",
+                method: "POST",
+                data: { use: isuse, idh: Idh }
+            })
+                .done(function (response) {
+                    alert("Thành công!");
+                    $.each(response, function (e, obj) {
+                        html += DetailBf(obj);
+                    });
+                    $("#buffet_item_view").html(html);
+                });
+        }
+    function ChangeInPut(event) {
+        $("#detail_val_sp").css("display", "block");
+        var html = `  <div style="min-height:auto; " class="read_file_excel">
+              <div class="read_excel_title">Danh sách đọc từ file</div>
+            `;
+        var table_output = "";
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(event.files[0]);
+        $("#file-name").val(event.files[0].name);
+        reader.onload = function (event) {
+            var data = new Uint8Array(reader.result);
+            var work_book = XLSX.read(data, { type: 'array' });
+            var sheet_name = work_book.SheetNames;
+            var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], { hearder: 0 });
+            if (sheet_data.length > 0) {
+                table_output += '<table style="overflow:scroll;" class="table table-bordered">';
+                table_output +=
+                    `<thead>
+                            <tr>
+                                <th>STT </th>
+                                <th> Mã Buffet </th>
+                                <th>Tên Buffet </th>
+                                <th> Giá Buffet</th>
+                                <th> Ngày tạo</th>
+                                <th>Thuế</th>
+                                <th> Sử dụng </th>
+                                <th>Hình ảnh</th>
+                                <th> Thành tiền</th>
+                            </tr>
+                            </thead>`;
+                table_output += '<tbody>';
+                for (var row = 0; row < sheet_data.length; row++) {
+                    table_output += '<tr>';
+                    table_output += '<td>' + row + '</td>';
+                    table_output += '<td>' + sheet_data[row].ID_Buffe + '</td>';
+                    table_output += '<td>' + sheet_data[row].TenBF + '</td>';
+                    table_output += '<td>' + sheet_data[row].GiaBF + '</td>';
+                    table_output += '<td>' + sheet_data[row].NgayTao+ '</td>';
+                    table_output += '<td>' + sheet_data[row].Thue + '%</td>';
+                    table_output += '<td>' + sheet_data[row].SuDung + '</td>';
+                    table_output += '<td >' + (sheet_data[row].Image).substring(0,40)+'.....</td>';
+                    table_output += '<td>' + sheet_data[row].Thue * sheet_data[row].GiaBF + '</td>';
+                    table_output += '</tr>';
+                    tblBuffe.push(sheet_data[row]);
+                }
+                table_output += '</tbody></table > ';
+            }
+            html += table_output;
+            html += ` <div class="device_or">
+                    <div class="list_btn_pr">
+                        <div onclick="LuuDanhSachBuffet();" style="background-color: blue;" class="btn_all"> <i class="fa-solid fa-floppy-disk"></i>  Lưu</div>
+                    </div>
+                </div>`;
+            html += `</div>`;
+            $("#txt_title_detail").html("Đọc dữ liệu từ: " + $("#file-name").val());
+            $("#loadworking").html(html);
+        }
+    }
+    function LuuDanhSachBuffet() {
+          $.ajax({
+                url: "@Url.Action("LuuDSBuffet", "Buffet")",
+              method: "POST",
+              data: { model: tblBuffe }
+            })
+            .done(function (response) {
+                customAlert.alert(response, "Thông báo");
+                $("#detail_val_sp").css("display", "none");
+            });
+    }
+    // html += CreateNewStr;
+    function TatCaMH() {
+        var html = "";
+        ngaydoi = "";
+        html += strDefaulrBf;
+        $.ajax({
+              url: "@Url.Action("DanhSachBuffetList", "Buffet")",
+                    method: "POST"
+        })
+            .done(function (response) {
+            $.each(response, function (e, obj) {
+                html += DetailBf(obj);
+            });
+            $("#buffet_item_view").html(html);
+        });
+    }
+    $(document).ready(function () {
+        TatCaMH();
+    });
+</script>

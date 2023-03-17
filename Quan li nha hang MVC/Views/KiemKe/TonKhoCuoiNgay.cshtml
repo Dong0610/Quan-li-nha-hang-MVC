@@ -1,0 +1,444 @@
+﻿
+@{
+    ViewBag.Title = "TonKhoCuoiNgay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div style="width:225px;" class="item_section_name">Tồn kho cuối ngày</div>
+<div style="margin-top:-45px;" id="main" class="col12">
+    <div style="background:white;" class="formmain col12">
+
+        <div style="height:660px;min-height:0; " class="main_screen">
+
+            <div class="nav_main">
+                <div class="item_navmain blue">
+                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    Xem kết quả
+                </div>
+                <div onclick="ExportExcel();" class="item_navmain blue">
+                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    Xuất Excel
+                </div>
+                <div onclick="DongBoData()" class="item_navmain green">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    Đồng bộ
+                </div>
+                <div onclick="LuuLaiHoaDon()" class="item_navmain green">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    Lưu kiểm kê
+                </div>
+            </div>
+            <div class="form_input">
+                <div class="top_index1">
+                    <div id="dsngay" class="col4 val_item">
+                        <p>Ngày kiểm kê</p>
+                        <input style="padding-left:20px;width:75%" id="danhsachngay" onchange="NgayKiemKe();" type="date" class="style_item_work"/>
+                       
+                    </div>
+                    <div  class="col4 val_item">
+                        <p>Loại NVL</p>
+                        <select style="padding-left:20px;width:65%;" onselect=""  class="style_item_work">
+                            <option>Vật liệu chính</option>
+                            <option>Vật liệu phụ</option>
+                        </select>
+                    </div>
+                    <div class="col2 val_item">
+                        <p>Vị trí</p>
+                        <select style="padding-left:20px; width:75%;" id="khuvuc" class="style_item_work">
+                            <option id="Bếp">Bếp</option>
+                            <option id="Bar">Quầy bar</option>
+                        </select>
+                    </div>
+                    <div class="col2 val_item">
+                        <div onclick="LoadDsHang();" style="padding-left:6px;width:80%;" class="item_navmain green kiemkenhom">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            Kiểm kê
+                        </div>
+                    </div>
+                </div>
+                <p class="txt_kieke">Thông tin kiểm kê</p>
+                <div class="top_index1">
+                    <div class="col6 val_item">
+                        <div class="input_form">
+                            <input id="txt_inputnvl" style="width:350px;" oninput="FindVal()" onfocus="focusval();" type="text"
+                                   placeholder="Tên hoặc mã NVL" class="style_item_work">
+                            <ul id="list_nvl" class="list_nvl">
+                            </ul>
+                            <input id="txt_notes" type="text" style="margin-top:8px;width:280px;" placeholder="Ghi chú" class="style_item_work note_ip">
+                        </div>
+
+                    </div>
+                    <div class="col4 val_item">
+                        <div class="input_form">
+                            <input id="dlnvlip" type="text" placeholder="Số lượng" class="style_item_work">
+                            <div class="btnlist">
+                                <div onclick="ThemHang()" style="padding-top:1px;" class="btn_enter">
+                                    <i class="fa-sharp fa-solid fa-arrow-down"></i>
+                                </div>
+                                <div style="padding-top:1px;" onclick="TimKiemHangTM()" class="btn_enter">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col2 val_item">
+                        <div onclick="LuuLaiHoaDon()" class="item_navmain green kiemkenhom">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Lưu kiểm kê
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="overflow-y:scroll;height:352px;" class="div_form">
+                    <table id="table" class="table ">
+                        <thead>
+                            <tr class="col10" style="margin-bottom:2px;background-color:orange; color:white;">
+                                <td style="width:5%" class="table_header stt-val">STT</td>
+                                <td style="width:10%" class="table_header stt-val">Khu vực</td>
+                                <td style="width:10%" class="table_header id-sp">Mã NVL</td>
+                                <td style="width:20%" class="table_header name-sp">Tên NVL</td>
+                                <td style="width:10%" class="table_header value-sp">Số lượng</td>
+                                <td style="width:10%" class="table_header value-sp">ĐVT</td>
+                                <td style="width:10%" class="table_header quantitative">Nguồn</td>
+                                <td style="width:15%" class="table_header note-sp">Ghi chú</td>
+                                <td style="width:10%" class="table_header note-sp">Thay đổi</td>
+                            </tr>
+                        </thead>
+                        <tbody id="danhsachth">
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+
+    var iseditsl = 0;
+    var idsua = "";
+    var soluongsua = "";
+    $(document).ready(function () {
+        $("#sectionctn").css("overflow", "hidden");
+        var tod = new Date().toISOString().substring(0, 10);
+        LoadDsHang();
+        $("#danhsachngay").val(tod);
+        if (iseditsl ==1) {
+            $("#dlnvlip").on("keydown", function (event) {
+                if (event.key === "Enter") {
+                    var sol = $("#dlnvlip").val();
+                    var note = $("#txt_notes").val();
+                    var kv = $("#khuvuc").val();
+                    if (idh == "") {
+                    }
+                    else {
+                        LuuSuaSL();
+                        LoadDsHang();
+                    }
+                }
+            });
+        }
+    });
+
+    function NgayKiemKe() {
+        var ngaykk = FormatDate($("#danhsachngay").val());
+        $.ajax({
+            url: "@Url.Action("KiemKeTheoNgay", "KiemKe")",
+            method: "POST",
+            data: { ngaykk: ngaykk }
+        }).done(function (response) {
+            var html = "";
+            var stt = 0;
+            $.each(response, function (e, obj) {
+                stt++;
+                html += DanhSachHT(stt, obj);
+            });
+            $("#danhsachth").html(html);
+        });
+    }
+
+    function FormatDate(dates) {
+        var date = dates.toString();
+        var year = date.substring(0, 4);
+        var month = date.substring(5, 7);
+        var day = date.substring(8, 10);
+        return day + "/" + month + "/" + year;
+    }
+    function LuuLaiHoaDon() {
+          var ghichu = "";
+        $.ajax({
+            url: "@Url.Action("LuuDSTonKho", "KiemKe")",
+            method: "POST"
+        }).done(function (response) {
+            customAlert.alert(response, "Thông báo");
+        });
+    }
+
+    function TimKiemHangTM() {
+        $.ajax({
+            url: "@Url.Action("DanhSachTonHN", "KiemKe")",
+            method: "POST",
+        }).done(function (response) {
+            var html = "";
+            var stt = 0;
+            $.each(response, function (e, obj) {
+                if (obj.IdMH == idh) {
+                    stt++;
+                    html += DanhSachHT(stt, obj);
+                }
+            });
+            $("#danhsachth").html(html);
+            idh = "";
+            names = "";
+            nccs = "";
+            dvts = "";
+            $("#txt_notes").val("");
+        });
+    }
+
+    function DongBoData() {
+        var ngayt = "";
+        var tenth = "";
+        var ghichu = "";
+        $.ajax({
+            url: "@Url.Action("DongBoData", "SanPham")",
+            method: "POST"
+        }).done(function (response) {
+            customAlert.alert(response, "Thông báo");
+        });
+    }
+
+
+    function FindVal() {
+        $("#list_nvl").css("display", "block");
+        let input = $("#txt_inputnvl").val();
+        var txt = input.toLowerCase();
+        let stringhtml = "";
+        $.ajax({
+            url: "@Url.Action("GetListAll", "SanPham")",
+            method: "POST"
+        }).done(function (response) {
+            $.each(response, function (e, obj) {
+                if (obj.ID_Hang.toLocaleLowerCase().includes(txt) || obj.TenHang.toLocaleLowerCase().includes(txt)) {
+                    stringhtml += `<li class="nvl_item" style="line-height:30px;margin:0 0 0 20px;" onclick="ItemClick('` + obj.ID_Hang + `','` + obj.TenHang + `','` + obj.TenNCC + `','` + obj.DonViTon + `')">` + obj.ID_Hang + " - " + obj.TenHang + "</li>";
+                }
+            });
+            $("#list_nvl").html(stringhtml);
+        });
+    }
+    function focusval() {
+
+        $("#list_nvl").css("display", "block");
+        $("#txt_inputnvl").val("");
+        let stringhtml = "";
+        $.ajax({
+            url: "@Url.Action("GetListAll", "SanPham")",
+            method: "POST"
+        }).done(function (response) {
+            $.each(response, function (e, obj) {
+                stringhtml += `<li class="nvl_item" style="line-height:30px;margin:0 0 0 20px;" onclick="ItemClick('` + obj.ID_Hang + `','` + obj.TenHang + `','` + obj.TenNCC + `','` + obj.DonViTon + `')">` + obj.ID_Hang + " - " + obj.TenHang + "</li>";
+            });
+            $("#list_nvl").html(stringhtml);
+        });
+        $("#dlnvlip").val("");
+    }
+    var idh = "";
+    var names = "";
+    var nccs = "";
+    var dvts = "";
+
+    function ThemHang() {
+        var sol = $("#dlnvlip").val();
+        var note = $("#txt_notes").val();
+        var kv = $("#khuvuc").val();
+        if (idh == "") {
+            alert("Chọn lại mặt hàng!");
+        }
+        else {
+            AddValue(idh, names, dvts, sol, note, nccs, kv);
+        }
+    }
+
+    function LuuSuaSL() {
+        var slmoi = $("#dlnvlip").val();
+        var gchu = $("#txt_notes").val();
+        $.ajax({
+            url: "@Url.Action("LuuSuaSoLuong", "KiemKe")",
+            method: "POST",
+            data: { id: idsua, slc: soluongsua, slnew: slmoi, gc: gchu }
+        }).done(function (response) {
+            if (response == 1 || response == 2) {
+                LoadDsHang();
+            }
+            else {
+                customAlert.alert("Thử lại sau", "Thông báo");
+            }
+
+        });
+
+    }
+
+    function ItemClick(ma, ten, ncc, dvt) {
+        $("#list_nvl").css("display", "none");
+        $("#txt_inputnvl").val(ma + " - " + ten);
+        $("#dlnvlip").focus();
+        if (ma == null || ten == null || dvt == null) {
+            alert("Nhập số lượng mặt hàng");
+        } else {
+            idh = ma;
+            names = ten;
+            nccs = ncc;
+            dvts = dvt;
+            $("#dlnvlip").on("keydown", function (event) {
+                if (event.key === "Enter") {
+                    var sol = $("#dlnvlip").val();
+                    var note = $("#txt_notes").val();
+                    var kv = $("#khuvuc").val();
+                    if (idh == "") {
+                    }
+                    else {
+                        AddValue(idh, names, dvts, sol, note, nccs, kv);
+                        idh = "";
+                        LoadDsHang();
+                    }
+                }
+            });
+        }
+    }
+
+    function AddValue(ma, ten, dvt, soluong, note, tenncc, kv) {
+        $.ajax({
+            url: "@Url.Action("ThemTonHang", "KiemKe")",
+            method: "POST",
+            data: { id: ma, name: ten, dvt: dvt, sol: soluong, note: note, ncc: tenncc,kv:kv }
+        }).done(function (response) {
+            var html = "";
+            var stt = 0;
+            $.each(response, function (e, obj) {
+                stt++;
+                html += DanhSachHT(stt, obj);
+            });
+            $("#danhsachth").html(html);
+            idh = "";
+            names = "";
+            nccs = "";
+            dvts = "";
+        });
+    }
+
+    function LoadDsHang() {
+        var stt = 0
+        var html = "";
+         $.ajax({
+                url: "@Url.Action("DanhSachTonHN", "KiemKe")",
+                method: "POST",
+         }).done(function (response) {
+                $.each(response, function (e, obj) {
+                    stt++;
+                    html += DanhSachHT(stt, obj);
+                });
+                $("#danhsachth").html(html);
+            });
+    }
+    function DanhSachHT(stt,obj) {
+        var ncc = "";
+        if (obj.NhaCC.length > 10) {
+            ncc = obj.NhaCC.substring(0, 10) + '...';
+        }
+        else {
+            ncc = obj.NhaCC;
+        }
+        return `<tr style="border-top:none; border-bottom:1px solid #ddd" >
+                <td style="text-align:center;">
+                    ` + stt++ + `
+                </td>
+                  <td>
+                    ` + obj.KhuVuc + `
+                </td>
+                   <td>
+                    ` + obj.IdMH + `
+                </td>
+                <td>
+                   ` + obj.TenH + `
+                </td>
+
+                <td>
+                   ` + [obj.SoLuong] + `
+                </td>
+                <td>
+                   ` + [obj.DonViTon] + `
+                </td>
+               <td>
+                   ` + ncc + `
+                </td>
+                <td>
+                   ` + [obj.Ghichu] + `
+                </td>
+               <td>
+                    <div class="flex_il">
+                        <div onclick="SuaThongTin('` + [obj.IdMH] + `',` + obj.SoLuong +`);" class="btn_sp btn_edt"><i class="fa-solid fa-pen"></i> Sửa</div>
+                        <div onclick="XoaSanPham('` + [obj.IdMH] + `',` + obj.SoLuong +`)"   class="btn_sp btn_del"> <i class="fa-solid fa-trash"></i> Xóa</div>
+                   </div>
+                </td>
+            </tr>`;
+    }
+
+    function XoaSanPham(id, sol) {
+        $.ajax({
+            url: "@Url.Action("XoaHangTT", "KiemKe")",
+            method: "POST",
+            data: { id: id, sol: sol }
+        }).done(function (response) {
+            DanhSachHT();
+        });
+    }
+    function SuaThongTin(id, soluong) {
+        idsua = id;
+        soluongsua = soluong;
+        iseditsl = 1;
+        $.ajax({
+            url: "@Url.Action("DanhSachTonHN", "KiemKe")",
+            method: "POST",
+        }).done(function (response) {
+            var html = "";
+            var stt = 0;
+            $.each(response, function (e, obj) {
+                if (obj.IdMH == id && obj.SoLuong == soluong) {
+                    $("#txt_inputnvl").val(obj.IdMH + " - " + obj.TenH);
+                    $("#dlnvlip").val(obj.SoLuong);
+                    $("#txt_notes").val(obj.Ghichu);
+                    $("#dlnvlip").focus();
+                    $("#dlnvlip").on("keydown", function (event) {
+                        if (event.key === "Enter") {
+                            if (idsua == "") {
+                            }
+                            else {
+                                LuuSuaSL();
+                                idsua = "";
+                                LoadDsHang();
+                            }
+                        }
+                    });
+                }
+            });
+            idh = "";
+            names = "";
+            nccs = "";
+            dvts = "";
+        });
+    }
+
+    function ExportExcel() {
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table.table"));
+    }
+
+
+
+
+</script>
