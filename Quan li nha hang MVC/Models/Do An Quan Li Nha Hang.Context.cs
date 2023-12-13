@@ -28,7 +28,7 @@ namespace Quan_li_nha_hang_MVC.Models
         }
     
         public virtual DbSet<ChuNhaHang> ChuNhaHang { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TaiKhoan> TaiKhoan { get; set; }
         public virtual DbSet<tblBanNH> tblBanNH { get; set; }
         public virtual DbSet<tblBuffet> tblBuffet { get; set; }
         public virtual DbSet<tblChiTietBuffet> tblChiTietBuffet { get; set; }
@@ -48,12 +48,11 @@ namespace Quan_li_nha_hang_MVC.Models
         public virtual DbSet<tblNhanVien> tblNhanVien { get; set; }
         public virtual DbSet<tblProductMix> tblProductMix { get; set; }
         public virtual DbSet<tblPhanQuyen> tblPhanQuyen { get; set; }
-        public virtual DbSet<tblTaiKhoan> tblTaiKhoan { get; set; }
+        public virtual DbSet<tblQuyenNV> tblQuyenNV { get; set; }
         public virtual DbSet<tblTonHang> tblTonHang { get; set; }
         public virtual DbSet<tblCT_ProductMix> tblCT_ProductMix { get; set; }
         public virtual DbSet<tblCTTonHang> tblCTTonHang { get; set; }
         public virtual DbSet<tblChiTietHDNH> tblChiTietHDNH { get; set; }
-        public virtual DbSet<tblQuyenNV> tblQuyenNV { get; set; }
         public virtual DbSet<BanChoThanhToan> BanChoThanhToan { get; set; }
         public virtual DbSet<ChiTietHoaDonOder> ChiTietHoaDonOder { get; set; }
         public virtual DbSet<DanhSachGiaoDich> DanhSachGiaoDich { get; set; }
@@ -105,20 +104,7 @@ namespace Quan_li_nha_hang_MVC.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ChiTietNVTheoMa_Result>("ChiTietNVTheoMa", manvParameter);
         }
     
-        public virtual ObjectResult<DannNhapAd_Result> DannNhapAd(string sodt, string pass)
-        {
-            var sodtParameter = sodt != null ?
-                new ObjectParameter("sodt", sodt) :
-                new ObjectParameter("sodt", typeof(string));
-    
-            var passParameter = pass != null ?
-                new ObjectParameter("pass", pass) :
-                new ObjectParameter("pass", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DannNhapAd_Result>("DannNhapAd", sodtParameter, passParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> DangKiNH(string tenCH, string soDT, string tenQL, string email, string pass)
+        public virtual int DangKiNH(string tenCH, string soDT, string tenQL, string email, string pass)
         {
             var tenCHParameter = tenCH != null ?
                 new ObjectParameter("TenCH", tenCH) :
@@ -140,41 +126,7 @@ namespace Quan_li_nha_hang_MVC.Models
                 new ObjectParameter("Pass", pass) :
                 new ObjectParameter("Pass", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DangKiNH", tenCHParameter, soDTParameter, tenQLParameter, emailParameter, passParameter);
-        }
-    
-        public virtual ObjectResult<DangNhapByUser_Result> DangNhapByUser(string sodt, string tendn, string pass)
-        {
-            var sodtParameter = sodt != null ?
-                new ObjectParameter("sodt", sodt) :
-                new ObjectParameter("sodt", typeof(string));
-    
-            var tendnParameter = tendn != null ?
-                new ObjectParameter("tendn", tendn) :
-                new ObjectParameter("tendn", typeof(string));
-    
-            var passParameter = pass != null ?
-                new ObjectParameter("pass", pass) :
-                new ObjectParameter("pass", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DangNhapByUser_Result>("DangNhapByUser", sodtParameter, tendnParameter, passParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> DangNhapNhanVien(string sodt, string tendn, string pass)
-        {
-            var sodtParameter = sodt != null ?
-                new ObjectParameter("sodt", sodt) :
-                new ObjectParameter("sodt", typeof(string));
-    
-            var tendnParameter = tendn != null ?
-                new ObjectParameter("tendn", tendn) :
-                new ObjectParameter("tendn", typeof(string));
-    
-            var passParameter = pass != null ?
-                new ObjectParameter("pass", pass) :
-                new ObjectParameter("pass", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DangNhapNhanVien", sodtParameter, tendnParameter, passParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DangKiNH", tenCHParameter, soDTParameter, tenQLParameter, emailParameter, passParameter);
         }
     
         public virtual ObjectResult<DanhSachTonHangTN_Result> DanhSachTonHangTN(string ngay)
@@ -184,6 +136,19 @@ namespace Quan_li_nha_hang_MVC.Models
                 new ObjectParameter("ngay", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DanhSachTonHangTN_Result>("DanhSachTonHangTN", ngayParameter);
+        }
+    
+        public virtual ObjectResult<DannNhapAd_Result> DannNhapAd(string sodt, string pass)
+        {
+            var sodtParameter = sodt != null ?
+                new ObjectParameter("sodt", sodt) :
+                new ObjectParameter("sodt", typeof(string));
+    
+            var passParameter = pass != null ?
+                new ObjectParameter("pass", pass) :
+                new ObjectParameter("pass", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DannNhapAd_Result>("DannNhapAd", sodtParameter, passParameter);
         }
     
         public virtual int DatBan(string tenkh, string sodt, Nullable<System.DateTime> ngaydat, string giodat, Nullable<int> sokhach, string idban)
@@ -263,15 +228,6 @@ namespace Quan_li_nha_hang_MVC.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DuyetHang", soluongParameter, mahdParameter, mahParameter);
         }
     
-        public virtual ObjectResult<HoaDonTheoBan_Result> HoaDonTheoBan(string maban)
-        {
-            var mabanParameter = maban != null ?
-                new ObjectParameter("maban", maban) :
-                new ObjectParameter("maban", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HoaDonTheoBan_Result>("HoaDonTheoBan", mabanParameter);
-        }
-    
         public virtual int HuyBanDat(Nullable<int> maban, string mabannh)
         {
             var mabanParameter = maban.HasValue ?
@@ -309,135 +265,6 @@ namespace Quan_li_nha_hang_MVC.Models
                 new ObjectParameter("ngay", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SoluongBuffetToDay_Result>("SoluongBuffetToDay", ngayParameter);
-        }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual ObjectResult<Nullable<double>> TongHangDaGoiTheoNgay(string ngay, string mah)
-        {
-            var ngayParameter = ngay != null ?
-                new ObjectParameter("ngay", ngay) :
-                new ObjectParameter("ngay", typeof(string));
-    
-            var mahParameter = mah != null ?
-                new ObjectParameter("mah", mah) :
-                new ObjectParameter("mah", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("TongHangDaGoiTheoNgay", ngayParameter, mahParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<double>> TongTienSPTonKho(string ngay, string mah)
-        {
-            var ngayParameter = ngay != null ?
-                new ObjectParameter("ngay", ngay) :
-                new ObjectParameter("ngay", typeof(string));
-    
-            var mahParameter = mah != null ?
-                new ObjectParameter("mah", mah) :
-                new ObjectParameter("mah", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("TongTienSPTonKho", ngayParameter, mahParameter);
         }
     
         public virtual int ThemMonAnBF(Nullable<int> hdhd, string mamon, Nullable<double> soluong, string giooder)
@@ -480,6 +307,32 @@ namespace Quan_li_nha_hang_MVC.Models
                 new ObjectParameter("giooder", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ThemSuatBF", hdhdParameter, mamonParameter, soluongParameter, giooderParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> TongHangDaGoiTheoNgay(string ngay, string mah)
+        {
+            var ngayParameter = ngay != null ?
+                new ObjectParameter("ngay", ngay) :
+                new ObjectParameter("ngay", typeof(string));
+    
+            var mahParameter = mah != null ?
+                new ObjectParameter("mah", mah) :
+                new ObjectParameter("mah", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("TongHangDaGoiTheoNgay", ngayParameter, mahParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> TongTienSPTonKho(string ngay, string mah)
+        {
+            var ngayParameter = ngay != null ?
+                new ObjectParameter("ngay", ngay) :
+                new ObjectParameter("ngay", typeof(string));
+    
+            var mahParameter = mah != null ?
+                new ObjectParameter("mah", mah) :
+                new ObjectParameter("mah", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("TongTienSPTonKho", ngayParameter, mahParameter);
         }
     
         public virtual int UpDateAll(string mahd)

@@ -86,7 +86,7 @@ namespace Quan_li_nha_hang_MVC.Controllers
 
         public JsonResult PhanTramDoanhThu()
         {
-            double tongdt = (double)LoadData.Instance.ExcuteScalar("SELECT SUM(TienCuoi) AS TongTien FROM dbo.tblGiaoDich");
+            double tongdt = (double)LoadData.Instance.ExcuteScalar("SELECT ISNULL(SUM(TienCuoi), 0) AS TongTien FROM dbo.tblGiaoDich;\r\n");
             double daonhthu = (double)LoadData.Instance.ExcuteScalar("SELECT CASE WHEN  SUM(TienCuoi)  IS NULL THEN 0 ELSE SUM(TienCuoi)" +
                 " END  AS TongTien FROM dbo.tblGiaoDich  WHERE FORMAT(CONVERT(datetime, ThoiGianGD, 100), 'dd/MM/yyyy') LIKE FORMAT(CONVERT(datetime, GETDATE(), 100), 'dd/MM/yyyy')\r\n");
             List<BieuDoBFHomNay> listtd = new List<BieuDoBFHomNay>();

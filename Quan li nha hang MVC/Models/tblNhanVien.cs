@@ -18,12 +18,11 @@ namespace Quan_li_nha_hang_MVC.Models
         public tblNhanVien()
         {
             this.ChuNhaHang = new HashSet<ChuNhaHang>();
+            this.TaiKhoan = new HashSet<TaiKhoan>();
             this.tblGiaoDich = new HashSet<tblGiaoDich>();
             this.tblGiaoDich1 = new HashSet<tblGiaoDich>();
             this.tblHDNhapHang = new HashSet<tblHDNhapHang>();
             this.tblHDOder = new HashSet<tblHDOder>();
-            this.tblTaiKhoan = new HashSet<tblTaiKhoan>();
-            this.tblQuyenNV = new HashSet<tblQuyenNV>();
             this.tblTonHang = new HashSet<tblTonHang>();
             this.tblProductMix = new HashSet<tblProductMix>();
         }
@@ -42,6 +41,8 @@ namespace Quan_li_nha_hang_MVC.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChuNhaHang> ChuNhaHang { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaiKhoan> TaiKhoan { get; set; }
         public virtual tblChucVu tblChucVu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGiaoDich> tblGiaoDich { get; set; }
@@ -51,10 +52,6 @@ namespace Quan_li_nha_hang_MVC.Models
         public virtual ICollection<tblHDNhapHang> tblHDNhapHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblHDOder> tblHDOder { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblTaiKhoan> tblTaiKhoan { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblQuyenNV> tblQuyenNV { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTonHang> tblTonHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Visual Studio\Asp.net\Quan li nha hang MVC\Quan li nha hang MVC\Models\Do An Quan  Li Nha Hang.edmx'. 
+﻿// T4 code generation is enabled for model 'T:\Visual Studio\Quan-li-nha-hang-MVC\Quan li nha hang MVC\Models\Do An Quan Li Nha Hang.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -17,30 +17,30 @@ namespace Quan_li_nha_hang_MVC.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChuNhaHang()
         {
-            this.tblTaiKhoan = new HashSet<tblTaiKhoan>();
+            this.TaiKhoan = new HashSet<TaiKhoan>();
         }
-    
-        public int ID_Assitant { get; set; }
+
+		public ChuNhaHang(int iD_Assitant, string tenCH, string tenQL, string sDT, string email, string passWrord, int? id_NV)
+		{
+			ID_Assitant = iD_Assitant;
+			TenCH = tenCH ?? throw new ArgumentNullException(nameof(tenCH));
+			TenQL = tenQL ?? throw new ArgumentNullException(nameof(tenQL));
+			SDT = sDT ?? throw new ArgumentNullException(nameof(sDT));
+			Email = email ?? throw new ArgumentNullException(nameof(email));
+			PassWrord = passWrord ?? throw new ArgumentNullException(nameof(passWrord));
+			Id_NV = id_NV;
+		}
+
+		public int ID_Assitant { get; set; }
         public string TenCH { get; set; }
         public string TenQL { get; set; }
         public string SDT { get; set; }
         public string Email { get; set; }
         public string PassWrord { get; set; }
         public Nullable<int> Id_NV { get; set; }
-
-        public ChuNhaHang(int iD_Assitant, string tenCH, string tenQL, string sDT, string email, string passWrord, int? id_NV)
-        {
-            ID_Assitant = iD_Assitant;
-            TenCH = tenCH;
-            TenQL = tenQL;
-            SDT = sDT;
-            Email = email;
-            PassWrord = passWrord;
-            Id_NV = id_NV;
-        }
-
+    
         public virtual tblNhanVien tblNhanVien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblTaiKhoan> tblTaiKhoan { get; set; }
+        public virtual ICollection<TaiKhoan> TaiKhoan { get; set; }
     }
 }

@@ -14,16 +14,7 @@ namespace Quan_li_nha_hang_MVC.Models
     
     public partial class tblPhanQuyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblPhanQuyen()
-        {
-            this.tblQuyenNV = new HashSet<tblQuyenNV>();
-        }
-    
         public string ID_Quyen { get; set; }
         public string TenQuyen { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblQuyenNV> tblQuyenNV { get; set; }
     }
 }

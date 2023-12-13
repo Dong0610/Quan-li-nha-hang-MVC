@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d0b8e4b176c42afb7637e564853aef8" Name="Diagram1">
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.ChuNhaHang" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.TaiKhoan" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblBanNH" Width="1.5" PointX="8" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblBuffet" Width="1.5" PointX="10.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChiTietBuffet" Width="1.5" PointX="12.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChiTietGoiMon" Width="1.5" PointX="12.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChiTietMon" Width="1.5" PointX="12.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChiTietOderBuffet" Width="1.5" PointX="12.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChucVu" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblDatBan" Width="1.5" PointX="10.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblGiaoDich" Width="1.5" PointX="8.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblHDNhapHang" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblHDOder" Width="1.5" PointX="10.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblLoaiBan" Width="1.5" PointX="5.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblLoaiHang" Width="1.5" PointX="6" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblMatHang" Width="1.5" PointX="8.25" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblMonAn" Width="1.5" PointX="10.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblNhaCC" Width="1.5" PointX="6" PointY="36.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblNhanVien" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblProductMix" Width="1.5" PointX="5.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblPhanQuyen" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblQuyenNV" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblTonHang" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblCT_ProductMix" Width="1.5" PointX="7.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblCTTonHang" Width="1.5" PointX="7.5" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.tblChiTietHDNH" Width="1.5" PointX="10.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.BanChoThanhToan" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.ChiTietHoaDonOder" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachGiaoDich" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachHD" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachHDCTT" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachHoaDon" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachMatHang" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DanhSachNhanVien" Width="1.5" PointX="12.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DatTruocBan" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DSAllMatHang" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DsBanNH" Width="1.5" PointX="16.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DsBuffet" Width="1.5" PointX="16.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.DsMonAnAll" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnQuanLiNHModel.ThanhPhanHang" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.CNH_NV" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_TK_NH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_ACC_NV" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_B_BNH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_B_LB" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_OD_BNH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK__tblChiTie__ID_Bu__40058253" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CTBF_BF" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CTBF_MA" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK__tblChiTie__ID_Mo__45BE5BA9" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CTOD_MO" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CT_H" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CT_MA" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CTOD_OD" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_NV_CV" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.PK_GD_HDOD" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.PK_GD_NVDO" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.PK_GD_NVMO" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CT_HDNH_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_NV_HDNH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_NV_HDOD" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_H_MaLH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK__tblCT_Pro__ID_Ha__6CD828CA" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CTTH_HH" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_H_NCC" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_HD_H" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_TH_NV" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.PK_NV" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_CT_Mix" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnQuanLiNHModel.FK_TH_CT" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

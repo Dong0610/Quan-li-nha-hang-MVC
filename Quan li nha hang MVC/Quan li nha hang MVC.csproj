@@ -378,185 +378,170 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BanChoThanhToan.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BieuDoBFHomNay.cs" />
     <Compile Include="Models\ChitietBanDat_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietBuffet_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietHoaDonGiMon_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietHoaDonOder.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietNVTheoMa_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChuNhaHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomOder.cs" />
-    <Compile Include="Models\DangNhapByUser_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DanhSachGiaoDich.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachHD.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachHDCTT.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachHoaDon.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachMatHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachNhanVien.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DanhSachTonHangTN_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DannNhapAd_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatTruocBan.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailViewBf_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Do An Quan  Li Nha Hang.Context.cs">
+    <Compile Include="Models\Do An Quan Li Nha Hang.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Do An Quan  Li Nha Hang.Context.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Do An Quan  Li Nha Hang.cs">
+    <Compile Include="Models\Do An Quan Li Nha Hang.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Do An Quan  Li Nha Hang.Designer.cs">
+    <Compile Include="Models\Do An Quan Li Nha Hang.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Do An Quan  Li Nha Hang.edmx</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DSAllMatHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DsBanNH.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DsBuffet.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DsHangTheoHD_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DsMonAnAll.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HoaDonTheoBan_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PhanQuyenNV.cs" />
     <Compile Include="Models\ProductMix.cs" />
     <Compile Include="Models\SoluongBuffetToDay_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+    <Compile Include="Models\TaiKhoan.cs">
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBanNH.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBuffet.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChiTietBuffet.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChiTietGoiMon.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChiTietHDNH.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChiTietMon.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChiTietOderBuffet.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblChucVu.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblCTTonHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblCT_ProductMix.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblDatBan.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGiaoDich.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblHDNhapHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblHDOder.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblLoaiBan.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblLoaiHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMatHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMonAn.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblNhaCC.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblNhanVien.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPhanQuyen.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblProductMix.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblQuyenNV.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblTaiKhoan.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblTonHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ThanhPhanHang.cs">
-      <DependentUpon>Do An Quan  Li Nha Hang.tt</DependentUpon>
+      <DependentUpon>Do An Quan Li Nha Hang.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TonKho.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2660,6 +2645,7 @@
     <Content Include="Content\js\alter1.js" />
     <Content Include="Content\js\exportsrtable.js" />
     <Content Include="Content\js\style.js" />
+    <Content Include="Database\Quan li nha hang MVC.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\Site.css" />
@@ -2716,15 +2702,16 @@
     <Content Include="Content\fontawesome-free-6.2.1\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\fontawesome-free-6.2.1\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Content\fontawesome-free-6.2.1\webfonts\fa-v4compatibility.woff2" />
-    <Content Include="Models\Do An Quan  Li Nha Hang.Context.tt">
+    <Content Include="Models\Do An Quan  Li Nha Hang.edmx.sql" />
+    <Content Include="Models\Do An Quan Li Nha Hang.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Do An Quan  Li Nha Hang.edmx</DependentUpon>
-      <LastGenOutput>Do An Quan  Li Nha Hang.Context.cs</LastGenOutput>
+      <DependentUpon>Do An Quan Li Nha Hang.edmx</DependentUpon>
+      <LastGenOutput>Do An Quan Li Nha Hang.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Do An Quan  Li Nha Hang.tt">
+    <Content Include="Models\Do An Quan Li Nha Hang.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Do An Quan  Li Nha Hang.edmx</DependentUpon>
-      <LastGenOutput>Do An Quan  Li Nha Hang.cs</LastGenOutput>
+      <DependentUpon>Do An Quan Li Nha Hang.edmx</DependentUpon>
+      <LastGenOutput>Do An Quan Li Nha Hang.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2732,12 +2719,12 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Do An Quan  Li Nha Hang.edmx">
+    <EntityDeploy Include="Models\Do An Quan Li Nha Hang.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Do An Quan  Li Nha Hang.Designer.cs</LastGenOutput>
+      <LastGenOutput>Do An Quan Li Nha Hang.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Do An Quan  Li Nha Hang.edmx.diagram">
-      <DependentUpon>Do An Quan  Li Nha Hang.edmx</DependentUpon>
+    <Content Include="Models\Do An Quan Li Nha Hang.edmx.diagram">
+      <DependentUpon>Do An Quan Li Nha Hang.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />

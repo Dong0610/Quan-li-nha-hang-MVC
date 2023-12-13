@@ -12,12 +12,17 @@ namespace Quan_li_nha_hang_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class TaiKhoan
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID_Acc { get; set; }
+        public Nullable<int> ID_NV { get; set; }
+        public string TenDn { get; set; }
+        public string Email { get; set; }
+        public string PassWrord { get; set; }
+        public int Type { get; set; }
+        public Nullable<int> MaNH { get; set; }
+    
+        public virtual ChuNhaHang ChuNhaHang { get; set; }
+        public virtual tblNhanVien tblNhanVien { get; set; }
     }
 }

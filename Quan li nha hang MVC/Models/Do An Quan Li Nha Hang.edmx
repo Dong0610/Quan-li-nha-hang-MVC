@@ -17,15 +17,17 @@
           <Property Name="PassWrord" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Id_NV" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="TaiKhoan">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID_Acc" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="ID_Acc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_NV" Type="int" />
+          <Property Name="TenDn" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PassWrord" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="MaNH" Type="int" />
         </EntityType>
         <EntityType Name="tblBanNH">
           <Key>
@@ -305,29 +307,13 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.tblChiTietHDNH' does not have a p
           <Property Name="ID_Quyen" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TenQuyen" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DoAnQuanLiNH.dbo.tblQuyenNV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblQuyenNV">
           <Key>
             <PropertyRef Name="ID_NhanVien" />
-            <PropertyRef Name="NgayPQ" />
           </Key>
           <Property Name="ID_NhanVien" Type="int" Nullable="false" />
           <Property Name="ID_PhanQuyen" Type="varchar" MaxLength="20" />
           <Property Name="NgayPQ" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblTaiKhoan">
-          <Key>
-            <PropertyRef Name="ID_Acc" />
-          </Key>
-          <Property Name="ID_Acc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_NV" Type="int" />
-          <Property Name="TenDn" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="SoDT" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="PassWrord" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="MaNH" Type="int" />
         </EntityType>
         <EntityType Name="tblTonHang">
           <Key>
@@ -648,7 +634,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblCT_Pro__ID_Ha__0DCF0841">
+        <Association Name="FK__tblCT_Pro__ID_Ha__6CD828CA">
           <End Role="tblMatHang" Type="Self.tblMatHang" Multiplicity="0..1" />
           <End Role="tblCT_ProductMix" Type="Self.tblCT_ProductMix" Multiplicity="*" />
           <ReferentialConstraint>
@@ -660,7 +646,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblChiTie__ID_Bu__123EB7A3">
+        <Association Name="FK__tblChiTie__ID_Bu__40058253">
           <End Role="tblBuffet" Type="Self.tblBuffet" Multiplicity="1" />
           <End Role="tblChiTietOderBuffet" Type="Self.tblChiTietOderBuffet" Multiplicity="*" />
           <ReferentialConstraint>
@@ -672,7 +658,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblChiTie__ID_Mo__17F790F9">
+        <Association Name="FK__tblChiTie__ID_Mo__45BE5BA9">
           <End Role="tblMonAn" Type="Self.tblMonAn" Multiplicity="1" />
           <End Role="tblChiTietGoiMon" Type="Self.tblChiTietGoiMon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -684,14 +670,14 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ACC_tblNV">
+        <Association Name="FK_ACC_NV">
           <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="0..1" />
-          <End Role="tblTaiKhoan" Type="Self.tblTaiKhoan" Multiplicity="*" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblNhanVien">
               <PropertyRef Name="ID_NhanVien" />
             </Principal>
-            <Dependent Role="tblTaiKhoan">
+            <Dependent Role="TaiKhoan">
               <PropertyRef Name="ID_NV" />
             </Dependent>
           </ReferentialConstraint>
@@ -912,38 +898,14 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PQ_NV">
-          <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="1" />
-          <End Role="tblQuyenNV" Type="Self.tblQuyenNV" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblNhanVien">
-              <PropertyRef Name="ID_NhanVien" />
-            </Principal>
-            <Dependent Role="tblQuyenNV">
-              <PropertyRef Name="ID_NhanVien" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PQ_PQ">
-          <End Role="tblPhanQuyen" Type="Self.tblPhanQuyen" Multiplicity="0..1" />
-          <End Role="tblQuyenNV" Type="Self.tblQuyenNV" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPhanQuyen">
-              <PropertyRef Name="ID_Quyen" />
-            </Principal>
-            <Dependent Role="tblQuyenNV">
-              <PropertyRef Name="ID_PhanQuyen" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TK_tblNH">
+        <Association Name="FK_TK_NH">
           <End Role="ChuNhaHang" Type="Self.ChuNhaHang" Multiplicity="0..1" />
-          <End Role="tblTaiKhoan" Type="Self.tblTaiKhoan" Multiplicity="*" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuNhaHang">
               <PropertyRef Name="ID_Assitant" />
             </Principal>
-            <Dependent Role="tblTaiKhoan">
+            <Dependent Role="TaiKhoan">
               <PropertyRef Name="MaNH" />
             </Dependent>
           </ReferentialConstraint>
@@ -1032,10 +994,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
         <Function Name="ChiTietNVTheoMa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="manv" Type="int" Mode="In" />
         </Function>
-        <Function Name="DannNhapAd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="sodt" Type="varchar" Mode="In" />
-          <Parameter Name="pass" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="DangKiNH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TenCH" Type="nvarchar" Mode="In" />
           <Parameter Name="SoDT" Type="varchar" Mode="In" />
@@ -1043,18 +1001,12 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Pass" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="DangNhapByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="sodt" Type="varchar" Mode="In" />
-          <Parameter Name="tendn" Type="nvarchar" Mode="In" />
-          <Parameter Name="pass" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="DangNhapNhanVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="sodt" Type="varchar" Mode="In" />
-          <Parameter Name="tendn" Type="nvarchar" Mode="In" />
-          <Parameter Name="pass" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="DanhSachTonHangTN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ngay" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DannNhapAd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sodt" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="DatBan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tenkh" Type="nvarchar" Mode="In" />
@@ -1079,10 +1031,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Parameter Name="mahd" Type="varchar" Mode="In" />
           <Parameter Name="mah" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="HoaDonTheoBan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="maban" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="HuyBanDat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="maban" Type="int" Mode="In" />
           <Parameter Name="mabannh" Type="varchar" Mode="In" />
@@ -1094,44 +1042,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
         </Function>
         <Function Name="SoluongBuffetToDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ngay" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="TongHangDaGoiTheoNgay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ngay" Type="varchar" Mode="In" />
-          <Parameter Name="mah" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="TongTienSPTonKho" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ngay" Type="varchar" Mode="In" />
-          <Parameter Name="mah" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ThemMonAnBF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="hdhd" Type="int" Mode="In" />
@@ -1145,6 +1055,14 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Parameter Name="soluong" Type="float" Mode="In" />
           <Parameter Name="giooder" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="TongHangDaGoiTheoNgay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ngay" Type="varchar" Mode="In" />
+          <Parameter Name="mah" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="TongTienSPTonKho" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ngay" Type="varchar" Mode="In" />
+          <Parameter Name="mah" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UpDateAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mahd" Type="varchar" Mode="In" />
         </Function>
@@ -1153,7 +1071,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
         </Function>
         <EntityContainer Name="DoAnQuanLiNHModelStoreContainer">
           <EntitySet Name="ChuNhaHang" EntityType="Self.ChuNhaHang" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBanNH" EntityType="Self.tblBanNH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBuffet" EntityType="Self.tblBuffet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblChiTietBuffet" EntityType="Self.tblChiTietBuffet" Schema="dbo" store:Type="Tables" />
@@ -1173,7 +1091,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <EntitySet Name="tblNhanVien" EntityType="Self.tblNhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProductMix" EntityType="Self.tblProductMix" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPhanQuyen" EntityType="Self.tblPhanQuyen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblTaiKhoan" EntityType="Self.tblTaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblQuyenNV" EntityType="Self.tblQuyenNV" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTonHang" EntityType="Self.tblTonHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCT_ProductMix" EntityType="Self.tblCT_ProductMix" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1208,13 +1126,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
     [tblChiTietHDNH].[SoLuong] AS [SoLuong], 
     [tblChiTietHDNH].[DuyetH] AS [DuyetH]
     FROM [dbo].[tblChiTietHDNH] AS [tblChiTietHDNH]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblQuyenNV" EntityType="Self.tblQuyenNV" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblQuyenNV].[ID_NhanVien] AS [ID_NhanVien], 
-    [tblQuyenNV].[ID_PhanQuyen] AS [ID_PhanQuyen], 
-    [tblQuyenNV].[NgayPQ] AS [NgayPQ]
-    FROM [dbo].[tblQuyenNV] AS [tblQuyenNV]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="BanChoThanhToan" EntityType="Self.BanChoThanhToan" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1390,21 +1301,21 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblNhanVien" EntitySet="tblNhanVien" />
             <End Role="ChuNhaHang" EntitySet="ChuNhaHang" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblCT_Pro__ID_Ha__0DCF0841" Association="Self.FK__tblCT_Pro__ID_Ha__0DCF0841">
+          <AssociationSet Name="FK__tblCT_Pro__ID_Ha__6CD828CA" Association="Self.FK__tblCT_Pro__ID_Ha__6CD828CA">
             <End Role="tblMatHang" EntitySet="tblMatHang" />
             <End Role="tblCT_ProductMix" EntitySet="tblCT_ProductMix" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblChiTie__ID_Bu__123EB7A3" Association="Self.FK__tblChiTie__ID_Bu__123EB7A3">
+          <AssociationSet Name="FK__tblChiTie__ID_Bu__40058253" Association="Self.FK__tblChiTie__ID_Bu__40058253">
             <End Role="tblBuffet" EntitySet="tblBuffet" />
             <End Role="tblChiTietOderBuffet" EntitySet="tblChiTietOderBuffet" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblChiTie__ID_Mo__17F790F9" Association="Self.FK__tblChiTie__ID_Mo__17F790F9">
+          <AssociationSet Name="FK__tblChiTie__ID_Mo__45BE5BA9" Association="Self.FK__tblChiTie__ID_Mo__45BE5BA9">
             <End Role="tblMonAn" EntitySet="tblMonAn" />
             <End Role="tblChiTietGoiMon" EntitySet="tblChiTietGoiMon" />
           </AssociationSet>
-          <AssociationSet Name="FK_ACC_tblNV" Association="Self.FK_ACC_tblNV">
+          <AssociationSet Name="FK_ACC_NV" Association="Self.FK_ACC_NV">
             <End Role="tblNhanVien" EntitySet="tblNhanVien" />
-            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
           </AssociationSet>
           <AssociationSet Name="FK_B_BNH" Association="Self.FK_B_BNH">
             <End Role="tblBanNH" EntitySet="tblBanNH" />
@@ -1478,17 +1389,9 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblBanNH" EntitySet="tblBanNH" />
             <End Role="tblHDOder" EntitySet="tblHDOder" />
           </AssociationSet>
-          <AssociationSet Name="FK_PQ_NV" Association="Self.FK_PQ_NV">
-            <End Role="tblNhanVien" EntitySet="tblNhanVien" />
-            <End Role="tblQuyenNV" EntitySet="tblQuyenNV" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PQ_PQ" Association="Self.FK_PQ_PQ">
-            <End Role="tblPhanQuyen" EntitySet="tblPhanQuyen" />
-            <End Role="tblQuyenNV" EntitySet="tblQuyenNV" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TK_tblNH" Association="Self.FK_TK_tblNH">
+          <AssociationSet Name="FK_TK_NH" Association="Self.FK_TK_NH">
             <End Role="ChuNhaHang" EntitySet="ChuNhaHang" />
-            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
           </AssociationSet>
           <AssociationSet Name="FK_TH_CT" Association="Self.FK_TH_CT">
             <End Role="tblTonHang" EntitySet="tblTonHang" />
@@ -1532,17 +1435,21 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="PassWrord" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_NV" Type="Int32" />
           <NavigationProperty Name="tblNhanVien" Relationship="Self.CNH_NV" FromRole="ChuNhaHang" ToRole="tblNhanVien" />
-          <NavigationProperty Name="tblTaiKhoan" Relationship="Self.FK_TK_tblNH" FromRole="ChuNhaHang" ToRole="tblTaiKhoan" />
+          <NavigationProperty Name="TaiKhoan" Relationship="Self.FK_TK_NH" FromRole="ChuNhaHang" ToRole="TaiKhoan" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="TaiKhoan">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID_Acc" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID_Acc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_NV" Type="Int32" />
+          <Property Name="TenDn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWrord" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="MaNH" Type="Int32" />
+          <NavigationProperty Name="ChuNhaHang" Relationship="Self.FK_TK_NH" FromRole="TaiKhoan" ToRole="ChuNhaHang" />
+          <NavigationProperty Name="tblNhanVien" Relationship="Self.FK_ACC_NV" FromRole="TaiKhoan" ToRole="tblNhanVien" />
         </EntityType>
         <EntityType Name="tblBanNH">
           <Key>
@@ -1571,7 +1478,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="Thue" Type="Double" Nullable="false" />
           <Property Name="SuDung" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblChiTietOderBuffet" Relationship="Self.FK__tblChiTie__ID_Bu__123EB7A3" FromRole="tblBuffet" ToRole="tblChiTietOderBuffet" />
+          <NavigationProperty Name="tblChiTietOderBuffet" Relationship="Self.FK__tblChiTie__ID_Bu__40058253" FromRole="tblBuffet" ToRole="tblChiTietOderBuffet" />
           <NavigationProperty Name="tblChiTietBuffet" Relationship="Self.FK_CTBF_BF" FromRole="tblBuffet" ToRole="tblChiTietBuffet" />
         </EntityType>
         <EntityType Name="tblChiTietBuffet">
@@ -1595,7 +1502,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="ID_Mon" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" Nullable="false" />
           <Property Name="GioOder" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblMonAn" Relationship="Self.FK__tblChiTie__ID_Mo__17F790F9" FromRole="tblChiTietGoiMon" ToRole="tblMonAn" />
+          <NavigationProperty Name="tblMonAn" Relationship="Self.FK__tblChiTie__ID_Mo__45BE5BA9" FromRole="tblChiTietGoiMon" ToRole="tblMonAn" />
           <NavigationProperty Name="tblHDOder" Relationship="Self.FK_CTOD_MO" FromRole="tblChiTietGoiMon" ToRole="tblHDOder" />
         </EntityType>
         <EntityType Name="tblChiTietMon">
@@ -1619,7 +1526,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="ID_Buffet" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" Nullable="false" />
           <Property Name="GioOder" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblBuffet" Relationship="Self.FK__tblChiTie__ID_Bu__123EB7A3" FromRole="tblChiTietOderBuffet" ToRole="tblBuffet" />
+          <NavigationProperty Name="tblBuffet" Relationship="Self.FK__tblChiTie__ID_Bu__40058253" FromRole="tblChiTietOderBuffet" ToRole="tblBuffet" />
           <NavigationProperty Name="tblHDOder" Relationship="Self.FK_CTOD_OD" FromRole="tblChiTietOderBuffet" ToRole="tblHDOder" />
         </EntityType>
         <EntityType Name="tblChucVu">
@@ -1738,7 +1645,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="SuDung" Type="Int32" />
           <NavigationProperty Name="tblChiTietMon" Relationship="Self.FK_CT_H" FromRole="tblMatHang" ToRole="tblChiTietMon" />
           <NavigationProperty Name="tblLoaiHang" Relationship="Self.FK_H_MaLH" FromRole="tblMatHang" ToRole="tblLoaiHang" />
-          <NavigationProperty Name="tblCT_ProductMix" Relationship="Self.FK__tblCT_Pro__ID_Ha__0DCF0841" FromRole="tblMatHang" ToRole="tblCT_ProductMix" />
+          <NavigationProperty Name="tblCT_ProductMix" Relationship="Self.FK__tblCT_Pro__ID_Ha__6CD828CA" FromRole="tblMatHang" ToRole="tblCT_ProductMix" />
           <NavigationProperty Name="tblCTTonHang" Relationship="Self.FK_CTTH_HH" FromRole="tblMatHang" ToRole="tblCTTonHang" />
           <NavigationProperty Name="tblNhaCC" Relationship="Self.FK_H_NCC" FromRole="tblMatHang" ToRole="tblNhaCC" />
           <NavigationProperty Name="tblChiTietHDNH" Relationship="Self.FK_HD_H" FromRole="tblMatHang" ToRole="tblChiTietHDNH" />
@@ -1755,7 +1662,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="SuDung" Type="Int32" />
           <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblChiTietBuffet" Relationship="Self.FK_CTBF_MA" FromRole="tblMonAn" ToRole="tblChiTietBuffet" />
-          <NavigationProperty Name="tblChiTietGoiMon" Relationship="Self.FK__tblChiTie__ID_Mo__17F790F9" FromRole="tblMonAn" ToRole="tblChiTietGoiMon" />
+          <NavigationProperty Name="tblChiTietGoiMon" Relationship="Self.FK__tblChiTie__ID_Mo__45BE5BA9" FromRole="tblMonAn" ToRole="tblChiTietGoiMon" />
           <NavigationProperty Name="tblChiTietMon" Relationship="Self.FK_CT_MA" FromRole="tblMonAn" ToRole="tblChiTietMon" />
         </EntityType>
         <EntityType Name="tblNhaCC">
@@ -1786,13 +1693,12 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="LamViec" Type="Int32" Nullable="false" />
           <Property Name="QueQuan" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ChuNhaHang" Relationship="Self.CNH_NV" FromRole="tblNhanVien" ToRole="ChuNhaHang" />
+          <NavigationProperty Name="TaiKhoan" Relationship="Self.FK_ACC_NV" FromRole="tblNhanVien" ToRole="TaiKhoan" />
           <NavigationProperty Name="tblChucVu" Relationship="Self.FK_NV_CV" FromRole="tblNhanVien" ToRole="tblChucVu" />
           <NavigationProperty Name="tblGiaoDich" Relationship="Self.PK_GD_NVDO" FromRole="tblNhanVien" ToRole="tblGiaoDich" />
           <NavigationProperty Name="tblGiaoDich1" Relationship="Self.PK_GD_NVMO" FromRole="tblNhanVien" ToRole="tblGiaoDich" />
           <NavigationProperty Name="tblHDNhapHang" Relationship="Self.FK_NV_HDNH" FromRole="tblNhanVien" ToRole="tblHDNhapHang" />
           <NavigationProperty Name="tblHDOder" Relationship="Self.FK_NV_HDOD" FromRole="tblNhanVien" ToRole="tblHDOder" />
-          <NavigationProperty Name="tblTaiKhoan" Relationship="Self.FK_ACC_tblNV" FromRole="tblNhanVien" ToRole="tblTaiKhoan" />
-          <NavigationProperty Name="tblQuyenNV" Relationship="Self.FK_PQ_NV" FromRole="tblNhanVien" ToRole="tblQuyenNV" />
           <NavigationProperty Name="tblTonHang" Relationship="Self.FK_TH_NV" FromRole="tblNhanVien" ToRole="tblTonHang" />
           <NavigationProperty Name="tblProductMix" Relationship="Self.PK_NV" FromRole="tblNhanVien" ToRole="tblProductMix" />
         </EntityType>
@@ -1814,22 +1720,14 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           </Key>
           <Property Name="ID_Quyen" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TenQuyen" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblQuyenNV" Relationship="Self.FK_PQ_PQ" FromRole="tblPhanQuyen" ToRole="tblQuyenNV" />
         </EntityType>
-        <EntityType Name="tblTaiKhoan">
+        <EntityType Name="tblQuyenNV">
           <Key>
-            <PropertyRef Name="ID_Acc" />
+            <PropertyRef Name="ID_NhanVien" />
           </Key>
-          <Property Name="ID_Acc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_NV" Type="Int32" />
-          <Property Name="TenDn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SoDT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PassWrord" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="MaNH" Type="Int32" />
-          <NavigationProperty Name="ChuNhaHang" Relationship="Self.FK_TK_tblNH" FromRole="tblTaiKhoan" ToRole="ChuNhaHang" />
-          <NavigationProperty Name="tblNhanVien" Relationship="Self.FK_ACC_tblNV" FromRole="tblTaiKhoan" ToRole="tblNhanVien" />
+          <Property Name="ID_NhanVien" Type="Int32" Nullable="false" />
+          <Property Name="ID_PhanQuyen" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NgayPQ" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTonHang">
           <Key>
@@ -1870,7 +1768,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="TenLoai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NhaCC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SuaDoi" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblMatHang" Relationship="Self.FK__tblCT_Pro__ID_Ha__0DCF0841" FromRole="tblCT_ProductMix" ToRole="tblMatHang" />
+          <NavigationProperty Name="tblMatHang" Relationship="Self.FK__tblCT_Pro__ID_Ha__6CD828CA" FromRole="tblCT_ProductMix" ToRole="tblMatHang" />
           <NavigationProperty Name="tblProductMix" Relationship="Self.FK_CT_Mix" FromRole="tblCT_ProductMix" ToRole="tblProductMix" />
         </EntityType>
         <EntityType Name="tblCTTonHang">
@@ -1899,17 +1797,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Name="DuyetH" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblHDNhapHang" Relationship="Self.FK_CT_HDNH_FK" FromRole="tblChiTietHDNH" ToRole="tblHDNhapHang" />
           <NavigationProperty Name="tblMatHang" Relationship="Self.FK_HD_H" FromRole="tblChiTietHDNH" ToRole="tblMatHang" />
-        </EntityType>
-        <EntityType Name="tblQuyenNV">
-          <Key>
-            <PropertyRef Name="ID_NhanVien" />
-            <PropertyRef Name="NgayPQ" />
-          </Key>
-          <Property Name="ID_NhanVien" Type="Int32" Nullable="false" />
-          <Property Name="ID_PhanQuyen" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NgayPQ" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblNhanVien" Relationship="Self.FK_PQ_NV" FromRole="tblQuyenNV" ToRole="tblNhanVien" />
-          <NavigationProperty Name="tblPhanQuyen" Relationship="Self.FK_PQ_PQ" FromRole="tblQuyenNV" ToRole="tblPhanQuyen" />
         </EntityType>
         <EntityType Name="BanChoThanhToan">
           <Key>
@@ -2191,15 +2078,27 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TK_tblNH">
+        <Association Name="FK_TK_NH">
           <End Role="ChuNhaHang" Type="Self.ChuNhaHang" Multiplicity="0..1" />
-          <End Role="tblTaiKhoan" Type="Self.tblTaiKhoan" Multiplicity="*" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuNhaHang">
               <PropertyRef Name="ID_Assitant" />
             </Principal>
-            <Dependent Role="tblTaiKhoan">
+            <Dependent Role="TaiKhoan">
               <PropertyRef Name="MaNH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ACC_NV">
+          <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="0..1" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblNhanVien">
+              <PropertyRef Name="ID_NhanVien" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="ID_NV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2239,7 +2138,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblChiTie__ID_Bu__123EB7A3">
+        <Association Name="FK__tblChiTie__ID_Bu__40058253">
           <End Role="tblBuffet" Type="Self.tblBuffet" Multiplicity="1" />
           <End Role="tblChiTietOderBuffet" Type="Self.tblChiTietOderBuffet" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2275,7 +2174,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblChiTie__ID_Mo__17F790F9">
+        <Association Name="FK__tblChiTie__ID_Mo__45BE5BA9">
           <End Role="tblMonAn" Type="Self.tblMonAn" Multiplicity="1" />
           <End Role="tblChiTietGoiMon" Type="Self.tblChiTietGoiMon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2431,7 +2330,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblCT_Pro__ID_Ha__0DCF0841">
+        <Association Name="FK__tblCT_Pro__ID_Ha__6CD828CA">
           <End Role="tblMatHang" Type="Self.tblMatHang" Multiplicity="0..1" />
           <End Role="tblCT_ProductMix" Type="Self.tblCT_ProductMix" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2479,30 +2378,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ACC_tblNV">
-          <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="0..1" />
-          <End Role="tblTaiKhoan" Type="Self.tblTaiKhoan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblNhanVien">
-              <PropertyRef Name="ID_NhanVien" />
-            </Principal>
-            <Dependent Role="tblTaiKhoan">
-              <PropertyRef Name="ID_NV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PQ_NV">
-          <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="1" />
-          <End Role="tblQuyenNV" Type="Self.tblQuyenNV" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblNhanVien">
-              <PropertyRef Name="ID_NhanVien" />
-            </Principal>
-            <Dependent Role="tblQuyenNV">
-              <PropertyRef Name="ID_NhanVien" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TH_NV">
           <End Role="tblNhanVien" Type="Self.tblNhanVien" Multiplicity="1" />
           <End Role="tblTonHang" Type="Self.tblTonHang" Multiplicity="*" />
@@ -2539,18 +2414,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PQ_PQ">
-          <End Role="tblPhanQuyen" Type="Self.tblPhanQuyen" Multiplicity="0..1" />
-          <End Role="tblQuyenNV" Type="Self.tblQuyenNV" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPhanQuyen">
-              <PropertyRef Name="ID_Quyen" />
-            </Principal>
-            <Dependent Role="tblQuyenNV">
-              <PropertyRef Name="ID_PhanQuyen" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TH_CT">
           <End Role="tblTonHang" Type="Self.tblTonHang" Multiplicity="0..1" />
           <End Role="tblCTTonHang" Type="Self.tblCTTonHang" Multiplicity="*" />
@@ -2565,7 +2428,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
         </Association>
         <EntityContainer Name="DoAnQuanLiNHEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ChuNhaHang" EntityType="Self.ChuNhaHang" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" />
           <EntitySet Name="tblBanNH" EntityType="Self.tblBanNH" />
           <EntitySet Name="tblBuffet" EntityType="Self.tblBuffet" />
           <EntitySet Name="tblChiTietBuffet" EntityType="Self.tblChiTietBuffet" />
@@ -2585,12 +2448,11 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <EntitySet Name="tblNhanVien" EntityType="Self.tblNhanVien" />
           <EntitySet Name="tblProductMix" EntityType="Self.tblProductMix" />
           <EntitySet Name="tblPhanQuyen" EntityType="Self.tblPhanQuyen" />
-          <EntitySet Name="tblTaiKhoan" EntityType="Self.tblTaiKhoan" />
+          <EntitySet Name="tblQuyenNV" EntityType="Self.tblQuyenNV" />
           <EntitySet Name="tblTonHang" EntityType="Self.tblTonHang" />
           <EntitySet Name="tblCT_ProductMix" EntityType="Self.tblCT_ProductMix" />
           <EntitySet Name="tblCTTonHang" EntityType="Self.tblCTTonHang" />
           <EntitySet Name="tblChiTietHDNH" EntityType="Self.tblChiTietHDNH" />
-          <EntitySet Name="tblQuyenNV" EntityType="Self.tblQuyenNV" />
           <EntitySet Name="BanChoThanhToan" EntityType="Self.BanChoThanhToan" />
           <EntitySet Name="ChiTietHoaDonOder" EntityType="Self.ChiTietHoaDonOder" />
           <EntitySet Name="DanhSachGiaoDich" EntityType="Self.DanhSachGiaoDich" />
@@ -2609,9 +2471,13 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblNhanVien" EntitySet="tblNhanVien" />
             <End Role="ChuNhaHang" EntitySet="ChuNhaHang" />
           </AssociationSet>
-          <AssociationSet Name="FK_TK_tblNH" Association="Self.FK_TK_tblNH">
+          <AssociationSet Name="FK_TK_NH" Association="Self.FK_TK_NH">
             <End Role="ChuNhaHang" EntitySet="ChuNhaHang" />
-            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ACC_NV" Association="Self.FK_ACC_NV">
+            <End Role="tblNhanVien" EntitySet="tblNhanVien" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
           </AssociationSet>
           <AssociationSet Name="FK_B_BNH" Association="Self.FK_B_BNH">
             <End Role="tblBanNH" EntitySet="tblBanNH" />
@@ -2625,7 +2491,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblBanNH" EntitySet="tblBanNH" />
             <End Role="tblHDOder" EntitySet="tblHDOder" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblChiTie__ID_Bu__123EB7A3" Association="Self.FK__tblChiTie__ID_Bu__123EB7A3">
+          <AssociationSet Name="FK__tblChiTie__ID_Bu__40058253" Association="Self.FK__tblChiTie__ID_Bu__40058253">
             <End Role="tblBuffet" EntitySet="tblBuffet" />
             <End Role="tblChiTietOderBuffet" EntitySet="tblChiTietOderBuffet" />
           </AssociationSet>
@@ -2637,7 +2503,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblMonAn" EntitySet="tblMonAn" />
             <End Role="tblChiTietBuffet" EntitySet="tblChiTietBuffet" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblChiTie__ID_Mo__17F790F9" Association="Self.FK__tblChiTie__ID_Mo__17F790F9">
+          <AssociationSet Name="FK__tblChiTie__ID_Mo__45BE5BA9" Association="Self.FK__tblChiTie__ID_Mo__45BE5BA9">
             <End Role="tblMonAn" EntitySet="tblMonAn" />
             <End Role="tblChiTietGoiMon" EntitySet="tblChiTietGoiMon" />
           </AssociationSet>
@@ -2689,7 +2555,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblLoaiHang" EntitySet="tblLoaiHang" />
             <End Role="tblMatHang" EntitySet="tblMatHang" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblCT_Pro__ID_Ha__0DCF0841" Association="Self.FK__tblCT_Pro__ID_Ha__0DCF0841">
+          <AssociationSet Name="FK__tblCT_Pro__ID_Ha__6CD828CA" Association="Self.FK__tblCT_Pro__ID_Ha__6CD828CA">
             <End Role="tblMatHang" EntitySet="tblMatHang" />
             <End Role="tblCT_ProductMix" EntitySet="tblCT_ProductMix" />
           </AssociationSet>
@@ -2705,14 +2571,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <End Role="tblMatHang" EntitySet="tblMatHang" />
             <End Role="tblChiTietHDNH" EntitySet="tblChiTietHDNH" />
           </AssociationSet>
-          <AssociationSet Name="FK_ACC_tblNV" Association="Self.FK_ACC_tblNV">
-            <End Role="tblNhanVien" EntitySet="tblNhanVien" />
-            <End Role="tblTaiKhoan" EntitySet="tblTaiKhoan" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PQ_NV" Association="Self.FK_PQ_NV">
-            <End Role="tblNhanVien" EntitySet="tblNhanVien" />
-            <End Role="tblQuyenNV" EntitySet="tblQuyenNV" />
-          </AssociationSet>
           <AssociationSet Name="FK_TH_NV" Association="Self.FK_TH_NV">
             <End Role="tblNhanVien" EntitySet="tblNhanVien" />
             <End Role="tblTonHang" EntitySet="tblTonHang" />
@@ -2724,10 +2582,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <AssociationSet Name="FK_CT_Mix" Association="Self.FK_CT_Mix">
             <End Role="tblProductMix" EntitySet="tblProductMix" />
             <End Role="tblCT_ProductMix" EntitySet="tblCT_ProductMix" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PQ_PQ" Association="Self.FK_PQ_PQ">
-            <End Role="tblPhanQuyen" EntitySet="tblPhanQuyen" />
-            <End Role="tblQuyenNV" EntitySet="tblQuyenNV" />
           </AssociationSet>
           <AssociationSet Name="FK_TH_CT" Association="Self.FK_TH_CT">
             <End Role="tblTonHang" EntitySet="tblTonHang" />
@@ -2745,29 +2599,19 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <FunctionImport Name="ChiTietNVTheoMa" ReturnType="Collection(DoAnQuanLiNHModel.ChiTietNVTheoMa_Result)">
             <Parameter Name="manv" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DannNhapAd" ReturnType="Collection(DoAnQuanLiNHModel.DannNhapAd_Result)">
-            <Parameter Name="sodt" Mode="In" Type="String" />
-            <Parameter Name="pass" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="DangKiNH" ReturnType="Collection(Int32)">
+          <FunctionImport Name="DangKiNH">
             <Parameter Name="TenCH" Mode="In" Type="String" />
             <Parameter Name="SoDT" Mode="In" Type="String" />
             <Parameter Name="TenQL" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Pass" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DangNhapByUser" ReturnType="Collection(DoAnQuanLiNHModel.DangNhapByUser_Result)">
-            <Parameter Name="sodt" Mode="In" Type="String" />
-            <Parameter Name="tendn" Mode="In" Type="String" />
-            <Parameter Name="pass" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="DangNhapNhanVien" ReturnType="Collection(Int32)">
-            <Parameter Name="sodt" Mode="In" Type="String" />
-            <Parameter Name="tendn" Mode="In" Type="String" />
-            <Parameter Name="pass" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="DanhSachTonHangTN" ReturnType="Collection(DoAnQuanLiNHModel.DanhSachTonHangTN_Result)">
             <Parameter Name="ngay" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DannNhapAd" ReturnType="Collection(DoAnQuanLiNHModel.DannNhapAd_Result)">
+            <Parameter Name="sodt" Mode="In" Type="String" />
+            <Parameter Name="pass" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DatBan">
             <Parameter Name="tenkh" Mode="In" Type="String" />
@@ -2792,9 +2636,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <Parameter Name="mahd" Mode="In" Type="String" />
             <Parameter Name="mah" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="HoaDonTheoBan" ReturnType="Collection(DoAnQuanLiNHModel.HoaDonTheoBan_Result)">
-            <Parameter Name="maban" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="HuyBanDat">
             <Parameter Name="maban" Mode="In" Type="Int32" />
             <Parameter Name="mabannh" Mode="In" Type="String" />
@@ -2807,44 +2648,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <FunctionImport Name="SoluongBuffetToDay" ReturnType="Collection(DoAnQuanLiNHModel.SoluongBuffetToDay_Result)">
             <Parameter Name="ngay" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DoAnQuanLiNHModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DoAnQuanLiNHModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="TongHangDaGoiTheoNgay" ReturnType="Collection(Double)">
-            <Parameter Name="ngay" Mode="In" Type="String" />
-            <Parameter Name="mah" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="TongTienSPTonKho" ReturnType="Collection(Double)">
-            <Parameter Name="ngay" Mode="In" Type="String" />
-            <Parameter Name="mah" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ThemMonAnBF">
             <Parameter Name="hdhd" Mode="In" Type="Int32" />
             <Parameter Name="mamon" Mode="In" Type="String" />
@@ -2856,6 +2659,14 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             <Parameter Name="mamon" Mode="In" Type="String" />
             <Parameter Name="soluong" Mode="In" Type="Double" />
             <Parameter Name="giooder" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="TongHangDaGoiTheoNgay" ReturnType="Collection(Double)">
+            <Parameter Name="ngay" Mode="In" Type="String" />
+            <Parameter Name="mah" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="TongTienSPTonKho" ReturnType="Collection(Double)">
+            <Parameter Name="ngay" Mode="In" Type="String" />
+            <Parameter Name="mah" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpDateAll">
             <Parameter Name="mahd" Mode="In" Type="String" />
@@ -2904,32 +2715,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Type="String" Name="MoTa" Nullable="false" MaxLength="500" />
           <Property Type="Double" Name="LuongCoBan" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="DannNhapAd_Result">
-          <Property Type="Int32" Name="ID_Assitant" Nullable="false" />
-          <Property Type="String" Name="TenCH" Nullable="false" MaxLength="300" />
-          <Property Type="String" Name="TenQL" Nullable="false" MaxLength="300" />
-          <Property Type="String" Name="SDT" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="PassWrord" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="Id_NV" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="DangNhapByUser_Result">
-          <Property Type="Int32" Name="ID_Acc" Nullable="false" />
-          <Property Type="Int32" Name="ID_NV" Nullable="true" />
-          <Property Type="String" Name="TenDn" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="SoDT" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="PassWrord" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="Type" Nullable="false" />
-          <Property Type="Int32" Name="MaNH" Nullable="true" />
-          <Property Type="Int32" Name="ID_Assitant" Nullable="false" />
-          <Property Type="String" Name="TenCH" Nullable="false" MaxLength="300" />
-          <Property Type="String" Name="TenQL" Nullable="false" MaxLength="300" />
-          <Property Type="String" Name="SDT" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Email1" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="PassWrord1" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="Id_NV1" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="DanhSachTonHangTN_Result">
           <Property Type="String" Name="IdMH" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="TenH" Nullable="false" MaxLength="500" />
@@ -2938,6 +2723,15 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Type="Double" Name="SoLuong" Nullable="false" />
           <Property Type="String" Name="GhiChu" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="KhuVuc" Nullable="false" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="DannNhapAd_Result">
+          <Property Type="Int32" Name="ID_Assitant" Nullable="false" />
+          <Property Type="String" Name="TenCH" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="TenQL" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="SDT" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="PassWrord" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="Id_NV" Nullable="true" />
         </ComplexType>
         <ComplexType Name="DetailViewBf_Result">
           <Property Type="String" Name="ID_Buffe" Nullable="false" MaxLength="20" />
@@ -2959,30 +2753,10 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
           <Property Type="Double" Name="Tien" Nullable="false" />
           <Property Type="Int32" Name="DuyetH" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="HoaDonTheoBan_Result">
-          <Property Type="String" Name="ID_Ban" Nullable="false" MaxLength="10" />
-          <Property Type="Int32" Name="ID_HDOder" Nullable="false" />
-          <Property Type="String" Name="TenBan" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="SoGhe" Nullable="false" />
-          <Property Type="String" Name="KhuVuc" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="TenLoaiBan" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ViTri" Nullable="false" MaxLength="500" />
-        </ComplexType>
         <ComplexType Name="SoluongBuffetToDay_Result">
           <Property Type="String" Name="ID_Buffe" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="TenBF" Nullable="false" MaxLength="300" />
           <Property Type="Int32" Name="SoLuong" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3003,14 +2777,16 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DoAnQuanLiNHModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="TaiKhoan">
+            <EntityTypeMapping TypeName="DoAnQuanLiNHModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="ID_Acc" ColumnName="ID_Acc" />
+                <ScalarProperty Name="ID_NV" ColumnName="ID_NV" />
+                <ScalarProperty Name="TenDn" ColumnName="TenDn" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassWrord" ColumnName="PassWrord" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MaNH" ColumnName="MaNH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3251,17 +3027,12 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTaiKhoan">
-            <EntityTypeMapping TypeName="DoAnQuanLiNHModel.tblTaiKhoan">
-              <MappingFragment StoreEntitySet="tblTaiKhoan">
-                <ScalarProperty Name="ID_Acc" ColumnName="ID_Acc" />
-                <ScalarProperty Name="ID_NV" ColumnName="ID_NV" />
-                <ScalarProperty Name="TenDn" ColumnName="TenDn" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="SoDT" ColumnName="SoDT" />
-                <ScalarProperty Name="PassWrord" ColumnName="PassWrord" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="MaNH" ColumnName="MaNH" />
+          <EntitySetMapping Name="tblQuyenNV">
+            <EntityTypeMapping TypeName="DoAnQuanLiNHModel.tblQuyenNV">
+              <MappingFragment StoreEntitySet="tblQuyenNV">
+                <ScalarProperty Name="ID_NhanVien" ColumnName="ID_NhanVien" />
+                <ScalarProperty Name="ID_PhanQuyen" ColumnName="ID_PhanQuyen" />
+                <ScalarProperty Name="NgayPQ" ColumnName="NgayPQ" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3314,15 +3085,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
                 <ScalarProperty Name="ID_Hang" ColumnName="ID_Hang" />
                 <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
                 <ScalarProperty Name="DuyetH" ColumnName="DuyetH" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblQuyenNV">
-            <EntityTypeMapping TypeName="DoAnQuanLiNHModel.tblQuyenNV">
-              <MappingFragment StoreEntitySet="tblQuyenNV">
-                <ScalarProperty Name="ID_NhanVien" ColumnName="ID_NhanVien" />
-                <ScalarProperty Name="ID_PhanQuyen" ColumnName="ID_PhanQuyen" />
-                <ScalarProperty Name="NgayPQ" ColumnName="NgayPQ" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3580,42 +3342,7 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DannNhapAd" FunctionName="DoAnQuanLiNHModel.Store.DannNhapAd">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.DannNhapAd_Result">
-                <ScalarProperty Name="ID_Assitant" ColumnName="ID_Assitant" />
-                <ScalarProperty Name="TenCH" ColumnName="TenCH" />
-                <ScalarProperty Name="TenQL" ColumnName="TenQL" />
-                <ScalarProperty Name="SDT" ColumnName="SDT" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PassWrord" ColumnName="PassWrord" />
-                <ScalarProperty Name="Id_NV" ColumnName="Id_NV" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DangKiNH" FunctionName="DoAnQuanLiNHModel.Store.DangKiNH" />
-          <FunctionImportMapping FunctionImportName="DangNhapByUser" FunctionName="DoAnQuanLiNHModel.Store.DangNhapByUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.DangNhapByUser_Result">
-                <ScalarProperty Name="ID_Acc" ColumnName="ID_Acc" />
-                <ScalarProperty Name="ID_NV" ColumnName="ID_NV" />
-                <ScalarProperty Name="TenDn" ColumnName="TenDn" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="SoDT" ColumnName="SoDT" />
-                <ScalarProperty Name="PassWrord" ColumnName="PassWrord" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="MaNH" ColumnName="MaNH" />
-                <ScalarProperty Name="ID_Assitant" ColumnName="ID_Assitant" />
-                <ScalarProperty Name="TenCH" ColumnName="TenCH" />
-                <ScalarProperty Name="TenQL" ColumnName="TenQL" />
-                <ScalarProperty Name="SDT" ColumnName="SDT" />
-                <ScalarProperty Name="Email1" ColumnName="Email1" />
-                <ScalarProperty Name="PassWrord1" ColumnName="PassWrord1" />
-                <ScalarProperty Name="Id_NV1" ColumnName="Id_NV1" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DangNhapNhanVien" FunctionName="DoAnQuanLiNHModel.Store.DangNhapNhanVien" />
           <FunctionImportMapping FunctionImportName="DanhSachTonHangTN" FunctionName="DoAnQuanLiNHModel.Store.DanhSachTonHangTN">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.DanhSachTonHangTN_Result">
@@ -3626,6 +3353,19 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
                 <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
                 <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
                 <ScalarProperty Name="KhuVuc" ColumnName="KhuVuc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DannNhapAd" FunctionName="DoAnQuanLiNHModel.Store.DannNhapAd">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.DannNhapAd_Result">
+                <ScalarProperty Name="ID_Assitant" ColumnName="ID_Assitant" />
+                <ScalarProperty Name="TenCH" ColumnName="TenCH" />
+                <ScalarProperty Name="TenQL" ColumnName="TenQL" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassWrord" ColumnName="PassWrord" />
+                <ScalarProperty Name="Id_NV" ColumnName="Id_NV" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3660,19 +3400,6 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DuyetHang" FunctionName="DoAnQuanLiNHModel.Store.DuyetHang" />
-          <FunctionImportMapping FunctionImportName="HoaDonTheoBan" FunctionName="DoAnQuanLiNHModel.Store.HoaDonTheoBan">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.HoaDonTheoBan_Result">
-                <ScalarProperty Name="ID_Ban" ColumnName="ID_Ban" />
-                <ScalarProperty Name="ID_HDOder" ColumnName="ID_HDOder" />
-                <ScalarProperty Name="TenBan" ColumnName="TenBan" />
-                <ScalarProperty Name="SoGhe" ColumnName="SoGhe" />
-                <ScalarProperty Name="KhuVuc" ColumnName="KhuVuc" />
-                <ScalarProperty Name="TenLoaiBan" ColumnName="TenLoaiBan" />
-                <ScalarProperty Name="ViTri" ColumnName="ViTri" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="HuyBanDat" FunctionName="DoAnQuanLiNHModel.Store.HuyBanDat" />
           <FunctionImportMapping FunctionImportName="MaMixTimKiem" FunctionName="DoAnQuanLiNHModel.Store.MaMixTimKiem" />
           <FunctionImportMapping FunctionImportName="SoluongBuffetToDay" FunctionName="DoAnQuanLiNHModel.Store.SoluongBuffetToDay">
@@ -3684,34 +3411,10 @@ warning 6002: The table/view 'DoAnQuanLiNH.dbo.ThanhPhanHang' does not have a pr
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="DoAnQuanLiNHModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="DoAnQuanLiNHModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="DoAnQuanLiNHModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="DoAnQuanLiNHModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="DoAnQuanLiNHModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DoAnQuanLiNHModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="DoAnQuanLiNHModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DoAnQuanLiNHModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="TongHangDaGoiTheoNgay" FunctionName="DoAnQuanLiNHModel.Store.TongHangDaGoiTheoNgay" />
-          <FunctionImportMapping FunctionImportName="TongTienSPTonKho" FunctionName="DoAnQuanLiNHModel.Store.TongTienSPTonKho" />
           <FunctionImportMapping FunctionImportName="ThemMonAnBF" FunctionName="DoAnQuanLiNHModel.Store.ThemMonAnBF" />
           <FunctionImportMapping FunctionImportName="ThemSuatBF" FunctionName="DoAnQuanLiNHModel.Store.ThemSuatBF" />
+          <FunctionImportMapping FunctionImportName="TongHangDaGoiTheoNgay" FunctionName="DoAnQuanLiNHModel.Store.TongHangDaGoiTheoNgay" />
+          <FunctionImportMapping FunctionImportName="TongTienSPTonKho" FunctionName="DoAnQuanLiNHModel.Store.TongTienSPTonKho" />
           <FunctionImportMapping FunctionImportName="UpDateAll" FunctionName="DoAnQuanLiNHModel.Store.UpDateAll" />
           <FunctionImportMapping FunctionImportName="XoaHoaDonTheoMa" FunctionName="DoAnQuanLiNHModel.Store.XoaHoaDonTheoMa" />
         </EntityContainerMapping>

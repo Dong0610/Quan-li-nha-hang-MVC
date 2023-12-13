@@ -17,8 +17,5 @@ namespace Quan_li_nha_hang_MVC.Models
         public int ID_NhanVien { get; set; }
         public string ID_PhanQuyen { get; set; }
         public string NgayPQ { get; set; }
-    
-        public virtual tblNhanVien tblNhanVien { get; set; }
-        public virtual tblPhanQuyen tblPhanQuyen { get; set; }
     }
 }
